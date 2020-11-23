@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar</title>
+  <link rel="stylesheet" href="style.css">
+
+
+  
+
+</head>
+<body>
+
+  <button class="trigger">Create Event</button>
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <form>
+              <input class="user-input" type="text" id="event-title" placeholder="Add Title" value="" autocomplete="off">
+              <div><label for="date"></label></div>
+              <input class="user-input" type="date" id="event-date" value="" >
+              <input class="user-input" type="time" id="event-time" value="" >   
+              <textarea class="user-input" rows="4" cols="50" name="comment" id="event-description" placeholder="Add Description..." value="" ></textarea>
+              <button type="submit" value="Submit" id="submit-event">Submit</button>
+            </form>
+        </div>
+    </div>
+	
+
+  <div id="month-year">
+    <span id="month" class="top"></span>
+    <span id="year" class="top"></span>
+  </div>
+
+
+  <div id="days-of-the-week-container">
+    <div class="day">Sunday</div>
+    <div class="day">Monday</div>
+    <div class="day">Tuesday</div>
+    <div class="day">Wednesday</div>
+    <div class="day">Thursday</div>
+    <div class="day">Friday</div>
+    <div class="day">Saturday</div>
+  </div>
+
+
+
+  <div id="days-of-the-month-container"></div>
+
+  <div id="previous-next-buttons">
+    <button class="bottom update-month" id="previous-btn">Previous</button>
+    <button class="bottom update-month" id="next-btn">Next</button>
+  </div>
+
+  <div id="month-year-tabs">
+    <span id="months-tab"></span>
+    <span id="years-tab"></span>
+  </div>
+<button  id="today">Today</button>
+<div id="date-selectors">
+
+  <select id = "month-selector">Select A Month
+    <option value="" disabled selected value>Select A Month</option>
+    <option class="month" value="January">January</option>
+    <option class="month" value="February">February</option>
+    <option class="month" value="March">March</option>
+    <option class="month" value="April">April</option>
+    <option class="month" value="May">May</option>
+    <option class="month" value="June">June</option>
+    <option class="month" value="July">July</option>
+    <option class="month" value="August">August</option>
+    <option class="month" value="September">September</option>
+    <option class="month" value="October">October</option>
+    <option class="month" value="November">November</option>
+    <option class="month" value="December">December</option>
+  </select>
+
+  <label for="year-input">Year:</label>
+  <input type="number" id="year-input" value="2020" autocomplete="off" max="2099" min="1905">
+</div>
+<script type="module" src="main.js"></script>
+
+  
+</body>
+</html>
