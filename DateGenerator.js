@@ -1,8 +1,9 @@
-import {Display_Calendar, UserInfo} from "./UI.js"
+import {Display_Calendar, UserInfo, displayMonth, createElements} from "./UI.js"
 
 export{
   Create_Date,
   Eventt,
+  generatingAllSquaresInCalendar
 }
 
 let monthsArray = [];
@@ -15,28 +16,28 @@ let days = ""
 
 let updatingMonth = newDate.getMonth()
 
+//UI
+const generatingAllSquaresInCalendar=()=>{
+  let daysInMonthContainer = document.getElementById('days-of-the-month-container')
+  for (let i = 0; i < 42; i++) {
+    let div = document.createElement('div')
+    div.className = 'calendar-days'
+   daysInMonthContainer.appendChild(div)
+  }
+}
+
  class Create_Date {
-  static generateCalendar(){
-    let daysInMonthContainer = document.getElementById('days-of-the-month-container')
-    const daysInTheMonth = Array.from(document.querySelectorAll
-      ('.calendar-days'))
-
- 
-    for (let i = 0; i < 42; i++) {
-      let div = document.createElement('div')
-      div.className = 'calendar-days'
-     daysInMonthContainer.appendChild(div)
-    }
-  }
+  
+  // static setAttributeInDOM() {
+  //   const daysOfMonthNodes = document.querySelectorAll('.calendar-days')
+  //   const arrayOfDays = Array.from(daysOfMonthNodes)
+  //   for(let i = 0; i <= 6; i++){
+  //     arrayOfDays[i].setAttribute('day-number',[i])
+  //   }
+  // }
 
 
-  static setAttributeInDOM() {
-    const daysOfMonthNodes = document.querySelectorAll('.calendar-days')
-    const arrayOfDays = Array.from(daysOfMonthNodes)
-    for(let i = 0; i <= 6; i++){
-      arrayOfDays[i].setAttribute('day-number',[i])
-    }
-  }
+
  static generateMonth(){
     monthsArray[0] = "January";
     monthsArray[1] = "February";
@@ -61,14 +62,14 @@ let updatingMonth = newDate.getMonth()
       updatingMonth = ((updatingMonth) % monthsArray.length)
       updatingMonth === -1 ? updatingMonth = monthsArray.length - 1 : updatingMonth = updatingMonth
       let newMonth = monthsArray[updatingMonth]
-      Display_Calendar.displayMonth(newMonth)
+      displayMonth(newMonth)
     }
     else if(e.target.id === 'next-btn'){
       updatingMonth = updatingMonth +  1
       updatingMonth = ((updatingMonth) % monthsArray.length)
       updatingMonth === 12 ? updatingMonth = monthsArray[updatingMonth] : updatingMonth = updatingMonth
       let newMonth = monthsArray[updatingMonth]
-      Display_Calendar.displayMonth(newMonth)
+      displayMonth(newMonth)
     }
     Create_Date.updateYear(e)
   }
@@ -307,7 +308,7 @@ let updatingMonth = newDate.getMonth()
      })
       const dayOfTheMonth = dayOfEvent[0]
       let event = this
-     UserInfo.createElements(event, dayOfTheMonth)
+     createElements(event, dayOfTheMonth)
    }
 }
 

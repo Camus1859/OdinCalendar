@@ -14,26 +14,38 @@ let clickedEventNumber = 0
 export{
   Display_Calendar,
   UserInfo,
+  displayMonth,
+  refreshShowToday,
+  getUserInfo,
+  editClicked,
+  deleteClicked,
+  handlerForEventsClicked,
+  createElements,
+  removeOldEventsContent
 }
 
 
- class Display_Calendar {
-  static displayMonth(month){
-    if (month === undefined){
-      let monthOnLoad = Create_Date.generateMonth()
-      document.getElementById('month').textContent = monthOnLoad
-    }else{
-      document.getElementById('month').textContent = month
-    }
+const displayMonth=(month)=>{
+  if (month === undefined){
+    let monthOnLoad = Create_Date.generateMonth()
+    document.getElementById('month').textContent = monthOnLoad
+  }else{
+    document.getElementById('month').textContent = month
   }
+}
 
-  static refreshShowToday(){
-    let theActualMonth = Create_Date.generateMonth()
-      document.getElementById('month').textContent = theActualMonth
-      let theActualYear = new Date().getFullYear()
-      document.getElementById('year').textContent = theActualYear
-      Create_Date.setFirstDayOfCalendar(theActualYear)
-  }
+const refreshShowToday=()=>{
+  let theActualMonth = Create_Date.generateMonth()
+    document.getElementById('month').textContent = theActualMonth
+    let theActualYear = new Date().getFullYear()
+    document.getElementById('year').textContent = theActualYear
+    Create_Date.setFirstDayOfCalendar(theActualYear)
+}
+
+ class Display_Calendar {
+ 
+
+
 
   static displayYear(sub){
     if (sub === -1){
@@ -73,8 +85,8 @@ export{
 }
 
 
- class UserInfo {
-static getUserInfo(e){
+
+const getUserInfo=(e)=>{
   e.preventDefault()
    const eventTitle = document.getElementById('event-title').value
    const eventDate = document.getElementById('event-date').value
@@ -84,12 +96,8 @@ static getUserInfo(e){
   UserInfo.getEvent(eventTitle, eventDate, eventTime, eventDescription)
 }
 
-static counter(){
-  add  = add + 1
-  return add
-}
 
-static editClicked(e){
+const editClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
   const editBtn = document.getElementById('edit')
   const submitBtn = document.getElementById('submit-event')
@@ -111,11 +119,7 @@ static editClicked(e){
   })
 }
 
-
-
-static deleteClicked(e){
-
-
+const deleteClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
   uniqueID = Number(uniqueID)
   if(confirm("Are You Sure")) {
@@ -126,8 +130,7 @@ static deleteClicked(e){
   }
 }
 
-
-static handlerForEventsClicked (){
+const handlerForEventsClicked=()=>{
   const container = document.getElementById("days-of-the-month-container")
   container.addEventListener('mouseover', (e) => {
     if(e.target.getAttribute('data')){
@@ -136,46 +139,88 @@ static handlerForEventsClicked (){
       let eventInArray = ArrayOfEvents.filter(event =>{
        return event.counter === clickedEventNumber
       })
-      UserInfo.compareEventToDate(eventInArray)
+      compareEventToDate(eventInArray)
     } 
     })
 }
   
-  static compareEventToDate(eventInArray) {
-    let event = eventInArray[0]
-        const modal = document.createElement('div')
-        modal.classList.add('modal2')
-        const content = document.createElement('div')
-        content.innerHTML = ` <ul>
-        <li><strong>Title: </strong>${event.title}</li>
-        <li><strong>Time: </strong>${event.time}</li>
-        <li><strong>Description: </strong>${event.description}</li>
-      </ul><div id="edit-del"> <button id="edit">Edit</button>
-      <button id="delete">Del</button></div>`
-      modal.appendChild(content)
-      document.body.appendChild(modal);
-      const deletebtn = document.querySelector('#delete')
-      const editBtn = document.getElementById('edit')
-      editBtn.addEventListener('click', UserInfo.editClicked)
-      editBtn.setAttribute('data', event.counter)
-      deletebtn.addEventListener('click', UserInfo.deleteClicked)
-      deletebtn.setAttribute('data', event.counter)
-      modal.setAttribute('data', event.counter)
-      modal.addEventListener('click', (e) => {
-        if (e.target.classList.contains("modal2")) {
-          e.target.remove();
-        }
-      })
-    return
-  }
+
+const compareEventToDate=(eventInArray)=> {
+  let event = eventInArray[0]
+      const modal = document.createElement('div')
+      modal.classList.add('modal2')
+      const content = document.createElement('div')
+      content.innerHTML = ` <ul>
+      <li><strong>Title: </strong>${event.title}</li>
+      <li><strong>Time: </strong>${event.time}</li>
+      <li><strong>Description: </strong>${event.description}</li>
+    </ul><div id="edit-del"> <button id="edit">Edit</button>
+    <button id="delete">Del</button></div>`
+    modal.appendChild(content)
+    document.body.appendChild(modal);
+    const deletebtn = document.querySelector('#delete')
+    const editBtn = document.getElementById('edit')
+    editBtn.addEventListener('click', editClicked)
+    editBtn.setAttribute('data', event.counter)
+    deletebtn.addEventListener('click', deleteClicked)
+    deletebtn.setAttribute('data', event.counter)
+    modal.setAttribute('data', event.counter)
+    modal.addEventListener('click', (e) => {
+      if (e.target.classList.contains("modal2")) {
+        e.target.remove();
+      }
+    })
+  return
+}
+
+const createElements=(event, element)=>{
+  for(const key in event){
+    h3 = document.createElement('h3')
+    if(`${key}` === 'date' || `${key}` === `time` || `${key}` === 'description' || `${key}` === 'counter'){
+      continue;
+    }else{
+
+    content = document.createTextNode(`${event[key]}`)
+     h3.classList.add('event')
+     h3.appendChild(content)
+    const addCounter = element.appendChild(h3)
+     addCounter.setAttribute('data', event.counter)
+    }
+   }
+ }
+
+ const removeOldEventsContent=()=>{
+  const userInputs = document.querySelectorAll('.user-input')
+  userInputs.forEach(userInput =>{
+    userInput.value = ""
+  })
+}
+
+ class UserInfo {
+
+static counter(){
+  add  = add + 1
+  return add
+}
+
+
+
+
+
+
+
+
+
+  
 
 
  static getEvent(title, date, time, description){
     const infoFromEvent = new Eventt(title, date, time, description, UserInfo.counter())
     ArrayOfEvents.push(infoFromEvent)
-    console.log(ArrayOfEvents)
     infoFromEvent.getYearMonthDay(infoFromEvent)
   }
+
+
 //displays event in future, fires on prevs/next click
   static displayEventOnGivenDate(){
     let currentYear = document.getElementById('year').textContent
@@ -195,32 +240,12 @@ static handlerForEventsClicked (){
           return listOfDays === theDay
          })
           const dayOfTheMonth = dayOfEvent[0]
-         UserInfo.createElements(event, dayOfTheMonth) 
+         createElements(event, dayOfTheMonth) 
       }
     })
   }
 
- static createElements(event, element){
-   for(const key in event){
-     h3 = document.createElement('h3')
-     if(`${key}` === 'date' || `${key}` === `time` || `${key}` === 'description' || `${key}` === 'counter'){
-       continue;
-     }else{
 
-     content = document.createTextNode(`${event[key]}`)
-      h3.classList.add('event')
-      h3.appendChild(content)
-     const addCounter = element.appendChild(h3)
-      addCounter.setAttribute('data', event.counter)
-     }
-    }
 
-   }
-
-  static removeOldEventsContent(){
-    const userInputs = document.querySelectorAll('.user-input')
-    userInputs.forEach(userInput =>{
-      userInput.value = ""
-    })
-  }
+ 
 }

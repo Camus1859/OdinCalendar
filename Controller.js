@@ -1,4 +1,4 @@
-import {Display_Calendar, UserInfo} from "./UI.js"
+import {Display_Calendar, UserInfo, refreshShowToday, getUserInfo, removeOldEventsContent} from "./UI.js"
 import {Create_Date} from "./DateGenerator.js"
 
 const prevNextBtns = document.querySelectorAll('.update-month')
@@ -12,20 +12,13 @@ const submitBtn = document.getElementById('submit-event')
 const editBtn = document.getElementById('edit')
 
 
-
-todayBtn.addEventListener('click', Display_Calendar.refreshShowToday)
-
-prevNextBtns.forEach(button =>{
-  button.addEventListener("click", Create_Date.updateMonth)
-})
-prevNextBtns.forEach(button =>{
-  button.addEventListener("click", Create_Date.updateSetFirstDayOfYearOnClick)
-})
+todayBtn.addEventListener('click', refreshShowToday)
+prevNextBtns.forEach(button =>button.addEventListener("click", Create_Date.updateMonth))
+prevNextBtns.forEach(button =>button.addEventListener("click", Create_Date.updateSetFirstDayOfYearOnClick))
 dropDownMonths.addEventListener('change', Create_Date.dropDownMonth)
 yearEntered.addEventListener('keyup', Create_Date.yearEntered)
-
 trigger.addEventListener("click", toggleModal);
-trigger.addEventListener('click', UserInfo.removeOldEventsContent)
+trigger.addEventListener('click', removeOldEventsContent)
 closeButton.addEventListener("click", toggleModal);
 submitBtn.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
@@ -35,12 +28,12 @@ function toggleModal() {
 }
 
 function windowOnClick(event) {
-    if (event.target === modal) {
-        toggleModal();
-    }
+  if (event.target === modal) {
+    toggleModal();
+  }
 }
 
 
 
 
-submitBtn.addEventListener('click', UserInfo.getUserInfo)
+submitBtn.addEventListener('click', getUserInfo)
