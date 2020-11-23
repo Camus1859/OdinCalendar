@@ -1,9 +1,10 @@
-import {Display_Calendar, UserInfo, displayMonth, createElements} from "./UI.js"
+import {Display_Calendar, UserInfo,} from "./UI.js"
+import {displayMonth, createElements, displayEventOnGivenDate} from "./UI2.js"
+
 
 export{
   Create_Date,
   Eventt,
-  generatingAllSquaresInCalendar
 }
 
 let monthsArray = [];
@@ -17,14 +18,7 @@ let days = ""
 let updatingMonth = newDate.getMonth()
 
 //UI
-const generatingAllSquaresInCalendar=()=>{
-  let daysInMonthContainer = document.getElementById('days-of-the-month-container')
-  for (let i = 0; i < 42; i++) {
-    let div = document.createElement('div')
-    div.className = 'calendar-days'
-   daysInMonthContainer.appendChild(div)
-  }
-}
+
 
  class Create_Date {
   
@@ -89,7 +83,7 @@ const generatingAllSquaresInCalendar=()=>{
     let year = document.getElementById('year').textContent
     year = Number(year)
     Create_Date.setFirstDayOfCalendar(year)
-    UserInfo.displayEventOnGivenDate()
+    displayEventOnGivenDate()
   }
 
  static generateYear(){

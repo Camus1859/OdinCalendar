@@ -1,4 +1,5 @@
-import {Display_Calendar, UserInfo, refreshShowToday, getUserInfo, removeOldEventsContent} from "./UI.js"
+import {refreshShowToday, getUserInfo, removeOldEventsContent} from "./UI2.js"
+
 import {Create_Date} from "./DateGenerator.js"
 
 const prevNextBtns = document.querySelectorAll('.update-month')

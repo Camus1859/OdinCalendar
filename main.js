@@ -1,5 +1,7 @@
-import {Create_Date, generatingAllSquaresInCalendar} from "./DateGenerator.js"
-import {Display_Calendar, UserInfo, displayMonth, handlerForEventsClicked} from  "./UI.js"
+import {Create_Date} from "./DateGenerator.js"
+import {Display_Calendar} from  "./UI.js"
+import {displayMonth, handlerForEventsClicked, generatingAllSquaresInCalendar} from  "./UI2.js"
+
 import './Controller.js'
 
 generatingAllSquaresInCalendar()
