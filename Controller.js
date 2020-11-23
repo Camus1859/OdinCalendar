@@ -1,5 +1,4 @@
 import {refreshShowToday, getUserInfo, removeOldEventsContent} from "./UI2.js"
-
 import {Create_Date} from "./DateGenerator.js"
 
 const prevNextBtns = document.querySelectorAll('.update-month')
@@ -10,7 +9,6 @@ const modal = document.querySelector(".modal");
 const trigger = document.querySelector(".trigger");
 const closeButton = document.querySelector(".close-button");
 const submitBtn = document.getElementById('submit-event')
-const editBtn = document.getElementById('edit')
 
 
 todayBtn.addEventListener('click', refreshShowToday)

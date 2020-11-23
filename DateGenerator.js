@@ -1,37 +1,94 @@
-import {Display_Calendar, UserInfo,} from "./UI.js"
 import {displayMonth, createElements, displayEventOnGivenDate} from "./UI2.js"
-
-
 export{
   Create_Date,
   Eventt,
+  counter,
+  displayYear,
+  UserEvent
 }
 
 let monthsArray = [];
-let events = [];
 let newDate = new Date();
 let num = 0
-let days = ""
-
-
-
 let updatingMonth = newDate.getMonth()
 
-//UI
 
+
+class ListOfAllUserEvents {
+  constructor(){
+    this.EventsList = []
+  }
+
+}
+
+class UserEvent {
+  constructor(title, date, time, description, counter){
+    this.title = title
+    this.date = date
+    this.time= time
+    this.description = description
+    this.counter = counter
+  }
+  static counter(){
+    let add = 0
+    add = add + 1
+    return add
+  }
+  getCounter(){
+    return this.counter
+  }
+}
+
+const count = UserEvent.counter()
+
+
+const counter=()=>{
+  let add = 0
+  add = add + 1
+  return add
+}
+
+
+
+const displayYear=(sub)=>{
+  if (sub === -1){
+    let year = document.getElementById('year').textContent
+    year = Number(year)
+    let updatedYear = year - 1
+    document.getElementById('year').textContent = updatedYear
+    updatedYear = Number(updatedYear)
+    Create_Date.setFirstDayOfCalendar(updatedYear)
+  }
+  
+  else if(sub === 1){
+   let year = document.getElementById('year').textContent
+   year = Number(year)
+   let updatedYear = year + 1
+   document.getElementById('year').textContent = updatedYear
+   updatedYear = Number(updatedYear)
+   Create_Date.setFirstDayOfCalendar(updatedYear)
+  }
+  else if(sub === undefined){
+    let year = Create_Date.generateYear()
+    document.getElementById('year').textContent = year
+    year = Number(year)
+    Create_Date.setFirstDayOfCalendar(year)
+  }
+}
+
+const displayStartDayNmonthLength=(startDay)=>{
+  Create_Date.clearCalendar()
+  const monthLength = Create_Date.generateNumberOfDaysInMonth()
+  const daysOfMonthNodes = document.querySelectorAll('.calendar-days')
+  const arrayOfDays = Array.from(daysOfMonthNodes)
+  for (let i = 0; i < monthLength ; i++){
+    arrayOfDays[i + startDay].textContent = i + 1
+    arrayOfDays[i + startDay].setAttribute('data-number', i + 1 )
+  }
+}
 
  class Create_Date {
   
-  // static setAttributeInDOM() {
-  //   const daysOfMonthNodes = document.querySelectorAll('.calendar-days')
-  //   const arrayOfDays = Array.from(daysOfMonthNodes)
-  //   for(let i = 0; i <= 6; i++){
-  //     arrayOfDays[i].setAttribute('day-number',[i])
-  //   }
-  // }
-
-
-
  static generateMonth(){
     monthsArray[0] = "January";
     monthsArray[1] = "February";
@@ -71,11 +128,11 @@ let updatingMonth = newDate.getMonth()
   static updateYear(e){
     if (document.getElementById('month').textContent === "January" && e.target.id === 'next-btn')  {
       let sub = 1
-      Display_Calendar.displayYear(sub)
+      displayYear(sub)
     }
     else if (document.getElementById('month').textContent === 'December' && e.target.id === 'previous-btn')  {
       let sub = -1
-      Display_Calendar.displayYear(sub)
+      displayYear(sub)
     }
   }
 
@@ -205,7 +262,7 @@ let updatingMonth = newDate.getMonth()
     const startIndex = daysOfWeek.findIndex(elem => elem === Create_Date.getNumForSetInterval())
 
     const index = (startIndex + count) % daysOfWeek.length
-    Display_Calendar.displayStartDayNmonthLength(index)
+    displayStartDayNmonthLength(index)
     return index
   }
 
@@ -286,6 +343,11 @@ let updatingMonth = newDate.getMonth()
  }
 
   addEventToCalendar(year, month, day){
+    console.log(year)
+    console.log(month)
+    console.log(day)
+
+
   let currentYear = document.getElementById('year').textContent
   currentYear = Number(currentYear)
 
@@ -296,12 +358,16 @@ let updatingMonth = newDate.getMonth()
     ('.calendar-days'))
 
    if(year === currentYear && month === currentMonth){
+
    let dayOfEvent = daysInTheMonth.filter(listOfDays => {
       listOfDays = Number(listOfDays.getAttribute('data-number'))
       return listOfDays === day
      })
+    
       const dayOfTheMonth = dayOfEvent[0]
       let event = this
+      console.log('hiya')
+
      createElements(event, dayOfTheMonth)
    }
 }

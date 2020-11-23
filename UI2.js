@@ -1,5 +1,4 @@
-import {Create_Date, Eventt} from "./DateGenerator.js"
-import {UserInfo} from "./UI.js"
+import {Create_Date, Eventt, counter} from "./DateGenerator.js"
 
 let h3;
 let content;
@@ -7,14 +6,8 @@ let ArrayOfEvents = []
 let theYear = 0
 let theMonth = 0
 let theDay = 0
-let add = 0
 let clickedEventNumber = 0
 
-let monthsArray = [];
-let events = [];
-let newDate = new Date();
-let num = 0
-let days = ""
 
 
 export{  
@@ -28,7 +21,6 @@ export{
   removeOldEventsContent,
   generatingAllSquaresInCalendar,
   displayEventOnGivenDate
-  
 }
 
 const generatingAllSquaresInCalendar=()=>{
@@ -70,6 +62,7 @@ const getUserInfo=(e)=>{
 
 const editClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
+  console.log(uniqueID)
   const editBtn = document.getElementById('edit')
   const submitBtn = document.getElementById('submit-event')
   const modal = document.querySelector(".modal");
@@ -83,8 +76,10 @@ const editClicked=(e)=>{
     if (e.target === submitBtn){
       uniqueID = Number(uniqueID)
       ArrayOfEvents = ArrayOfEvents.filter(event =>{
+        console.log(ArrayOfEvents)
         return event.counter != uniqueID
   })
+  
   document.querySelectorAll(`[data="${uniqueID}"]`).forEach(node => { node.remove()})
     }
   })
@@ -107,7 +102,6 @@ const handlerForEventsClicked=()=>{
     if(e.target.getAttribute('data')){
       clickedEventNumber = e.target.getAttribute('data')
       clickedEventNumber = Number(clickedEventNumber)
-      console.log(ArrayOfEvents)
       let eventInArray = ArrayOfEvents.filter(event =>{
        return event.counter === clickedEventNumber
       })
@@ -118,7 +112,6 @@ const handlerForEventsClicked=()=>{
   
 
 const compareEventToDate=(eventInArray)=> {
-  console.log(eventInArray)
   let event = eventInArray[0]
       const modal = document.createElement('div')
       modal.classList.add('modal2')
@@ -146,7 +139,52 @@ const compareEventToDate=(eventInArray)=> {
   return
 }
 
+
+
+const getEvent=(title, date, time, description)=>{
+  const infoFromEvent = new Eventt(title, date, time, description, counter())
+  ArrayOfEvents.push(infoFromEvent)
+  console.log(infoFromEvent)
+  infoFromEvent.getYearMonthDay(infoFromEvent)
+}
+
+
+//displays event in future, fires on prevs/next click
+const displayEventOnGivenDate=()=>{
+
+  let currentYear = document.getElementById('year').textContent
+  currentYear = Number(currentYear)
+  let currentMonth = document.getElementById('month').textContent 
+console.log('1')
+  currentMonth = Eventt.getMonthForEvent(currentMonth)
+  console.log('2')
+
+  const daysInTheMonth = Array.from(document.querySelectorAll
+    ('.calendar-days'))
+    console.log('3')
+
+  ArrayOfEvents.forEach(event =>{
+    console.log(ArrayOfEvents)
+
+    const date = event.date.split('-')
+     theYear = Number(date[0])
+     theMonth = Number(date[1])
+     theDay = Number(date[2])
+     console.log('5')
+
+
+    if(currentYear === theYear && currentMonth === theMonth){
+      let dayOfEvent = daysInTheMonth.filter(listOfDays => {
+        listOfDays = Number(listOfDays.getAttribute('data-number'))
+        return listOfDays === theDay
+       })
+        const dayOfTheMonth = dayOfEvent[0]
+       createElements(event, dayOfTheMonth) 
+    }
+  })
+}
 const createElements=(event, element)=>{
+console.log('2')
   for(const key in event){
     h3 = document.createElement('h3')
     if(`${key}` === 'date' || `${key}` === `time` || `${key}` === 'description' || `${key}` === 'counter'){
@@ -157,6 +195,8 @@ const createElements=(event, element)=>{
      h3.classList.add('event')
      h3.appendChild(content)
     const addCounter = element.appendChild(h3)
+    console.log(element)
+    console.log( addCounter)
      addCounter.setAttribute('data', event.counter)
     }
    }
@@ -166,37 +206,5 @@ const createElements=(event, element)=>{
   const userInputs = document.querySelectorAll('.user-input')
   userInputs.forEach(userInput =>{
     userInput.value = ""
-  })
-}
-
-const getEvent=(title, date, time, description)=>{
-  const infoFromEvent = new Eventt(title, date, time, description, UserInfo.counter())
-  ArrayOfEvents.push(infoFromEvent)
-  console.log(ArrayOfEvents)
-  infoFromEvent.getYearMonthDay(infoFromEvent)
-}
-
-
-//displays event in future, fires on prevs/next click
-const displayEventOnGivenDate=()=>{
-  let currentYear = document.getElementById('year').textContent
-  currentYear = Number(currentYear)
-  let currentMonth = document.getElementById('month').textContent 
-  currentMonth = Eventt.getMonthForEvent(currentMonth)
-  const daysInTheMonth = Array.from(document.querySelectorAll
-    ('.calendar-days'))
-  ArrayOfEvents.forEach(event =>{
-    const date = event.date.split('-')
-     theYear = Number(date[0])
-     theMonth = Number(date[1])
-     theDay = Number(date[2])
-    if(currentYear === theYear && currentMonth === theMonth){
-      let dayOfEvent = daysInTheMonth.filter(listOfDays => {
-        listOfDays = Number(listOfDays.getAttribute('data-number'))
-        return listOfDays === theDay
-       })
-        const dayOfTheMonth = dayOfEvent[0]
-       createElements(event, dayOfTheMonth) 
-    }
   })
 }
