@@ -93,7 +93,7 @@ class UserEvent extends Calendar {
   }
 
  compareUserYearAndMonthToCalendarYearAndMonth(eventYear, eventMonth, eventDay){
-   if (this.getCalendarCurrentMonth == eventMonth  && this.getCalendarCurrentYear == eventYear){
+   if (this.getCalendarMonthNumber == eventMonth  && this.getCalendarCurrentYear == eventYear){
      determineTheDayOnCurrentMonthForEvent(eventDay)
   }
 }
@@ -147,15 +147,15 @@ const displayYear=(sub)=>{
 // const displayYear=(sub)=>{
 //   if (sub === -1){
 //     displayCurrentYear(calendarObject.getCalendarCurrentYear() - 1)
-//     Create_Date.setFirstDayOfCalendar(calendarObject.getCalendarCurrentYear() - 1)
+//     setFirstDayOfCalendar(calendarObject.getCalendarCurrentYear() - 1)
 //  }
 //  else if(sub === 1){
 //   displayCurrentYear(calendarObject.getCalendarCurrentYear() + 1)
-//   Create_Date.setFirstDayOfCalendar(calendarObject.getCalendarCurrentYear() + 1)
+//   setFirstDayOfCalendar(calendarObject.getCalendarCurrentYear() + 1)
 //  }
 //  else if(sub === undefined){
 //   displayCurrentYear(calendarObject.getCalendarCurrentYear())
-//   Create_Date.setFirstDayOfCalendar(calendarObject.getCalendarCurrentYear())
+//   setFirstDayOfCalendar(calendarObject.getCalendarCurrentYear())
 //  }
 // }
 
@@ -233,16 +233,15 @@ const displayStartDayNmonthLength=(startDay)=>{
   //replaces updateMonth
 //  changesTheMonthWhenPrevOrNextClicked=(e)=>{
 //   if (e.target.id === 'previous-btn'){
-//     monthNumber = newDate.getMonth()
-//     monthNames = monthNumber -  1
+//     monthNumber = calendarObject.getCalendarMonthNumber() - 1
 //     monthNumber = ((monthNumber) % calendarObject.monthNames.length)
 //     monthNumber === -1 ? monthNumber = calendarObject.monthNames.length - 1 : monthNumber =    monthNumber
 //     let newMonth = calendarObject.monthNames[monthNumber]
 //     displayMonth(newMonth)
 //   }
 //   else if(e.target.id === 'next-btn'){
-//     monthNumber = newDate.getMonth()
-//     monthNames = monthNumber +  1
+  //   monthNumber = calendarObject.getCalendarMonthNumber() + 1
+
 //     monthNumber = ((monthNumber) % calendarObject.monthNames.length)
 //     monthNumber === 12 ? monthNumber = calendarObject.monthNames[monthNames]: monthNumber = monthNumber
 //     let newMonth = calendarObject.monthNames[monthNumber]
@@ -289,14 +288,16 @@ const displayStartDayNmonthLength=(startDay)=>{
   // }
 
 
-//unsure
+//
  static generateYear(){
     let year = new Date().getFullYear()
     return year
   }
 
-  // calendarObject.getCalendarCurrentYear()
-
+  // const generateActualYear=()=>{
+  //   let year = new Date().getFullYear()
+  //   return year
+  // }
 
 //read object will delete
  static generateNumberOfDaysInMonth(){
@@ -357,13 +358,13 @@ const displayStartDayNmonthLength=(startDay)=>{
 
   
 
-
-
 //will delete
   static thisMonth(){
    let month = document.getElementById('month').textContent
    return month
   }
+
+  // calendarObject.getCalendarCurrentMonthName()
 
 
 
@@ -460,7 +461,7 @@ const displayStartDayNmonthLength=(startDay)=>{
   //   let numberOfLeapYears = 0
   //   leapYearsAsDecimal.toFixed(2) >= Math.trunc(leapYearsAsDecimal) + .75 ? numberOfLeapYears = Math.round(leapYearsAsDecimal) : numberOfLeapYears = Math.floor(leapYearsAsDecimal)
   //   let iterationsDaysOfWeekArr = (incomingYear - 1905) + numberOfLeapYears
-  //   Create_Date.getSetInterval(iterationsDaysOfWeekArr)
+  //   getSetInterval(iterationsDaysOfWeekArr)
   // }
 
 
@@ -515,7 +516,7 @@ const displayStartDayNmonthLength=(startDay)=>{
   // static yearEntered(e){
   //   let year = +document.getElementById('year-input').value
   //  if (e.keyCode === 13){
-  //   document.getElementById('year').textContent = year
+  //   calendarObject.setCalendarCurrentYear(year) 
   //  setFirstDayOfCalendar(year)
   //  }
   // }
@@ -524,7 +525,7 @@ const displayStartDayNmonthLength=(startDay)=>{
 
 
 
-
+// delete
  class Eventt {
   constructor(title, date, time, description, counter){
     this.title = title
@@ -618,8 +619,7 @@ const displayStartDayNmonthLength=(startDay)=>{
 
 // addEventToCalendar(eventYear, eventMonth, eventDay){
 //   let currentYear = calendarObject.getCalendarCurrentYear()
-//   let currentMonth = calendarObject.getCalendarMonthName()
-//   currentMonth = getMonthForEvent(currentMonth)
+//   let currentMonth = getMonthForEvent(calendarObject.getCalendarMonthName())
 //   const daysInTheMonth = Array.from(document.querySelectorAll('.calendar-days'))
 //    if(eventYear === currentYear && eventMonth === currentMonth){
 //     let dayOfEvent = daysInTheMonth.find(listOfDays => +listOfDays.getAttribute('data-number') === theDay)

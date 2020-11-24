@@ -35,6 +35,16 @@ const generatingAllSquaresInCalendar=()=>{
 }
 
 
+// const generatingAllSquaresInCalendar=()=>{
+//   let daysInMonthContainer = document.getElementById('days-of-the-month-container')
+//   for (let i = 0; i < 42; i++) {
+//     let div = document.createElement('div')
+//     div.className = 'calendar-days'
+//    daysInMonthContainer.appendChild(div)
+//   }
+// }
+
+
 // need read an object
 const displayMonth=(month)=>{
   if (month === undefined){
@@ -47,6 +57,15 @@ const displayMonth=(month)=>{
 
 
 
+// const displayMonth=(month)=>{
+//   if (month === undefined){
+//     calendarObject.setCalendarCurrentMonth(calendarObject.getCalendarCurrentMonthName()) 
+//   }else{
+//     calendarObject.setCalendarCurrentMonth(month)
+//   }
+// }
+
+
 // need read an object
 
 const refreshShowToday=()=>{
@@ -57,6 +76,12 @@ const refreshShowToday=()=>{
     Create_Date.setFirstDayOfCalendar(theActualYear)
 }
 
+
+// const refreshShowToday=()=>{
+//   calendarObject.setCalendarCurrentMonth(calendarObject.getCalendarCurrentMonthName())
+//   calendarObject.setCalendarCurrentYear(calendarObject.getCalendarCurrentYear())
+//   setFirstDayOfCalendar(calendarObject.getCalendarCurrentYear())
+// }
 
 
 //leave as is-gets user data
@@ -71,7 +96,7 @@ const getUserInfo=(e)=>{
 
 
 
-// slightly modify
+// leave for now
 const editClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
   const editBtn = document.getElementById('edit')
@@ -94,7 +119,7 @@ const editClicked=(e)=>{
 }
 
 
-//slightly modify
+// leave for now
 const deleteClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
   uniqueID = Number(uniqueID)
@@ -107,7 +132,7 @@ const deleteClicked=(e)=>{
 }
 
 
-//slightly modify
+// leave for now
 const handlerForEventsClicked=()=>{
   const container = document.getElementById("days-of-the-month-container")
   container.addEventListener('mouseover', (e) => {
@@ -124,7 +149,7 @@ const handlerForEventsClicked=()=>{
   
 
 
-//slightly modify
+// leave for now
 const compareEventToDate=(eventInArray)=> {
   let event = eventInArray[0]
       const modal = document.createElement('div')
@@ -166,7 +191,6 @@ const getEvent=(title, date, time, description)=>{
 
 
 // need read an object
-
 const displayEventOnGivenDate=()=>{
   let currentYear = document.getElementById('year').textContent
   currentYear = Number(currentYear)
