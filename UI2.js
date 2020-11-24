@@ -23,6 +23,8 @@ export{
   displayEventOnGivenDate
 }
 
+
+//leave as is, generates calendar squares
 const generatingAllSquaresInCalendar=()=>{
   let daysInMonthContainer = document.getElementById('days-of-the-month-container')
   for (let i = 0; i < 42; i++) {
@@ -32,14 +34,20 @@ const generatingAllSquaresInCalendar=()=>{
   }
 }
 
+
+// need read an object
 const displayMonth=(month)=>{
   if (month === undefined){
-    let monthOnLoad = Create_Date.generateMonth()
-    document.getElementById('month').textContent = monthOnLoad
+   // calendarObject.calendarMonth()
+    document.getElementById('month').textContent = Create_Date.generateMonth()
   }else{
     document.getElementById('month').textContent = month
   }
 }
+
+
+
+// need read an object
 
 const refreshShowToday=()=>{
   let theActualMonth = Create_Date.generateMonth()
@@ -49,7 +57,9 @@ const refreshShowToday=()=>{
     Create_Date.setFirstDayOfCalendar(theActualYear)
 }
 
-//get the users event data
+
+
+//leave as is-gets user data
 const getUserInfo=(e)=>{
   e.preventDefault()
    const eventTitle = document.getElementById('event-title').value
@@ -60,9 +70,10 @@ const getUserInfo=(e)=>{
 }
 
 
+
+// slightly modify
 const editClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
-  console.log(uniqueID)
   const editBtn = document.getElementById('edit')
   const submitBtn = document.getElementById('submit-event')
   const modal = document.querySelector(".modal");
@@ -71,12 +82,10 @@ const editClicked=(e)=>{
    modal2.remove();
    modal.classList.toggle("show-modal");
   }
-
   document.addEventListener('click', (e)=>{
     if (e.target === submitBtn){
       uniqueID = Number(uniqueID)
       ArrayOfEvents = ArrayOfEvents.filter(event =>{
-        console.log(ArrayOfEvents)
         return event.counter != uniqueID
   })
   document.querySelectorAll(`[data="${uniqueID}"]`).forEach(node => { node.remove()})
@@ -84,6 +93,8 @@ const editClicked=(e)=>{
   })
 }
 
+
+//slightly modify
 const deleteClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
   uniqueID = Number(uniqueID)
@@ -95,6 +106,8 @@ const deleteClicked=(e)=>{
   }
 }
 
+
+//slightly modify
 const handlerForEventsClicked=()=>{
   const container = document.getElementById("days-of-the-month-container")
   container.addEventListener('mouseover', (e) => {
@@ -110,6 +123,8 @@ const handlerForEventsClicked=()=>{
 }
   
 
+
+//slightly modify
 const compareEventToDate=(eventInArray)=> {
   let event = eventInArray[0]
       const modal = document.createElement('div')
@@ -139,41 +154,32 @@ const compareEventToDate=(eventInArray)=> {
 }
 
 
-
+//leave as is with new code
 const getEvent=(title, date, time, description)=>{
   const infoFromEvent = new Eventt(title, date, time, description, counter())
   //infoFromEvent = new UserEvent(title, date, time, description, counter())
   //storingAllUserEvents.placeUserEventInMyArray(infoFromEvent)
-
   ArrayOfEvents.push(infoFromEvent)
   infoFromEvent.getYearMonthDay(infoFromEvent)
 }
 
 
-//displays event in future, fires on prevs/next click
-const displayEventOnGivenDate=()=>{
 
+// need read an object
+
+const displayEventOnGivenDate=()=>{
   let currentYear = document.getElementById('year').textContent
   currentYear = Number(currentYear)
   let currentMonth = document.getElementById('month').textContent 
-console.log('1')
   currentMonth = Eventt.getMonthForEvent(currentMonth)
-  console.log('2')
-
   const daysInTheMonth = Array.from(document.querySelectorAll
     ('.calendar-days'))
-    console.log('3')
-
   ArrayOfEvents.forEach(event =>{
-    console.log(ArrayOfEvents)
-
     const date = event.date.split('-')
      theYear = Number(date[0])
      theMonth = Number(date[1])
      theDay = Number(date[2])
      console.log('5')
-
-
     if(currentYear === theYear && currentMonth === theMonth){
       let dayOfEvent = daysInTheMonth.filter(listOfDays => {
         listOfDays = Number(listOfDays.getAttribute('data-number'))
@@ -185,6 +191,29 @@ console.log('1')
   })
 }
 
+
+// const displayEventOnGivenDate=()=>{
+//   let currentYear = calendarObject.getCalendarCurrentYear()
+//   let currentMonth = calendarObject.getCalendarMonthName()
+//   currentMonth = getMonthForEvent(currentMonth)
+//   const daysInTheMonth = Array.from(document.querySelectorAll('.calendar-days'))
+//   ArrayOfEvents.forEach(event =>{
+//     const date = event.date.split('-')
+//      theYear = Number(date[0])
+//      theMonth = Number(date[1])
+//      theDay = Number(date[2])
+//     if(currentYear === theYear && currentMonth === theMonth){
+//       let dayOfEvent = daysInTheMonth.find(listOfDays => +listOfDays.getAttribute('data-number') === theDay)
+//       //must find a way to obtain this event for argument below
+//        createElements(event, dayOfEvent) 
+//     }
+//   })
+// }
+
+
+
+
+//leave as is
 const createElements=(event, element)=>{
   for(const key in event){
     if(`${key}` === 'title') {
@@ -194,9 +223,13 @@ const createElements=(event, element)=>{
  }
 }
 
+//leave as is
  const removeOldEventsContent=()=>{
   const userInputs = document.querySelectorAll('.user-input')
   userInputs.forEach(userInput =>userInput.value = "")
 }
 
 
+const displayCurrentYear =(year)=>{
+  document.getElementById('year').textContent = year
+}
