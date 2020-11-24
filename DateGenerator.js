@@ -2,9 +2,10 @@ import {displayMonth, createElements, displayEventOnGivenDate} from "./UI2.js"
 export{
   Create_Date,
   Eventt,
-  counter,
   displayYear,
-  UserEvent
+  UserEvent,
+  ListOfAllUserEvents,
+  counter
 }
 
 let monthsArray = [];
@@ -12,17 +13,41 @@ let newDate = new Date();
 let num = 0
 let updatingMonth = newDate.getMonth()
 
+class Calendar {
+  constructor(){
+    this.calendarMonth()
+    this.calendarYear()
+  }
+  calendarMonth(){
+    const monthNames = 
+    [
+      "January", "February", "March", "April", "May","June",
+      "July", "August", "September", "October", "November","December"
+    ]
+      return  monthNames[new Date().getMonth()];
+  }
+  calendarYear(){
+    return new Date().getFullYear()
+  }
+}
 
 
 class ListOfAllUserEvents {
   constructor(){
     this.EventsList = []
   }
+  getEventList(){
+    return this.EventsList
+  }
 
+  placeUserEventInMyArray(userEvent){
+    this.getEventList().push(userEvent)
+  }
 }
 
-class UserEvent {
+class UserEvent extends Calendar {
   constructor(title, date, time, description, counter){
+    super()
     this.title = title
     this.date = date
     this.time= time
@@ -37,7 +62,30 @@ class UserEvent {
   getCounter(){
     return this.counter
   }
+  getYearMonthDay(userEvent){
+    const date = this.date.split('-')
+    const year = Number(date[0])
+    const month = Number(date[1])
+    const day = Number(date[2])
+    userEvent.compareUserYearAndMonthToCalendarYearAndMonth(year, month, day, userEvent)
+ }
+
+ compareUserYearAndMonthToCalendarYearAndMonth(eventYear, eventMonth, eventDay, userEvent){
+   if (this.calendarMonth == eventMonth  && this.calendarYear == eventYear){
+     determineTheDayOnCurrentMonthForEvent(eventDay, userEvent)
+  }
 }
+
+  determineTheDayOnCurrentMonthForEvent(eventDay, userEvent){
+    const daysInTheMonth = Array.from(document.querySelectorAll('.calendar-days'))
+    let dayOfEvent = daysInTheMonth.find(listOfDays => +listOfDays.getAttribute('data-number') == eventDay)
+    createElements(userEvent, dayOfEvent)
+  }
+
+ }
+
+
+
 
 const count = UserEvent.counter()
 
@@ -341,45 +389,23 @@ const displayStartDayNmonthLength=(startDay)=>{
     //displays event that month
     event.addEventToCalendar(year, month, day)
  }
-
   addEventToCalendar(year, month, day){
-    console.log(year)
-    console.log(month)
-    console.log(day)
-
-
   let currentYear = document.getElementById('year').textContent
   currentYear = Number(currentYear)
-
   let currentMonth = document.getElementById('month').textContent 
   currentMonth = Eventt.getMonthForEvent(currentMonth)
-
   const daysInTheMonth = Array.from(document.querySelectorAll
     ('.calendar-days'))
-
    if(year === currentYear && month === currentMonth){
-
    let dayOfEvent = daysInTheMonth.filter(listOfDays => {
       listOfDays = Number(listOfDays.getAttribute('data-number'))
       return listOfDays === day
      })
-    
+     console.log(dayOfEvent)
+
       const dayOfTheMonth = dayOfEvent[0]
       let event = this
-      console.log('hiya')
-
      createElements(event, dayOfTheMonth)
    }
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
- }

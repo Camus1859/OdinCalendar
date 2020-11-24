@@ -1,5 +1,4 @@
 import {Create_Date, Eventt, counter} from "./DateGenerator.js"
-
 let h3;
 let content;
 let ArrayOfEvents = []
@@ -7,6 +6,7 @@ let theYear = 0
 let theMonth = 0
 let theDay = 0
 let clickedEventNumber = 0
+//let storingAllUserEvents = new ListOfAllUserEvents
 
 
 
@@ -49,13 +49,13 @@ const refreshShowToday=()=>{
     Create_Date.setFirstDayOfCalendar(theActualYear)
 }
 
+//get the users event data
 const getUserInfo=(e)=>{
   e.preventDefault()
    const eventTitle = document.getElementById('event-title').value
    const eventDate = document.getElementById('event-date').value
    const eventTime = document.getElementById('event-time').value
    const eventDescription = document.getElementById('event-description').value
-  //Pass users data to constructor
   getEvent(eventTitle, eventDate, eventTime, eventDescription)
 }
 
@@ -79,7 +79,6 @@ const editClicked=(e)=>{
         console.log(ArrayOfEvents)
         return event.counter != uniqueID
   })
-  
   document.querySelectorAll(`[data="${uniqueID}"]`).forEach(node => { node.remove()})
     }
   })
@@ -143,8 +142,10 @@ const compareEventToDate=(eventInArray)=> {
 
 const getEvent=(title, date, time, description)=>{
   const infoFromEvent = new Eventt(title, date, time, description, counter())
+  //infoFromEvent = new UserEvent(title, date, time, description, counter())
+  //storingAllUserEvents.placeUserEventInMyArray(infoFromEvent)
+
   ArrayOfEvents.push(infoFromEvent)
-  console.log(infoFromEvent)
   infoFromEvent.getYearMonthDay(infoFromEvent)
 }
 
@@ -183,28 +184,19 @@ console.log('1')
     }
   })
 }
-const createElements=(event, element)=>{
-console.log('2')
-  for(const key in event){
-    h3 = document.createElement('h3')
-    if(`${key}` === 'date' || `${key}` === `time` || `${key}` === 'description' || `${key}` === 'counter'){
-      continue;
-    }else{
 
-    content = document.createTextNode(`${event[key]}`)
-     h3.classList.add('event')
-     h3.appendChild(content)
-    const addCounter = element.appendChild(h3)
-    console.log(element)
-    console.log( addCounter)
-     addCounter.setAttribute('data', event.counter)
-    }
-   }
+const createElements=(event, element)=>{
+  for(const key in event){
+    if(`${key}` === 'title') {
+   const newEventForCalendar =`<h3 data="${event.counter}" class="event">${event[key]}</h3>`
+    element.insertAdjacentHTML('beforeend', newEventForCalendar)
+  }
  }
+}
 
  const removeOldEventsContent=()=>{
   const userInputs = document.querySelectorAll('.user-input')
-  userInputs.forEach(userInput =>{
-    userInput.value = ""
-  })
+  userInputs.forEach(userInput =>userInput.value = "")
 }
+
+
