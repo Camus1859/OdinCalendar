@@ -25,16 +25,6 @@ export{
 
 
 //leave as is, generates calendar squares
-const generatingAllSquaresInCalendar=()=>{
-  let daysInMonthContainer = document.getElementById('days-of-the-month-container')
-  for (let i = 0; i < 42; i++) {
-    let div = document.createElement('div')
-    div.className = 'calendar-days'
-   daysInMonthContainer.appendChild(div)
-  }
-}
-
-
 // const generatingAllSquaresInCalendar=()=>{
 //   let daysInMonthContainer = document.getElementById('days-of-the-month-container')
 //   for (let i = 0; i < 42; i++) {
@@ -43,6 +33,15 @@ const generatingAllSquaresInCalendar=()=>{
 //    daysInMonthContainer.appendChild(div)
 //   }
 // }
+
+
+const generatingAllSquaresInCalendar=()=>{
+  let daysInMonthContainer = document.getElementById('days-of-the-month-container')
+  for (let i = 0; i < 42; i++) {
+    let div = `<div class="calendar-days"> </div>`
+    daysInMonthContainer.insertAdjacentHTML('beforeend', div)
+  }
+}
 
 
 // need read an object
@@ -143,7 +142,7 @@ const deleteClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
   uniqueID = Number(uniqueID)
   if(confirm("Are You Sure")) {
-   ArrayOfEvents = this.getEventList.filter(event =>event.counter != uniqueID)
+   ArrayOfEvents = ArrayOfEvents.filter(event =>event.counter != uniqueID)
    document.querySelectorAll(`[data="${uniqueID}"]`).forEach(node => { node.remove()})
   }
 }
@@ -190,33 +189,33 @@ const handlerForEventsClicked=()=>{
 
 
 // leave for now
-// const compareEventToDate=(eventInArray)=> {
-//   let event = eventInArray[0]
-//       const modal = document.createElement('div')
-//       modal.classList.add('modal2')
-//       const content = document.createElement('div')
-//       content.innerHTML = ` <ul>
-//       <li><strong>Title: </strong>${event.title}</li>
-//       <li><strong>Time: </strong>${event.time}</li>
-//       <li><strong>Description: </strong>${event.description}</li>
-//     </ul><div id="edit-del"> <button id="edit">Edit</button>
-//     <button id="delete">Del</button></div>`
-//     modal.appendChild(content)
-//     document.body.appendChild(modal);
-//     const deletebtn = document.querySelector('#delete')
-//     const editBtn = document.getElementById('edit')
-//     editBtn.addEventListener('click', editClicked)
-//     editBtn.setAttribute('data', event.counter)
-//     deletebtn.addEventListener('click', deleteClicked)
-//     deletebtn.setAttribute('data', event.counter)
-//     modal.setAttribute('data', event.counter)
-//     modal.addEventListener('click', (e) => {
-//       if (e.target.classList.contains("modal2")) {
-//         e.target.remove();
-//       }
-//     })
-//   return
-// }
+const compareEventToDate=(eventInArray)=> {
+  let event = eventInArray[0]
+      const modal = document.createElement('div')
+      modal.classList.add('modal2')
+      const content = document.createElement('div')
+      content.innerHTML = ` <ul>
+      <li><strong>Title: </strong>${event.title}</li>
+      <li><strong>Time: </strong>${event.time}</li>
+      <li><strong>Description: </strong>${event.description}</li>
+    </ul><div id="edit-del"> <button id="edit">Edit</button>
+    <button id="delete">Del</button></div>`
+    modal.appendChild(content)
+    document.body.appendChild(modal);
+    const deletebtn = document.querySelector('#delete')
+    const editBtn = document.getElementById('edit')
+    editBtn.addEventListener('click', editClicked)
+    editBtn.setAttribute('data', event.counter)
+    deletebtn.addEventListener('click', deleteClicked)
+    deletebtn.setAttribute('data', event.counter)
+    modal.setAttribute('data', event.counter)
+    modal.addEventListener('click', (e) => {
+      if (e.target.classList.contains("modal2")) {
+        e.target.remove();
+      }
+    })
+  return
+}
 
 
 //leave as is with new code
