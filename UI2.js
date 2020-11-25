@@ -96,7 +96,7 @@ const getUserInfo=(e)=>{
 
 
 
-// leave for now
+// minor adjustement
 const editClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
   const editBtn = document.getElementById('edit')
@@ -118,18 +118,44 @@ const editClicked=(e)=>{
   })
 }
 
+// const editClicked=(e)=>{
+//   let uniqueID = e.target.getAttribute('data')
+//   const editBtn = document.getElementById('edit')
+//   const submitBtn = document.getElementById('submit-event')
+//   const modal = document.querySelector(".modal");
+//   const modal2 = document.querySelector('.modal2')
+//   if (e.target === editBtn) {
+//    modal2.remove();
+//    modal.classList.toggle("show-modal");
+//   }
+//   document.addEventListener('click', (e)=>{
+//     if (e.target === submitBtn){
+//       uniqueID = Number(uniqueID)
+//       ArrayOfEvents = this.getEventList.filter(event =>event.counter != uniqueID)
+//       document.querySelectorAll(`[data="${uniqueID}"]`).forEach(node => { node.remove()})
+//     }
+//   })
+// }
+
 
 // leave for now
 const deleteClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
   uniqueID = Number(uniqueID)
   if(confirm("Are You Sure")) {
-   ArrayOfEvents = ArrayOfEvents.filter(event =>{
-    return event.counter != uniqueID
-  })
- document.querySelectorAll(`[data="${uniqueID}"]`).forEach(node => { node.remove()})
+   ArrayOfEvents = this.getEventList.filter(event =>event.counter != uniqueID)
+   document.querySelectorAll(`[data="${uniqueID}"]`).forEach(node => { node.remove()})
   }
 }
+
+// const deleteClicked=(e)=>{
+//   let uniqueID = e.target.getAttribute('data')
+//   uniqueID = Number(uniqueID)
+//   if(confirm("Are You Sure")) {
+//    ArrayOfEvents = this.getEventList.filter(event =>event.counter != uniqueID)
+//    document.querySelectorAll(`[data="${uniqueID}"]`).forEach(node => { node.remove()})
+//   }
+// }
 
 
 // leave for now
@@ -144,39 +170,53 @@ const handlerForEventsClicked=()=>{
       })
       compareEventToDate(eventInArray)
     } 
-    })
+  })
 }
+
+// const handlerForEventsClicked=()=>{
+//   const container = document.getElementById("days-of-the-month-container")
+//   container.addEventListener('mouseover', (e) => {
+//     if(e.target.getAttribute('data')){
+//       clickedEventNumber = e.target.getAttribute('data')
+//       clickedEventNumber = Number(clickedEventNumber)
+//       let eventInArray = ArrayOfEvents.find(event =>event.counter === clickedEventNumber)
+//       compareEventToDate(eventInArray)
+//     } 
+//   })
+// }
+
+
   
 
 
 // leave for now
-const compareEventToDate=(eventInArray)=> {
-  let event = eventInArray[0]
-      const modal = document.createElement('div')
-      modal.classList.add('modal2')
-      const content = document.createElement('div')
-      content.innerHTML = ` <ul>
-      <li><strong>Title: </strong>${event.title}</li>
-      <li><strong>Time: </strong>${event.time}</li>
-      <li><strong>Description: </strong>${event.description}</li>
-    </ul><div id="edit-del"> <button id="edit">Edit</button>
-    <button id="delete">Del</button></div>`
-    modal.appendChild(content)
-    document.body.appendChild(modal);
-    const deletebtn = document.querySelector('#delete')
-    const editBtn = document.getElementById('edit')
-    editBtn.addEventListener('click', editClicked)
-    editBtn.setAttribute('data', event.counter)
-    deletebtn.addEventListener('click', deleteClicked)
-    deletebtn.setAttribute('data', event.counter)
-    modal.setAttribute('data', event.counter)
-    modal.addEventListener('click', (e) => {
-      if (e.target.classList.contains("modal2")) {
-        e.target.remove();
-      }
-    })
-  return
-}
+// const compareEventToDate=(eventInArray)=> {
+//   let event = eventInArray[0]
+//       const modal = document.createElement('div')
+//       modal.classList.add('modal2')
+//       const content = document.createElement('div')
+//       content.innerHTML = ` <ul>
+//       <li><strong>Title: </strong>${event.title}</li>
+//       <li><strong>Time: </strong>${event.time}</li>
+//       <li><strong>Description: </strong>${event.description}</li>
+//     </ul><div id="edit-del"> <button id="edit">Edit</button>
+//     <button id="delete">Del</button></div>`
+//     modal.appendChild(content)
+//     document.body.appendChild(modal);
+//     const deletebtn = document.querySelector('#delete')
+//     const editBtn = document.getElementById('edit')
+//     editBtn.addEventListener('click', editClicked)
+//     editBtn.setAttribute('data', event.counter)
+//     deletebtn.addEventListener('click', deleteClicked)
+//     deletebtn.setAttribute('data', event.counter)
+//     modal.setAttribute('data', event.counter)
+//     modal.addEventListener('click', (e) => {
+//       if (e.target.classList.contains("modal2")) {
+//         e.target.remove();
+//       }
+//     })
+//   return
+// }
 
 
 //leave as is with new code
