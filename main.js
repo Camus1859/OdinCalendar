@@ -1,9 +1,9 @@
-import {Create_Date, displayYear} from "./DateGenerator.js"
-import {displayMonth, handlerForEventsClicked, generatingAllSquaresInCalendar} from  "./UI2.js"
-import './Controller.js'
+import {generatingAllSquaresInCalendar, displayMonth, handlerForEventsClicked } from "./ui.js"
+import {displayYear, setFirstDayOfCalendar} from "./dateGenerator.js"
+import './controller.js'
 
 generatingAllSquaresInCalendar()
 displayYear()
 displayMonth()
-Create_Date.setFirstDayOfCalendar()
+setFirstDayOfCalendar()
 handlerForEventsClicked() 

@@ -1,5 +1,5 @@
-import {refreshShowToday, getUserInfo, removeOldEventsContent} from "./UI2.js"
-import {Create_Date} from "./DateGenerator.js"
+import {refreshShowToday, changesTheMonthWhenPrevOrNextClicked, dropDownMonth, removeOldEventsContent, getUserInfo} from "./ui.js"
+import {updateSetFirstDayOfYearOnClick} from "./dateGenerator.js"
 
 const prevNextBtns = document.querySelectorAll('.update-month')
 const todayBtn = document.getElementById('today')
@@ -10,12 +10,12 @@ const trigger = document.querySelector(".trigger");
 const closeButton = document.querySelector(".close-button");
 const submitBtn = document.getElementById('submit-event')
 
-
+submitBtn.addEventListener('click', getUserInfo)
 todayBtn.addEventListener('click', refreshShowToday)
-prevNextBtns.forEach(button =>button.addEventListener("click", Create_Date.updateMonth))
-prevNextBtns.forEach(button =>button.addEventListener("click", Create_Date.updateSetFirstDayOfYearOnClick))
-dropDownMonths.addEventListener('change', Create_Date.dropDownMonth)
-yearEntered.addEventListener('keyup', Create_Date.yearEntered)
+prevNextBtns.forEach(button =>button.addEventListener("click", changesTheMonthWhenPrevOrNextClicked))
+prevNextBtns.forEach(button =>button.addEventListener("click", updateSetFirstDayOfYearOnClick))
+dropDownMonths.addEventListener('change', dropDownMonth)
+yearEntered.addEventListener('keyup', yearEntered)
 trigger.addEventListener("click", toggleModal);
 trigger.addEventListener('click', removeOldEventsContent)
 closeButton.addEventListener("click", toggleModal);
@@ -35,4 +35,3 @@ function windowOnClick(event) {
 
 
 
-submitBtn.addEventListener('click', getUserInfo)
