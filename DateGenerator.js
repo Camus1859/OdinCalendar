@@ -13,43 +13,78 @@ let newDate = new Date();
 let num = 0
 let updatingMonth = newDate.getMonth()
 
+
+
 class Calendar {
   constructor(){
     this._year = new Date().getFullYear()
-    this._monthName=
-    [
-      "January", "February", "March", "April", "May","June",
-      "July", "August", "September", "October", "November","December"
-    ],
     this._monthNumber = new Date().getMonth()
+    this._monthsList = [
+                        "January", "February", "March", "April", "May","June",
+                        "July", "August", "September", "October", "November","December"
+                       ]
+    this._month = this._calendarMonth()
   }
-  getCalendarCurrentMonthName(){
-    return  this._monthName[new Date().getMonth()];
+
+  _calendarMonth(x=this._monthNumber){ 
+    this._monthNumber = x + 0
+    return this._monthsList[this._monthNumber];
   }
-  getCalendarCurrentYear(){
+
+   _setMonthToNextMonth(){ 
+    let num = this._monthNumber + 1
+    num = ((num) % this._monthsList.length)
+    num === 12 ? num = this._monthsList[num] : num= num
+    this._monthNumber = num
+    return this._monthsList[num];
+  }
+
+  _setMonthToPriorMonth(){
+    let num = this._monthNumber - 1
+    num = ((num) % this._monthsList.length)
+    num === -1 ? num = this._monthsList.length - 1 : num = num
+    this._monthNumber = num
+    console.log(this._monthsList[num])
+    return this._monthsList[num];
+  }
+
+   getCalendarMonth(){
+    return  this._calendarMonth()
+  }
+
+  getCalendarYear(){
     return this._year
   }
-  goBackOneMonthName(){
-    return this.monthName[new Date().getMonth() - 1]
-  }
-  goForwardOneMonthName(){
-    return this.monthName[new Date().getMonth() + 1]
-  }
-  setCalendarCurrentYear(incomingYear){
-    this._year = incomingYear
-  }
-  setCalendarCurrentMonth(month){
-   const index = this.getIndexOfMonth(month) - 1
-    this._monthName = this._monthName[index]
-  }
-  getCalendarMonthNumber(){
+
+   getCalendarMonthNumber(){
     return this._monthNumber
   }
+
+  getSetMonthToPriorMonth(){
+   return this._month = this._setMonthToPriorMonth()
+  }
+
+  getSetMonthToNextMonth(){
+    return this._month = this._setMonthToNextMonth()
+  }
+
+  setCalendarYear(newYear){
+    this._year = newYear
+  }
+
+  setCalendarMonth(month){
+   const index = this.getIndexOfMonth(month) - 1
+   this._month = this._calendarMonth(index)
+  }
+ 
   getIndexOfMonth(month){
-    const index = this._monthName.indexOf(month)
+    const index = this._monthsList.indexOf(month)
     return index + 1
   }
 }
+
+
+
 
 const calendarObject = new Calendar()
 
@@ -121,7 +156,7 @@ const counter=()=>{
 }
 
 
-// must read object
+//2A
 const displayYear=(sub)=>{
   if (sub === -1){
     let year = document.getElementById('year').textContent
@@ -130,7 +165,7 @@ const displayYear=(sub)=>{
     document.getElementById('year').textContent = updatedYear
     updatedYear = Number(updatedYear)
     Create_Date.setFirstDayOfCalendar(updatedYear)
-  }else if(sub === 1){
+  }else if(sub === 1){displayYear
    let year = document.getElementById('year').textContent
    year = Number(year)
    let updatedYear = year + 1
@@ -144,6 +179,7 @@ const displayYear=(sub)=>{
     Create_Date.setFirstDayOfCalendar(year)
   }
 }
+
 // const displayYear=(sub)=>{
 //   if (sub === -1){
 //     displayCurrentYear(calendarObject.getCalendarCurrentYear() - 1)
@@ -161,7 +197,7 @@ const displayYear=(sub)=>{
 
 
 
-//leave as is
+//5A
 const displayStartDayNmonthLength=(startDay)=>{
   Create_Date.clearCalendar()
   const monthLength = Create_Date.generateNumberOfDaysInMonth()
@@ -209,11 +245,11 @@ const displayStartDayNmonthLength=(startDay)=>{
 
 
 
-//will use updated version
+//1
   static updateMonth(e){
     if (e.target.id === 'previous-btn'){
      // calendarObject.goBackOneMonth()
-       newDate.getMonth() - 1
+      console.log(updatingMonth)
       updatingMonth = updatingMonth -  1
       updatingMonth = ((updatingMonth) % monthsArray.length)
       updatingMonth === -1 ? updatingMonth = monthsArray.length - 1 : updatingMonth = updatingMonth
@@ -230,7 +266,7 @@ const displayStartDayNmonthLength=(startDay)=>{
     Create_Date.updateYear(e)
   }
 
-  //replaces updateMonth
+//   replaces updateMonth
 //  changesTheMonthWhenPrevOrNextClicked=(e)=>{
 //   if (e.target.id === 'previous-btn'){
 //     monthNumber = calendarObject.getCalendarMonthNumber() - 1
@@ -240,7 +276,7 @@ const displayStartDayNmonthLength=(startDay)=>{
 //     displayMonth(newMonth)
 //   }
 //   else if(e.target.id === 'next-btn'){
-  //   monthNumber = calendarObject.getCalendarMonthNumber() + 1
+//     monthNumber = calendarObject.getCalendarMonthNumber() + 1
 
 //     monthNumber = ((monthNumber) % calendarObject.monthNames.length)
 //     monthNumber === 12 ? monthNumber = calendarObject.monthNames[monthNames]: monthNumber = monthNumber
@@ -299,7 +335,7 @@ const displayStartDayNmonthLength=(startDay)=>{
   //   return year
   // }
 
-//read object will delete
+//side effect of a main function
  static generateNumberOfDaysInMonth(){
    let month = document.getElementById('month').textContent
    let year = document.getElementById('year').textContent
@@ -435,7 +471,7 @@ const displayStartDayNmonthLength=(startDay)=>{
     //   }
 
 
-// will modify
+// 3A
   static setFirstDayOfCalendar(year){
     let incomingYear = 0
     if(year === undefined){
@@ -466,7 +502,7 @@ const displayStartDayNmonthLength=(startDay)=>{
 
 
 
-//leave as is
+//side effect of a main function
   static clearCalendar(){
     const daysOfMonthNodes = document.querySelectorAll('.calendar-days')
     daysOfMonthNodes.forEach(day => {
@@ -484,7 +520,7 @@ const displayStartDayNmonthLength=(startDay)=>{
   // }
 
 
-// modify or leave as is
+// 4A
   static getSetInterval(count){
     const daysOfWeek = [1, 2, 3, 4, 5, 6, 7];
     const startIndex = daysOfWeek.findIndex(elem => elem === Create_Date.getNumForSetInterval())
@@ -534,7 +570,7 @@ const displayStartDayNmonthLength=(startDay)=>{
     this.description = description
     this.counter = counter
   }
-
+//side affect
   static getMonthForEvent(month){
     switch (month) {
       case 'January':

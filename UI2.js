@@ -34,7 +34,7 @@ export{
 //   }
 // }
 
-
+//1A
 const generatingAllSquaresInCalendar=()=>{
   let daysInMonthContainer = document.getElementById('days-of-the-month-container')
   for (let i = 0; i < 42; i++) {
@@ -44,7 +44,7 @@ const generatingAllSquaresInCalendar=()=>{
 }
 
 
-// need read an object
+// 1B
 const displayMonth=(month)=>{
   if (month === undefined){
    // calendarObject.calendarMonth()
@@ -157,7 +157,7 @@ const deleteClicked=(e)=>{
 // }
 
 
-// leave for now
+// 1C
 const handlerForEventsClicked=()=>{
   const container = document.getElementById("days-of-the-month-container")
   container.addEventListener('mouseover', (e) => {
@@ -188,7 +188,7 @@ const handlerForEventsClicked=()=>{
   
 
 
-// leave for now
+// 2C
 const compareEventToDate=(eventInArray)=> {
   let event = eventInArray[0]
       const modal = document.createElement('div')
