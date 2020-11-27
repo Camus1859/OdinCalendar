@@ -1,6 +1,3 @@
-export{Calendar, calendarObject}
-
-
 class Calendar {
   constructor(){
     this._year = new Date().getFullYear()
@@ -87,3 +84,5 @@ class Calendar {
 
 
 const calendarObject = new Calendar()
+
+export{Calendar, calendarObject}

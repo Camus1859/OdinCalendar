@@ -3,7 +3,6 @@ import {calendarObject} from "./calendarClass.js"
 import {generateNumberOfDaysInMonth, setFirstDayOfCalendar} from "./dateGenerator.js"
 import {ListOfAllUserEvents} from "./listOfAllUserEventsClass.js"
 import{displayYear} from "./dateGenerator.js"
-export{generatingAllSquaresInCalendar, displayCurrentYear, displayMonth, displayStartDayNmonthLength,  handlerForEventsClicked, refreshShowToday, displayEventOnGivenDate , dropDownMonth, removeOldEventsContent, getUserInfo, determineTheDayOnCurrentMonthForEvent, updateMonth, yearEntered}
 
 let storingAllUserEvents = new ListOfAllUserEvents()
 
@@ -39,7 +38,7 @@ const getEvent=(title, date, time, description)=>{
   aUsersEvent.setCalendarMonth(calendarObject.getCalendarMonth())
   aUsersEvent.setCalendarYear(calendarObject.getCalendarYear())
   storingAllUserEvents.getEventList().push(aUsersEvent)
-  aUsersEvent.getYearMonthDay(aUsersEvent)
+  getCurrentYearAndMonthFromCalendar()
  }
 
  
@@ -59,13 +58,6 @@ const displayStartDayNmonthLength=(startDay)=>{
     arrayOfDays[i + startDay].textContent = i + 1
     arrayOfDays[i + startDay].setAttribute('data-number', i + 1 )
   }
-}
-
-
-const determineTheDayOnCurrentMonthForEvent=(aUsersEvent, eventDay)=>{
-  const daysInTheMonth = Array.from(document.querySelectorAll('.calendar-days'))
-  let dayOfEvent = daysInTheMonth.find(listOfDays => +listOfDays.getAttribute('data-number') == eventDay)
-  createElements(aUsersEvent, dayOfEvent)
 }
 
 
@@ -91,8 +83,6 @@ const updateMonth=(e)=>{
       displayYear(-1)
     }
   } 
-
-
    else if(e.target.id === 'next-btn' ){
     document.getElementById('month').textContent = calendarObject.setCalendarMonth(calendarObject.getSetMonthToNextMonth())
     console.log(calendarObject)
@@ -108,7 +98,7 @@ const refreshShowToday=()=>{
   document.getElementById('month').textContent = calendarObject.setCalendarMonthNumberReturnsCurrentMonth(new Date().getMonth())
   document.getElementById('year').textContent = calendarObject.setCalendarYear(new Date().getFullYear())
   setFirstDayOfCalendar(new Date().getFullYear())
-  displayEventOnGivenDate()
+  getCurrentYearAndMonthFromCalendar()
 }
 
 
@@ -154,7 +144,6 @@ const handlerForEventsClicked=()=>{
      const clickedEventNumber = +e.target.getAttribute('data')
      console.log(clickedEventNumber)
       let eventInArray = storingAllUserEvents.getEventList().find(event =>event.counter === clickedEventNumber)
-
       console.log(storingAllUserEvents.getEventList())
       compareEventToDate(eventInArray)
     } 
@@ -191,27 +180,36 @@ const compareEventToDate=(eventInArray)=> {
 }
 
 
-const getCurrentYearMonthAndDaysInMonth=()=>{
-  let currentYear = calendarObject.getCalendarYear()
-  let currentMonth = calendarObject.getCalendarMonthNumber()
-  const daysInTheMonth = Array.from(document.querySelectorAll('.calendar-days'))
-  return [currentYear, currentMonth, daysInTheMonth ]
+const getCurrentYearAndMonthFromCalendar=()=>{
+  const thisYear = calendarObject.getCalendarYear() 
+  const thisMonthNum = calendarObject.getCalendarMonthNumber() + 1
+  comparingEventDatesToCurrentCalendar(thisYear, thisMonthNum)
+}
+ 
+
+
+const comparingEventDatesToCurrentCalendar=(thisYear, thisMonthNum)=>{
+  separatingYearMonthDayOfUserEvent(thisYear, thisMonthNum)
 }
 
-const displayEventOnGivenDate=()=>{
-  const [currentYearOfCalendar, currentMonthOfCalendar, daysInTheMonth ] = getCurrentYearMonthAndDaysInMonth()
+const getDayOfEvent=(thisEvent, eventDay)=>{
+  const daysInTheMonth = Array.from(document.querySelectorAll('.calendar-days'))
+  let dayOfEvent = daysInTheMonth.find(listOfDays => +listOfDays.getAttribute('data-number') == eventDay)
+  createElements(thisEvent, dayOfEvent)
+}
+
+
+const separatingYearMonthDayOfUserEvent=(thisYear, thisMonthNum)=>{
   storingAllUserEvents.getEventList().forEach(thisEvent =>{
     const date = thisEvent.date.split('-')
-   const  anEventYear = Number(date[0])
-   const  anEventMonth = Number(date[1])
-   const  anEventDay = Number(date[2])
-    if(currentYearOfCalendar === anEventYear && currentMonthOfCalendar + 1 === anEventMonth){
-      let dayOfEvent = daysInTheMonth.find(listOfDays => +listOfDays.getAttribute('data-number') === anEventDay)
-       createElements(thisEvent, dayOfEvent) 
+   const  eventYear = Number(date[0])
+   const  eventMonth = Number(date[1])
+   const  eventDay = Number(date[2])
+   if (thisYear === eventYear && thisMonthNum === eventMonth){
+    getDayOfEvent(thisEvent, eventDay)
     }
-  })
+ })
 }
-
 
 
 const createElements=(aUsersEvent, element)=>{
@@ -229,3 +227,5 @@ const createElements=(aUsersEvent, element)=>{
 }
 
 
+export{generatingAllSquaresInCalendar, displayCurrentYear, displayMonth, displayStartDayNmonthLength,  handlerForEventsClicked, refreshShowToday , dropDownMonth, removeOldEventsContent, getUserInfo, updateMonth, yearEntered,   getCurrentYearAndMonthFromCalendar
+}

@@ -1,6 +1,3 @@
-export{ListOfAllUserEvents}
-
-
 class ListOfAllUserEvents {
   constructor(){
     this._EventsList = []
@@ -17,3 +14,5 @@ class ListOfAllUserEvents {
   return  this._EventsList = array
   }
 }
+
+export{ListOfAllUserEvents}
