@@ -54,13 +54,6 @@ const updateSetFirstDayOfYearOnClick=()=>{
 }
 
 
-
-const generateActualYear=()=>{
-  let year = new Date().getFullYear()
-  return year
-}
-
-
 const getNumForSetInterval=()=>{
   let num;
 switch (calendarObject.getCalendarMonth()) {

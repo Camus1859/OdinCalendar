@@ -8,7 +8,6 @@ export{generatingAllSquaresInCalendar, displayCurrentYear, displayMonth, display
 let storingAllUserEvents = new ListOfAllUserEvents()
 
 
-
 const generatingAllSquaresInCalendar=()=>{
   let daysInMonthContainer = document.getElementById('days-of-the-month-container')
   for (let i = 0; i < 42; i++) {
@@ -105,26 +104,12 @@ const updateMonth=(e)=>{
 
 
 
-
-
-
-
-
-
-
-
 const refreshShowToday=()=>{
   document.getElementById('month').textContent = calendarObject.setCalendarMonthNumberReturnsCurrentMonth(new Date().getMonth())
   document.getElementById('year').textContent = calendarObject.setCalendarYear(new Date().getFullYear())
   setFirstDayOfCalendar(new Date().getFullYear())
   displayEventOnGivenDate()
 }
-
-
-
-
-
- 
 
 
 
@@ -147,7 +132,6 @@ const editClicked=(e)=>{
     }
   })
 }
-
 
 
 
@@ -179,8 +163,6 @@ const handlerForEventsClicked=()=>{
 
 
   
-
-
 const compareEventToDate=(eventInArray)=> {
       const modal = document.createElement('div')
       modal.classList.add('modal2')
@@ -209,9 +191,6 @@ const compareEventToDate=(eventInArray)=> {
 }
 
 
-
-
-
 const getCurrentYearMonthAndDaysInMonth=()=>{
   let currentYear = calendarObject.getCalendarYear()
   let currentMonth = calendarObject.getCalendarMonthNumber()
@@ -232,7 +211,6 @@ const displayEventOnGivenDate=()=>{
     }
   })
 }
-
 
 
 
