@@ -24,12 +24,12 @@ class UserEvent extends Calendar {
 
   getYearMonthDay(aUsersEvent){
     const  [year, month, day] = this.separatingYearMonthDayOfUserEvent(aUsersEvent)
-    this.compareUserYearAndMonthToCalendarYearAndMonth(year, month, day)
+    this.compareUserYearAndMonthToCalendarYearAndMonth(aUsersEvent, year, month, day)
+    console.log(aUsersEvent)
   }
 
-
  compareUserYearAndMonthToCalendarYearAndMonth(eventYear, eventMonth, eventDay){
-   if (this.getCalendarMonthNumber === eventMonth  && this.getCalendarYear === eventYear){
+   if (this.getCalendarMonthNumber() + 1 === eventMonth  && this.getCalendarYear() === eventYear){
      const aUsersEvent = this
      determineTheDayOnCurrentMonthForEvent(aUsersEvent, eventDay)
    }
@@ -43,12 +43,6 @@ separatingYearMonthDayOfUserEvent(){
   return [year, month, day]
 }
 
-// getYearMonthDay=()=>{
-//   const  [year, month, day] = separatingYearMonthDayOfUserEvent(this)
-//   this.addEventToCalendar(this, year, month, day)
-// }
-
-
- }
+}
 
 const count = UserEvent.counter()

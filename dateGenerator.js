@@ -4,15 +4,13 @@ export{displayYear, setFirstDayOfCalendar, generateNumberOfDaysInMonth, updateSe
 
 
 
-
-
 const displayYear=(sub)=>{
  if (sub === -1){
-  displayCurrentYear(calendarObject.getCalendarYear() - 1)
+  displayCurrentYear(calendarObject.setCalendarYear(calendarObject.getCalendarYear() - 1))
   setFirstDayOfCalendar(calendarObject.getCalendarYear() - 1)
  }
  else if(sub === 1){
-  displayCurrentYear(calendarObject.getCalendarYear() + 1)
+  displayCurrentYear(calendarObject.setCalendarYear(calendarObject.getCalendarYear() + 1))
   setFirstDayOfCalendar(calendarObject.getCalendarYear() + 1)
  }
  else if(sub === undefined){
@@ -20,6 +18,7 @@ const displayYear=(sub)=>{
   setFirstDayOfCalendar(calendarObject.getCalendarYear())
  }
 }
+
 
 const setFirstDayOfCalendar=(year)=>{
   let incomingYear = 0
@@ -31,6 +30,7 @@ const setFirstDayOfCalendar=(year)=>{
   getSetInterval(iterationsDaysOfWeekArr)
 }
 
+
 const getSetInterval=(count)=>{
   const daysOfWeek = [1, 2, 3, 4, 5, 6, 7];
   const startIndex = daysOfWeek.findIndex(elem => elem === getNumForSetInterval())
@@ -39,33 +39,26 @@ const getSetInterval=(count)=>{
   return index
 }
 
+
 const generateNumberOfDaysInMonth=()=>{
-  let daysInMonth = new Date(calendarObject.getCalendarYear(), calendarObject.getCalendarMonthNumber(), 0).getDate()
+  const year = calendarObject.getCalendarYear()
+  const month = calendarObject.getCalendarMonthNumber()
+  let daysInMonth = new Date(year, month + 1, 0).getDate()
   return daysInMonth
 }
 
 
-
-  const updateSetFirstDayOfYearOnClick=()=>{
-    setFirstDayOfCalendar(calendarObject.getCalendarYear())
-    displayEventOnGivenDate()
-  }
-
+const updateSetFirstDayOfYearOnClick=()=>{
+  setFirstDayOfCalendar(calendarObject.getCalendarYear())
+  displayEventOnGivenDate()
+}
 
 
 
-  const generateActualYear=()=>{
-    let year = new Date().getFullYear()
-    return year
-  }
-
-
-    
-
-
- 
-
-
+const generateActualYear=()=>{
+  let year = new Date().getFullYear()
+  return year
+}
 
 
 const getNumForSetInterval=()=>{
@@ -100,32 +93,5 @@ switch (calendarObject.getCalendarMonth()) {
   }
   return num
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const getMonthForEvent=(month)=>{
-  return calendarObject.getIndexOfMonth(month)
-}
-
-
-
-
-
-
-
-
-
-
 
 

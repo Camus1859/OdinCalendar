@@ -1,11 +1,11 @@
 import {UserEvent, count} from "./userEventClass.js"
 import {calendarObject} from "./calendarClass.js"
-import {generateNumberOfDaysInMonth} from "./dateGenerator.js"
+import {generateNumberOfDaysInMonth, setFirstDayOfCalendar} from "./dateGenerator.js"
 import {ListOfAllUserEvents} from "./listOfAllUserEventsClass.js"
 import{displayYear} from "./dateGenerator.js"
-export{generatingAllSquaresInCalendar, displayCurrentYear, displayMonth, displayStartDayNmonthLength,  handlerForEventsClicked, refreshShowToday, displayEventOnGivenDate , dropDownMonth, yearEntered, removeOldEventsContent, getUserInfo, determineTheDayOnCurrentMonthForEvent, changesTheMonthWhenPrevOrNextClicked}
-let storingAllUserEvents = new ListOfAllUserEvents()
+export{generatingAllSquaresInCalendar, displayCurrentYear, displayMonth, displayStartDayNmonthLength,  handlerForEventsClicked, refreshShowToday, displayEventOnGivenDate , dropDownMonth, removeOldEventsContent, getUserInfo, determineTheDayOnCurrentMonthForEvent, updateMonth, yearEntered}
 
+let storingAllUserEvents = new ListOfAllUserEvents()
 
 
 
@@ -28,19 +28,22 @@ const displayMonth=(month)=>{
 
 const getUserInfo=(e)=>{
   e.preventDefault()
-   const eventTitle = document.getElementById('event-title').value
-   const eventDate = document.getElementById('event-date').value
-   const eventTime = document.getElementById('event-time').value
-   const eventDescription = document.getElementById('event-description').value
+  const eventTitle = document.getElementById('event-title').value
+  const eventDate = document.getElementById('event-date').value
+  const eventTime = document.getElementById('event-time').value
+  const eventDescription = document.getElementById('event-description').value
   getEvent(eventTitle, eventDate, eventTime, eventDescription)
 }
 
 const getEvent=(title, date, time, description)=>{
   const aUsersEvent = new UserEvent(title, date, time, description, count())
-   storingAllUserEvents.getEventList().push(aUsersEvent)
-   aUsersEvent.getYearMonthDay(aUsersEvent)
+  aUsersEvent.setCalendarMonth(calendarObject.getCalendarMonth())
+  aUsersEvent.setCalendarYear(calendarObject.getCalendarYear())
+  storingAllUserEvents.getEventList().push(aUsersEvent)
+  aUsersEvent.getYearMonthDay(aUsersEvent)
  }
 
+ 
 const clearCalendar=()=>{
   const daysOfMonthNodes = document.querySelectorAll('.calendar-days')
   daysOfMonthNodes.forEach(day => {
@@ -48,6 +51,7 @@ const clearCalendar=()=>{
     day.removeAttribute('data-number')
   })
 }
+
 
 const displayStartDayNmonthLength=(startDay)=>{
   clearCalendar()
@@ -58,14 +62,6 @@ const displayStartDayNmonthLength=(startDay)=>{
   }
 }
 
-// const addEventToCalendar=(aUsersEvent, eventYear, eventMonth, eventDay)=>{
-//   const [currentYear, currentMonth, daysInTheMonth ] = getCurrentYearMonthAndDaysInMonth()
-//    if(eventYear === currentYear && eventMonth === currentMonth){
-//     let dayOfEvent = daysInTheMonth.find(listOfDays => +listOfDays.getAttribute('data-number') === eventDay)
-//      createElements(aUsersEvent, dayOfEvent)
-//   }
-// }
-
 
 const determineTheDayOnCurrentMonthForEvent=(aUsersEvent, eventDay)=>{
   const daysInTheMonth = Array.from(document.querySelectorAll('.calendar-days'))
@@ -74,38 +70,43 @@ const determineTheDayOnCurrentMonthForEvent=(aUsersEvent, eventDay)=>{
 }
 
 
-
-
 const dropDownMonth=(e)=>{
-  calendarObject.setCalendarMonth(e.target.value)
+  console.log(e.target.value)
+  document.getElementById('month').textContent = calendarObject.setCalendarMonth(e.target.value)
 }
+
 
 const yearEntered=(e)=>{
   let year = +document.getElementById('year-input').value
   if (e.keyCode === 13){
-    calendarObject.setCalendarYear(year) 
+    document.getElementById('year').textContent = calendarObject.setCalendarYear(year) 
     setFirstDayOfCalendar(year)
   }
 }
 
-const updateYear=(e)=>{
-  if (calendarObject.getCalendarMonth() === 'January' && e.target.id === 'next-btn'){
-    displayYear(1)
-  }
-  else if (calendarObject.getCalendarMonth() === 'December' && e.target.id === 'previous-btn'){
-    displayYear(-1)
+
+const updateMonth=(e)=>{
+  if (e.target.id === 'previous-btn' ){
+    document.getElementById('month').textContent = calendarObject.setCalendarMonth(calendarObject.getSetMonthToPriorMonth())
+    if(calendarObject.getCalendarMonth() === 'December'){
+      displayYear(-1)
+    }
+  } 
+
+
+   else if(e.target.id === 'next-btn' ){
+    document.getElementById('month').textContent = calendarObject.setCalendarMonth(calendarObject.getSetMonthToNextMonth())
+    console.log(calendarObject)
+    if(calendarObject.getCalendarMonth() === 'January'){
+      displayYear(1)
+    }
   }
 }
 
-const changesTheMonthWhenPrevOrNextClicked=(e)=>{
-  if (e.target.id === 'previous-btn'){
-   document.getElementById('month').textContent = calendarObject.getSetMonthToPriorMonth()
-  }
-  else if(e.target.id === 'next-btn'){
-    document.getElementById('month').textContent = calendarObject.getSetMonthToNextMonth()
-  }
-  updateYear(e)
-}
+
+
+
+
 
 
 
@@ -113,9 +114,10 @@ const changesTheMonthWhenPrevOrNextClicked=(e)=>{
 
 
 const refreshShowToday=()=>{
-  document.getElementById('month').textContent = calendarObject.setCalendarCurrentMonth(calendarObject.getCalendarMonth())
-  document.getElementById('year').textContent = calendarObject.setCalendarCurrentYear(calendarObject.getCalendarYear())
-  setFirstDayOfCalendar(calendarObject.getCalendarYear())
+  document.getElementById('month').textContent = calendarObject.setCalendarMonthNumberReturnsCurrentMonth(new Date().getMonth())
+  document.getElementById('year').textContent = calendarObject.setCalendarYear(new Date().getFullYear())
+  setFirstDayOfCalendar(new Date().getFullYear())
+  displayEventOnGivenDate()
 }
 
 
@@ -153,7 +155,7 @@ const deleteClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
   uniqueID = Number(uniqueID)
   if(confirm("Are You Sure")) {
-   const arrayOfEvents = storingAllUserEvents.getEventList().filter(event =>event.counter === uniqueID)
+   const arrayOfEvents = storingAllUserEvents.getEventList().filter(event =>event.counter != uniqueID)
    storingAllUserEvents.resetEventList(arrayOfEvents)
    document.querySelectorAll(`[data="${uniqueID}"]`).forEach(node => { node.remove()})
   }
@@ -165,8 +167,11 @@ const handlerForEventsClicked=()=>{
   const container = document.getElementById("days-of-the-month-container")
   container.addEventListener('mouseover', (e) => {
     if(e.target.getAttribute('data')){
-      clickedEventNumber = +e.target.getAttribute('data')
+     const clickedEventNumber = +e.target.getAttribute('data')
+     console.log(clickedEventNumber)
       let eventInArray = storingAllUserEvents.getEventList().find(event =>event.counter === clickedEventNumber)
+
+      console.log(storingAllUserEvents.getEventList())
       compareEventToDate(eventInArray)
     } 
   })
@@ -218,10 +223,10 @@ const displayEventOnGivenDate=()=>{
   const [currentYearOfCalendar, currentMonthOfCalendar, daysInTheMonth ] = getCurrentYearMonthAndDaysInMonth()
   storingAllUserEvents.getEventList().forEach(thisEvent =>{
     const date = thisEvent.date.split('-')
-     anEventYear = Number(date[0])
-     anEventMonth = Number(date[1])
-     anEventDay = Number(date[2])
-    if(currentYearOfCalendar === anEventYear && currentMonthOfCalendar === anEventMonth){
+   const  anEventYear = Number(date[0])
+   const  anEventMonth = Number(date[1])
+   const  anEventDay = Number(date[2])
+    if(currentYearOfCalendar === anEventYear && currentMonthOfCalendar + 1 === anEventMonth){
       let dayOfEvent = daysInTheMonth.find(listOfDays => +listOfDays.getAttribute('data-number') === anEventDay)
        createElements(thisEvent, dayOfEvent) 
     }
@@ -232,7 +237,7 @@ const displayEventOnGivenDate=()=>{
 
 
 const createElements=(aUsersEvent, element)=>{
-  for(const key in thisEvent){
+  for(const key in aUsersEvent){
     if(`${key}` === 'title') {
    const newEventForCalendar =`<h3 data="${aUsersEvent.counter}" class="event">${aUsersEvent[key]}</h3>`
     element.insertAdjacentHTML('beforeend', newEventForCalendar)

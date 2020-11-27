@@ -4,7 +4,7 @@ export{Calendar, calendarObject}
 class Calendar {
   constructor(){
     this._year = new Date().getFullYear()
-    this._monthNumber = new Date().getMonth()
+    this._monthNumber = new Date().getMonth() 
     this._monthsList = [
                         "January", "February", "March", "April", "May","June",
                         "July", "August", "September", "October", "November","December"
@@ -20,7 +20,11 @@ class Calendar {
    _setMonthToNextMonth(){ 
     let num = this._monthNumber + 1
     num = ((num) % this._monthsList.length)
-    num === 12 ? num = this._monthsList[num] : num= num
+    if(num === 12){
+      num = this._monthsList[num]
+    }else{
+      num= num
+    }
     this._monthNumber = num
     return this._monthsList[num];
   }
@@ -28,9 +32,12 @@ class Calendar {
   _setMonthToPriorMonth(){
     let num = this._monthNumber - 1
     num = ((num) % this._monthsList.length)
-    num === -1 ? num = this._monthsList.length - 1 : num = num
+    if(num === -1){
+      num = this._monthsList.length - 1
+    }else{
+      num = num
+    }
     this._monthNumber = num
-    console.log(this._monthsList[num])
     return this._monthsList[num];
   }
 
@@ -53,17 +60,23 @@ class Calendar {
 
   getSetMonthToNextMonth(){
     this._month = this._setMonthToNextMonth()
+    this._month = this._month 
     return this._month
   }
 
   setCalendarYear(newYear){
-    this._year = newYear
+   return this._year = newYear
   }
 
   setCalendarMonth(month){
    const index = this.getIndexOfMonth(month) - 1
    this._month = this._calendarMonth(index)
    return this._month
+  }
+  setCalendarMonthNumberReturnsCurrentMonth(num){
+    this._monthNumber = num
+    this._month = this._monthsList[num]
+    return this._month
   }
  
   getIndexOfMonth(month){
