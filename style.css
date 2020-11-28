@@ -69,7 +69,18 @@ body{
 .calendar-days{
   border: 1px solid black;
   width: 100%;
-  height: 100%
+  height: 100%;
+  height: 66px;
+  max-height: 66px;
+  display: block;
+}
+
+.inside-of-square{
+  display: flex;
+  flex-direction: column ;
+  margin-top: -5px;
+  
+  
 }
 
 
@@ -121,7 +132,12 @@ input::-webkit-inner-spin-button {
 }
 
 .event{
+  display: flex;
+  justify-content: center;
   font-size: .8rem;
+  margin: 0%;
+  margin-right: 16px;
+
 }
 
 

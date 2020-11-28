@@ -1,5 +1,4 @@
 import {refreshShowToday, dropDownMonth, removeOldEventsContent, getUserInfo, updateMonth, yearEntered} from "./ui.js"
-import {updateSetFirstDayOfYearOnClick} from "./dateGenerator.js"
 
 
 const prevNextBtns = document.querySelectorAll('.update-month')
@@ -13,7 +12,6 @@ const submitBtn = document.getElementById('submit-event')
 submitBtn.addEventListener('click', getUserInfo)
 todayBtn.addEventListener('click', refreshShowToday)
 prevNextBtns.forEach(button =>button.addEventListener("click", updateMonth))
-prevNextBtns.forEach(button =>button.addEventListener("click", updateSetFirstDayOfYearOnClick))
 dropDownMonths.addEventListener('change', dropDownMonth)
 yearEnteredValue.addEventListener('keyup', yearEntered)
 trigger.addEventListener("click", toggleModal);

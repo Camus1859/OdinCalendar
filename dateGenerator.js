@@ -1,5 +1,7 @@
 import {calendarObject} from "./calendarClass.js"
-import {displayCurrentYear, getCurrentYearAndMonthFromCalendar, displayStartDayNmonthLength} from "./ui.js"
+import {displayCurrentYear, displayStartDayNmonthLength} from "./ui.js"
+
+
 
 const displayYear=(sub)=>{
  if (sub === -1){
@@ -47,7 +49,7 @@ const generateNumberOfDaysInMonth=()=>{
 
 const updateSetFirstDayOfYearOnClick=()=>{
   setFirstDayOfCalendar(calendarObject.getCalendarYear())
-  getCurrentYearAndMonthFromCalendar()
+  //displayEventOnGivenDate()
 }
 
 
@@ -84,5 +86,5 @@ switch (calendarObject.getCalendarMonth()) {
   return num
 }
 
-export{displayYear, setFirstDayOfCalendar, generateNumberOfDaysInMonth, updateSetFirstDayOfYearOnClick}
 
+export{displayYear, setFirstDayOfCalendar, generateNumberOfDaysInMonth, updateSetFirstDayOfYearOnClick}
