@@ -1,4 +1,5 @@
-import {generatingAllSquaresInCalendar, displayMonth, handlerForEventsClicked } from "./ui.js"
+import {generatingAllSquaresInCalendar, displayMonth, handlerForEventsClicked, 
+} from "./ui.js"
 import {displayYear, setFirstDayOfCalendar} from "./dateGenerator.js"
 import './controller.js'
 

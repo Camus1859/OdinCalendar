@@ -1,4 +1,5 @@
 body{
+  margin-top: 10rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,6 +141,10 @@ input::-webkit-inner-spin-button {
 
 }
 
+.hidden{
+  visibility: hidden;
+}
+
 
 
 .overlay {
@@ -203,6 +208,19 @@ input::-webkit-inner-spin-button {
   align-items:center;
 }
 
+.extra-events {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+  background-color: white;
+  padding: 6rem;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
 .modal2 > div {
   background-color:#fff;
   border-radius:4px;
@@ -216,4 +234,10 @@ input::-webkit-inner-spin-button {
 
 #edit-del{
   display: flex;
+}
+
+#dots{
+  display: flex;
+  flex-direction: row;
+  margin-top: -10px;
 }

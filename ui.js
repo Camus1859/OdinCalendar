@@ -3,7 +3,6 @@ import {calendarObject} from "./calendarClass.js"
 import {generateNumberOfDaysInMonth, setFirstDayOfCalendar} from "./dateGenerator.js"
 import {ListOfAllUserEvents} from "./listOfAllUserEventsClass.js"
 import{displayYear} from "./dateGenerator.js"
-
 let storingAllUserEvents = new ListOfAllUserEvents()
 
 
@@ -32,6 +31,8 @@ const getUserInfo=(e)=>{
   const eventTime = document.getElementById('event-time').value
   const eventDescription = document.getElementById('event-description').value
   getEvent(eventTitle, eventDate, eventTime, eventDescription)
+  countChildNodes()
+
 }
 
 const getEvent=(title, date, time, description)=>{
@@ -78,6 +79,8 @@ const yearEntered=(e)=>{
 
 
 const updateMonth=(e)=>{
+  colorInEmptySquares()
+
   console.log('yo')
   if (e.target.id === 'previous-btn' ){
     document.getElementById('month').textContent = calendarObject.setCalendarMonth(calendarObject.getSetMonthToPriorMonth())
@@ -159,7 +162,7 @@ const compareEventToDate=(eventInArray)=> {
       const content = document.createElement('div')
       content.innerHTML = ` <ul>
       <li><strong>Title: </strong>${eventInArray.title}</li>
-      <li><strong>Time: </strong>${eventInArray.time}</li>
+      <li><strong>Time: </strong>${timer(eventInArray.time)}</li>
       <li><strong>Description: </strong>${eventInArray.description}</li>
     </ul><div id="edit-del"> <button id="edit">Edit</button>
     <button id="delete">Del</button></div>`
@@ -233,9 +236,19 @@ const checksMonthYearToCalendar=()=>{
   })
 }
 
+const timer=(time)=>{
+  let timeString = time + "";
+  const H = +timeString.substr(0, 2);
+  const h = (H % 12) || 12;
+  const ampm = H < 12 ? "AM" : "PM";
+  timeString = h + timeString.substr(2, 3) + ampm;
+  return timeString
+}
+
+
 
 const createElements=(aUsersEvent, element)=>{
-   const newEventForCalendar =`<h3 data="${aUsersEvent.counter}"class="event"><div class="time-title">${aUsersEvent.time} ${aUsersEvent.title}</div></h3>`
+   const newEventForCalendar =`<h3 data="${aUsersEvent.counter}"class="event"><div data="${aUsersEvent.counter}" class="time-title">${timer(aUsersEvent.time)} ${aUsersEvent.title}</div></h3>`
    element.firstChild.nextSibling.insertAdjacentHTML('beforeend', newEventForCalendar)
 }
 
@@ -245,5 +258,34 @@ const createElements=(aUsersEvent, element)=>{
 }
 
 
-export{generatingAllSquaresInCalendar, displayCurrentYear, displayMonth, displayStartDayNmonthLength,  handlerForEventsClicked, refreshShowToday , dropDownMonth, removeOldEventsContent, getUserInfo, updateMonth, yearEntered,   getCurrentYearAndMonthFromCalendar
+const colorInEmptySquares=()=>{
+ const days = Array.from(document.querySelectorAll('.calendar-days'))
+ days.forEach(day=>{
+   if(!day.hasAttribute('data-number')){
+   }
+ })
+}
+
+const countChildNodes=()=>{
+  const days = Array.from(document.querySelectorAll('.inside-of-square'))
+  days.forEach(day=>{
+   if(day.childElementCount === 4){
+     const idNumber = day.lastChild.getAttribute('data')
+     const arrayOfEvents = storingAllUserEvents.getEventList().filter(event =>event.counter != idNumber)
+     storingAllUserEvents.resetEventList(arrayOfEvents)
+    day.lastChild.remove()
+    alert('Only allowed 3 events per day!')
+   }
+  })
+}
+
+
+
+
+
+
+
+
+
+export{generatingAllSquaresInCalendar, displayCurrentYear, displayMonth, displayStartDayNmonthLength,  handlerForEventsClicked, refreshShowToday , dropDownMonth, removeOldEventsContent, getUserInfo, updateMonth, yearEntered,   getCurrentYearAndMonthFromCalendar, colorInEmptySquares,countChildNodes
 }

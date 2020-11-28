@@ -1,4 +1,5 @@
-import {refreshShowToday, dropDownMonth, removeOldEventsContent, getUserInfo, updateMonth, yearEntered} from "./ui.js"
+import {refreshShowToday, dropDownMonth, removeOldEventsContent, getUserInfo, updateMonth, yearEntered,  } from "./ui.js"
+
 
 
 const prevNextBtns = document.querySelectorAll('.update-month')
@@ -19,6 +20,8 @@ trigger.addEventListener('click', removeOldEventsContent)
 closeButton.addEventListener("click", toggleModal);
 submitBtn.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
+const extraEvents = document.querySelector('.extra-events')
+
 
 function toggleModal() {
   modal.classList.toggle("show-modal");

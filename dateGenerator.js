@@ -49,7 +49,6 @@ const generateNumberOfDaysInMonth=()=>{
 
 const updateSetFirstDayOfYearOnClick=()=>{
   setFirstDayOfCalendar(calendarObject.getCalendarYear())
-  //displayEventOnGivenDate()
 }
 
 
@@ -88,3 +87,12 @@ switch (calendarObject.getCalendarMonth()) {
 
 
 export{displayYear, setFirstDayOfCalendar, generateNumberOfDaysInMonth, updateSetFirstDayOfYearOnClick}
+
+const timer=(time)=>{
+  let timeString = time + "";
+  const H = +timeString.substr(0, 2);
+  const h = (H % 12) || 12;
+  const ampm = H < 12 ? "AM" : "PM";
+  timeString = h + timeString.substr(2, 3) + ampm;
+  return timeString
+}
