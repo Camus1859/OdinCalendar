@@ -286,14 +286,14 @@ const createElements=(aUsersEvent, element)=>{
 const colorInEmptySquares=()=>{
   const days = Array.from(document.querySelectorAll('[data-number]'))
   days.forEach(day=>{
-    day.style.backgroundColor = "#DCDCDC"
+    day.style.backgroundColor = "white"
  })
  }
 
  const colorInEmptySquaresYellow=()=>{
   const days = Array.from(document.querySelectorAll('.calendar-days'))
   days.forEach(day=>{
-    day.style.backgroundColor = "#87CEFA"
+    day.style.backgroundColor = "#e6e6e6"
  })
  }
 

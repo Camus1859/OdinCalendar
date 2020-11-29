@@ -11,9 +11,10 @@
 
 </head>
 <body>
-
   <button id="container-all-events"> Display All Events In<span id="event-month"></span></button>
-  <div id="holds-events"></div>
+
+<div id="top">
+ <div id="event-container"> <div id="holds-events"></div></div>
   <div id="body">
   <button class="trigger">Create Event</button>
     <div class="modal">
@@ -29,13 +30,19 @@
             </form>
         </div>
     </div>
+    
 	
 
-  <div id="month-year">
-    <span id="month" class="top"></span>
-    <span id="year" class="top"></span>
-  </div>
+ 
 
+
+
+
+  <div id="days-of-the-month-container">
+    <div id="month-year">
+      <span id="month" class="top"></span>
+      <span id="year" class="top"></span>
+    </div>
 
   <div id="days-of-the-week-container">
     <div class="day">Sunday</div>
@@ -46,10 +53,6 @@
     <div class="day">Friday</div>
     <div class="day">Saturday</div>
   </div>
-
-
-
-  <div id="days-of-the-month-container">
   </div>
 
   <div id="previous-next-buttons">
@@ -86,5 +89,9 @@
 <script type="module" src="main.js"></script>
 
 </div>
+
+</div>
+
+
 </body>
 </html>
