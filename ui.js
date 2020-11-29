@@ -32,8 +32,9 @@ const getUserInfo=(e)=>{
   const eventDescription = document.getElementById('event-description').value
   getEvent(eventTitle, eventDate, eventTime, eventDescription)
   countChildNodes()
-
 }
+
+
 
 const getEvent=(title, date, time, description)=>{
   const aUsersEvent = new UserEvent(title, date, time, description, count())
@@ -41,6 +42,7 @@ const getEvent=(title, date, time, description)=>{
   aUsersEvent.setCalendarYear(calendarObject.getCalendarYear())
   storingAllUserEvents.getEventList().push(aUsersEvent)
   getCurrentYearAndMonthFromCalendar(aUsersEvent)
+
  }
 
  
@@ -64,7 +66,6 @@ const displayStartDayNmonthLength=(startDay)=>{
 
 
 const dropDownMonth=(e)=>{
-  console.log(e.target.value)
   document.getElementById('month').textContent = calendarObject.setCalendarMonth(e.target.value)
 }
 
@@ -74,14 +75,13 @@ const yearEntered=(e)=>{
   if (e.keyCode === 13){
     document.getElementById('year').textContent = calendarObject.setCalendarYear(year) 
     setFirstDayOfCalendar(year)
+    checksMonthYearToCalendar()
   }
 }
 
 
 const updateMonth=(e)=>{
-  colorInEmptySquares()
-
-  console.log('yo')
+  colorInEmptySquaresYellow()
   if (e.target.id === 'previous-btn' ){
     document.getElementById('month').textContent = calendarObject.setCalendarMonth(calendarObject.getSetMonthToPriorMonth())
     if(calendarObject.getCalendarMonth() === 'December'){
@@ -95,6 +95,10 @@ const updateMonth=(e)=>{
     }
   }
   checksForMatchedWhenPrevNextClicked()
+  colorInEmptySquares()
+  clearShowAllEvents()
+  displayEventsInCurrentMonth()
+
 }
 
 
@@ -110,17 +114,29 @@ const refreshShowToday=()=>{
 
 const editClicked=(e)=>{
   let uniqueID = e.target.getAttribute('data')
+  console.log(uniqueID)
+
   const editBtn = document.getElementById('edit')
   const submitBtn = document.getElementById('submit-event')
   const modal = document.querySelector(".modal");
   const modal2 = document.querySelector('.modal2')
   if (e.target === editBtn) {
+  const clickedEvent =  storingAllUserEvents.getEventList().find(eventt=>eventt.counter === +e.target.getAttribute('data'))
+
+    document.getElementById('event-title').value = clickedEvent.title
+    document.getElementById('event-date').value = clickedEvent.date
+    document.getElementById('event-time').value = clickedEvent.time
+    document.getElementById('event-description').value = clickedEvent.description
+  
    modal2.remove();
    modal.classList.toggle("show-modal");
   }
   document.addEventListener('click', (e)=>{
     if (e.target === submitBtn){
-      uniqueID = +(uniqueID)
+      let uniqueID = +e.target.getAttribute('data')
+      console.log(uniqueID)
+      console.log(storingAllUserEvents.getEventList())
+
      const arrayOfEvents = storingAllUserEvents.getEventList().filter(event =>event.counter != uniqueID)
       storingAllUserEvents.resetEventList(arrayOfEvents)
       document.querySelectorAll(`[data="${uniqueID}"]`).forEach(node => { node.remove()})
@@ -147,7 +163,6 @@ const handlerForEventsClicked=()=>{
   container.addEventListener('mouseover', (e) => {
     if(e.target.getAttribute('data')){
      const clickedEventNumber = +e.target.getAttribute('data')
-     console.log(clickedEventNumber)
       let eventInArray = storingAllUserEvents.getEventList().find(event =>event.counter === clickedEventNumber)
       compareEventToDate(eventInArray)
     } 
@@ -156,32 +171,42 @@ const handlerForEventsClicked=()=>{
 
 
   
+
+
+
 const compareEventToDate=(eventInArray)=> {
-      const modal = document.createElement('div')
-      modal.classList.add('modal2')
-      const content = document.createElement('div')
-      content.innerHTML = ` <ul>
-      <li><strong>Title: </strong>${eventInArray.title}</li>
-      <li><strong>Time: </strong>${timer(eventInArray.time)}</li>
-      <li><strong>Description: </strong>${eventInArray.description}</li>
-    </ul><div id="edit-del"> <button id="edit">Edit</button>
-    <button id="delete">Del</button></div>`
-    modal.appendChild(content)
-    document.body.appendChild(modal);
-    const deletebtn = document.querySelector('#delete')
-    const editBtn = document.getElementById('edit')
-    editBtn.addEventListener('click', editClicked)
-    editBtn.setAttribute('data', eventInArray.counter)
-    deletebtn.addEventListener('click', deleteClicked)
-    deletebtn.setAttribute('data', eventInArray.counter)
-    modal.setAttribute('data', eventInArray.counter)
-    modal.addEventListener('click', (e) => {
-      if (e.target.classList.contains("modal2")) {
-        e.target.remove();
-      }
-    })
-  return
+  const modal = document.createElement('div')
+  modal.classList.add('modal2')
+  const content = document.createElement('div')
+  content.classList.add('displayModal')
+  content.innerHTML = ` 
+  <ul>
+  <li><strong>Title: </strong>${eventInArray.title}</li>
+  <li><strong>Time: </strong>${timer(eventInArray.time)}</li>
+  <li><strong>Description: </strong>${eventInArray.description}</li>
+</ul>
+<div id="edit-del"> <button id="edit">Edit</button>
+<button id="delete">Del</button></div>`
+modal.appendChild(content)
+document.body.appendChild(modal);
+const deletebtn = document.querySelector('#delete')
+const editBtn = document.getElementById('edit')
+editBtn.addEventListener('click', editClicked)
+editBtn.setAttribute('data', eventInArray.counter)
+deletebtn.addEventListener('click', deleteClicked)
+deletebtn.setAttribute('data', eventInArray.counter)
+modal.setAttribute('data', eventInArray.counter)
+modal.addEventListener('click', (e) => {
+  if (e.target.classList.contains("modal2")) {
+    e.target.remove();
+  }
+})
+return
 }
+
+
+
+
 
 
 const getCurrentYearAndMonthFromCalendar=(aUsersEvent)=>{
@@ -197,10 +222,8 @@ const comparingEventDatesToCurrentCalendar=(aUsersEvent, thisYear, thisMonthNum)
 
 
 const getDayOfEvent=(thisEvent, eventDay)=>{
-  console.log(eventDay)
   const daysInTheMonth = Array.from(document.querySelectorAll('.calendar-days'))
   let dayOfEvent = daysInTheMonth.find(listOfDays => +listOfDays.getAttribute('data-number') === eventDay)
-  console.log(thisEvent, dayOfEvent)
   createElements(thisEvent, dayOfEvent)
 }
 
@@ -250,6 +273,9 @@ const timer=(time)=>{
 const createElements=(aUsersEvent, element)=>{
    const newEventForCalendar =`<h3 data="${aUsersEvent.counter}"class="event"><div data="${aUsersEvent.counter}" class="time-title">${timer(aUsersEvent.time)} ${aUsersEvent.title}</div></h3>`
    element.firstChild.nextSibling.insertAdjacentHTML('beforeend', newEventForCalendar)
+   colorInEmptySquares()
+   console.log(calendarObject)
+   
 }
 
  const removeOldEventsContent=()=>{
@@ -257,14 +283,21 @@ const createElements=(aUsersEvent, element)=>{
   userInputs.forEach(userInput =>userInput.value = "")
 }
 
-
 const colorInEmptySquares=()=>{
- const days = Array.from(document.querySelectorAll('.calendar-days'))
- days.forEach(day=>{
-   if(!day.hasAttribute('data-number')){
-   }
+  const days = Array.from(document.querySelectorAll('[data-number]'))
+  days.forEach(day=>{
+    day.style.backgroundColor = "#DCDCDC"
  })
-}
+ }
+
+ const colorInEmptySquaresYellow=()=>{
+  const days = Array.from(document.querySelectorAll('.calendar-days'))
+  days.forEach(day=>{
+    day.style.backgroundColor = "#87CEFA"
+ })
+ }
+
+
 
 const countChildNodes=()=>{
   const days = Array.from(document.querySelectorAll('.inside-of-square'))
@@ -279,6 +312,39 @@ const countChildNodes=()=>{
   })
 }
 
+const displayEventsInCurrentMonth=()=>{
+  const eventMonth = document.getElementById('event-month')
+  eventMonth.textContent = ` ${calendarObject.getCalendarMonth()}`
+}
+
+const showAllEvents=()=>{
+  const holdEvents = document.getElementById('holds-events')
+
+  storingAllUserEvents.getEventList().filter(eventt=>{
+    const date = eventt.date.split('-')
+    const  eventYear = Number(date[0])
+    const  eventMonth = Number(date[1]) - 1
+    const  eventDay = Number(date[2])
+    if(eventYear === calendarObject.getCalendarYear() && eventMonth === calendarObject.getCalendarMonthNumber()){
+      const allEvents = `<div>${eventt.title} ${eventDay}</div>`
+      holdEvents.insertAdjacentHTML('beforeend', allEvents)
+
+
+    }
+   
+  })
+}
+
+const clearShowAllEvents=()=>{
+  const holdEvents = document.getElementById('holds-events')
+
+
+
+  
+  while (holdEvents.lastElementChild) {
+    holdEvents.removeChild(holdEvents.lastElementChild)
+  }
+}
 
 
 
@@ -286,6 +352,5 @@ const countChildNodes=()=>{
 
 
 
-
-export{generatingAllSquaresInCalendar, displayCurrentYear, displayMonth, displayStartDayNmonthLength,  handlerForEventsClicked, refreshShowToday , dropDownMonth, removeOldEventsContent, getUserInfo, updateMonth, yearEntered,   getCurrentYearAndMonthFromCalendar, colorInEmptySquares,countChildNodes
+export{generatingAllSquaresInCalendar, displayCurrentYear, displayMonth, displayStartDayNmonthLength,  handlerForEventsClicked, refreshShowToday , dropDownMonth, removeOldEventsContent, getUserInfo, updateMonth, yearEntered,   getCurrentYearAndMonthFromCalendar,countChildNodes, colorInEmptySquares, colorInEmptySquaresYellow, displayEventsInCurrentMonth, showAllEvents
 }
