@@ -124,6 +124,9 @@ const refreshShowToday = () => {
   document.getElementById('year').textContent = calendarObject.setCalendarYear(new Date().getFullYear())
   setFirstDayOfCalendar(new Date().getFullYear())
   checksMonthYearToCalendar()
+  colorInEmptySquaresYellow()
+  colorInEmptySquares()
+ 
 }
 
 
