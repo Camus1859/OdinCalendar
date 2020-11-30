@@ -1,27 +1,30 @@
-import {calendarObject} from "./calendarClass.js"
-import {displayCurrentYear, displayStartDayNmonthLength} from "./ui.js"
+import {
+  calendarObject
+} from "./calendarClass.js"
+import {
+  displayCurrentYear,
+  displayStartDayNmonthLength
+} from "./ui.js"
 
 
 
-const displayYear=(sub)=>{
- if (sub === -1){
-  displayCurrentYear(calendarObject.setCalendarYear(calendarObject.getCalendarYear() - 1))
-  setFirstDayOfCalendar(calendarObject.getCalendarYear() - 1)
- }
- else if(sub === 1){
-  displayCurrentYear(calendarObject.setCalendarYear(calendarObject.getCalendarYear() + 1))
-  setFirstDayOfCalendar(calendarObject.getCalendarYear() + 1)
- }
- else if(sub === undefined){
-  displayCurrentYear(calendarObject.getCalendarYear())
-  setFirstDayOfCalendar(calendarObject.getCalendarYear())
- }
+const displayYear = (sub) => {
+  if (sub === -1) {
+      displayCurrentYear(calendarObject.setCalendarYear(calendarObject.getCalendarYear() - 1))
+      setFirstDayOfCalendar(calendarObject.getCalendarYear() - 1)
+  } else if (sub === 1) {
+      displayCurrentYear(calendarObject.setCalendarYear(calendarObject.getCalendarYear() + 1))
+      setFirstDayOfCalendar(calendarObject.getCalendarYear() + 1)
+  } else if (sub === undefined) {
+      displayCurrentYear(calendarObject.getCalendarYear())
+      setFirstDayOfCalendar(calendarObject.getCalendarYear())
+  }
 }
 
 
-const setFirstDayOfCalendar=(year)=>{
+const setFirstDayOfCalendar = (year) => {
   let incomingYear = 0
-  year === undefined ?  incomingYear = calendarObject.getCalendarYear() : incomingYear = year
+  year === undefined ? incomingYear = calendarObject.getCalendarYear() : incomingYear = year
   let leapYearsAsDecimal = ((incomingYear - 1905) / 4)
   let numberOfLeapYears = 0
   leapYearsAsDecimal.toFixed(2) >= Math.trunc(leapYearsAsDecimal) + .75 ? numberOfLeapYears = Math.round(leapYearsAsDecimal) : numberOfLeapYears = Math.floor(leapYearsAsDecimal)
@@ -30,7 +33,7 @@ const setFirstDayOfCalendar=(year)=>{
 }
 
 
-const getSetInterval=(count)=>{
+const getSetInterval = (count) => {
   const daysOfWeek = [1, 2, 3, 4, 5, 6, 7];
   const startIndex = daysOfWeek.findIndex(elem => elem === getNumForSetInterval())
   const index = (startIndex + count) % daysOfWeek.length
@@ -39,7 +42,7 @@ const getSetInterval=(count)=>{
 }
 
 
-const generateNumberOfDaysInMonth=()=>{
+const generateNumberOfDaysInMonth = () => {
   const year = calendarObject.getCalendarYear()
   const month = calendarObject.getCalendarMonthNumber()
   let daysInMonth = new Date(year, month + 1, 0).getDate()
@@ -47,52 +50,48 @@ const generateNumberOfDaysInMonth=()=>{
 }
 
 
-const updateSetFirstDayOfYearOnClick=()=>{
+const updateSetFirstDayOfYearOnClick = () => {
   setFirstDayOfCalendar(calendarObject.getCalendarYear())
 }
 
 
-const getNumForSetInterval=()=>{
+const getNumForSetInterval = () => {
   let num;
-switch (calendarObject.getCalendarMonth()) {
-  case 'January':
-  case 'October':
-    num = 1
-    break;
-  case 'February':
-  case 'March':
-  case 'November':
-    num = 4
-    break;
-  case 'April':
-  case 'July':
-    num = 7
-    break;
-  case 'May':
-    num = 2
-    break;
-  case 'June':
-    num = 5
-    break;
-  case 'August':
-    num = 3
-    break;
-  case 'September':
-  case 'December':
-    num = 6
-    break;
+  switch (calendarObject.getCalendarMonth()) {
+      case 'January':
+      case 'October':
+          num = 1
+          break;
+      case 'February':
+      case 'March':
+      case 'November':
+          num = 4
+          break;
+      case 'April':
+      case 'July':
+          num = 7
+          break;
+      case 'May':
+          num = 2
+          break;
+      case 'June':
+          num = 5
+          break;
+      case 'August':
+          num = 3
+          break;
+      case 'September':
+      case 'December':
+          num = 6
+          break;
   }
   return num
 }
 
 
-export{displayYear, setFirstDayOfCalendar, generateNumberOfDaysInMonth, updateSetFirstDayOfYearOnClick}
-
-const timer=(time)=>{
-  let timeString = time + "";
-  const H = +timeString.substr(0, 2);
-  const h = (H % 12) || 12;
-  const ampm = H < 12 ? "AM" : "PM";
-  timeString = h + timeString.substr(2, 3) + ampm;
-  return timeString
+export {
+  displayYear,
+  setFirstDayOfCalendar,
+  generateNumberOfDaysInMonth,
+  updateSetFirstDayOfYearOnClick
 }

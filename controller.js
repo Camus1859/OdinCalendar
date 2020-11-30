@@ -1,4 +1,12 @@
-import {refreshShowToday, dropDownMonth, removeOldEventsContent, getUserInfo, updateMonth, yearEntered, showAllEvents  } from "./ui.js"
+import {
+  refreshShowToday,
+  dropDownMonth,
+  removeOldEventsContent,
+  getUserInfo,
+  updateMonth,
+  yearEntered,
+  showAllEvents
+} from "./ui.js"
 
 
 
@@ -12,7 +20,7 @@ const closeButton = document.querySelector(".close-button");
 const submitBtn = document.getElementById('submit-event')
 submitBtn.addEventListener('click', getUserInfo)
 todayBtn.addEventListener('click', refreshShowToday)
-prevNextBtns.forEach(button =>button.addEventListener("click", updateMonth))
+prevNextBtns.forEach(button => button.addEventListener("click", updateMonth))
 dropDownMonths.addEventListener('change', dropDownMonth)
 yearEnteredValue.addEventListener('keyup', yearEntered)
 trigger.addEventListener("click", toggleModal);
@@ -30,10 +38,6 @@ function toggleModal() {
 
 function windowOnClick(event) {
   if (event.target === modal) {
-    toggleModal();
+      toggleModal();
   }
 }
-
-
-
-

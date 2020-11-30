@@ -22,6 +22,11 @@
   margin-right: 18rem;
 }
 
+#container-all-events{
+  width: 100%;
+}
+
+
 #top{
   display: flex;
 
@@ -252,14 +257,15 @@ input::-webkit-inner-spin-button {
   
 }
 
-ul{
+.displayModal>ul{
   display: flex;
   flex-direction: column;
- justify-content: center;
- margin-top: 10px;
- margin-bottom: 5rem;
+ justify-content: flex-start;
+}
 
-
+#holds-events>ul{
+  display: flex;
+ justify-content: flex-start;
 }
 
 .extra-events {

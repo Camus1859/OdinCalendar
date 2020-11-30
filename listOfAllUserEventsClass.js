@@ -1,18 +1,20 @@
 class ListOfAllUserEvents {
-  constructor(){
-    this._EventsList = []
-  }
-  
-  getEventList(){
-    return this._EventsList
+  constructor() {
+      this._EventsList = []
   }
 
-  placeUserEventInMyArray(userEvent){
-    this.getEventList().push(userEvent)
+  getEventList() {
+      return this._EventsList
   }
-  resetEventList(array){
-  return  this._EventsList = array
+
+  placeUserEventInMyArray(userEvent) {
+      this.getEventList().push(userEvent)
+  }
+  resetEventList(array) {
+      return this._EventsList = array
   }
 }
 
-export{ListOfAllUserEvents}
+export {
+  ListOfAllUserEvents
+}
