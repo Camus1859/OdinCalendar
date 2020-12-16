@@ -36,6 +36,7 @@ const displayMonth = (month) => {
       document.getElementById('month').textContent = month
 }
 
+
 const getUserInfo = (e) => {
   e.preventDefault()
   const eventTitle = document.getElementById('event-title').value
@@ -45,7 +46,6 @@ const getUserInfo = (e) => {
   getEvent(eventTitle, eventDate, eventTime, eventDescription)
   countChildNodes()
 }
-
 
 
 const getEvent = (title, date, time, description) => {
@@ -108,15 +108,10 @@ const updateMonth = (e) => {
   checksForMatchedWhenPrevNextClicked()
   colorInEmptySquares()
   clearShowAllEvents()
-
-
   displayEventsInCurrentMonth()
   const displayAllEvents = document.getElementById('container-all-events')
-
   displayAllEvents.addEventListener('click', showAllEvents)
-
 }
-
 
 
 const refreshShowToday = () => {
@@ -130,18 +125,13 @@ const refreshShowToday = () => {
 }
 
 
-
 const editClicked = (e) => {
-  let uniqueID = e.target.getAttribute('data')
-  console.log(uniqueID)
-
   const editBtn = document.getElementById('edit')
   const submitBtn = document.getElementById('submit-event')
   const modal = document.querySelector(".modal");
   const modal2 = document.querySelector('.modal2')
   if (e.target === editBtn) {
       const clickedEvent = storingAllUserEvents.getEventList().find(eventt => eventt.counter === +e.target.getAttribute('data'))
-
       document.getElementById('event-title').value = clickedEvent.title
       document.getElementById('event-date').value = clickedEvent.date
       document.getElementById('event-time').value = clickedEvent.time
@@ -153,9 +143,6 @@ const editClicked = (e) => {
   document.addEventListener('click', (e) => {
       if (e.target === submitBtn) {
           let uniqueID = +e.target.getAttribute('data')
-          console.log(uniqueID)
-          console.log(storingAllUserEvents.getEventList())
-
           const arrayOfEvents = storingAllUserEvents.getEventList().filter(event => event.counter != uniqueID)
           storingAllUserEvents.resetEventList(arrayOfEvents)
           document.querySelectorAll(`[data="${uniqueID}"]`).forEach(node => {
@@ -164,7 +151,6 @@ const editClicked = (e) => {
       }
   })
 }
-
 
 
 const deleteClicked = (e) => {
@@ -191,8 +177,6 @@ const handlerForEventsClicked = () => {
       }
   })
 }
-
-
 
 
 const compareEventToDate = (eventInArray) => {
@@ -291,13 +275,14 @@ const createElements = (aUsersEvent, element) => {
   const newEventForCalendar = `<h3 data="${aUsersEvent.counter}"class="event"><div data="${aUsersEvent.counter}" class="time-title">${timer(aUsersEvent.time)} ${aUsersEvent.title}</div></h3>`
   element.firstChild.nextSibling.insertAdjacentHTML('beforeend', newEventForCalendar)
   colorInEmptySquares()
-  console.log(calendarObject)
 }
+
 
 const removeOldEventsContent = () => {
   const userInputs = document.querySelectorAll('.user-input')
   userInputs.forEach(userInput => userInput.value = "")
 }
+
 
 const colorInEmptySquares = () => {
   const days = Array.from(document.querySelectorAll('[data-number]'))
@@ -305,6 +290,7 @@ const colorInEmptySquares = () => {
       day.style.backgroundColor = "white"
   })
 }
+
 
 const colorInEmptySquaresYellow = () => {
   const days = Array.from(document.querySelectorAll('.calendar-days'))
@@ -327,6 +313,8 @@ const countChildNodes = () => {
   })
 }
 
+
+
 const displayEventsInCurrentMonth = () => {
   const eventMonth = document.getElementById('event-month')
   eventMonth.textContent = ` ${calendarObject.getCalendarMonth()}`
@@ -342,7 +330,7 @@ const showAllEvents = () => {
       if (eventYear === calendarObject.getCalendarYear() && eventMonth === calendarObject.getCalendarMonthNumber()) {
           const allEvents = `
     <ul>
-      <li id="listing">${eventt.title} ${eventDay}</li>
+      <li id="listing">${eventt.title} ${eventDay}th</li>
     <ul>`
           holdEvents.insertAdjacentHTML('beforeend', allEvents)
       }

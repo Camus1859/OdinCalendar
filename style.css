@@ -1,4 +1,7 @@
 
+body{
+  background-color: #99f7fa;
+}
 
 #body{
   display: flex;
@@ -57,7 +60,6 @@
   display: block;
 
 }
-
 
 
 #days-of-the-week-container{
@@ -254,7 +256,7 @@ input::-webkit-inner-spin-button {
 .displayModal{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-self: center;
   
 }
 
