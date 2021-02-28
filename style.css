@@ -1,6 +1,7 @@
 
 body{
-  background-color: rgb(195, 209, 228);
+  background-color: rgb(24, 41, 65);
+  margin-top: 3rem;
 
 }
 
@@ -8,7 +9,7 @@ body{
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  /* width: 50%; */
   justify-content: end;
   
 } 
@@ -16,13 +17,15 @@ body{
 #event-container{
   display: flex;
   flex-direction: column;
-  width: 10%;
+  /* width: 10%; */
   align-items: center;
-  margin-right: 18rem;
+  /* margin-right: 18rem; */
+  display: none;
 }
 
 #container-all-events{
-  width: 100%;
+  /* width: 100%; */
+  display: none
 }
 
 
@@ -34,12 +37,21 @@ body{
 #month-year{
   display: grid;
   justify-content: space-evenly;
-  width: 25%;
+  /* width: 25%; */
   grid-row: 1/-8;
   grid-column: 1/ 8;
   grid-template-columns: repeat(7, 1fr);
   font-weight: bolder;
-  font-size: 30px
+  font-size: 30px;
+}
+
+#month-selector {
+  font-weight: bolder;
+  text-decoration: none;
+  outline: none;
+  border-radius: 0.5rem;
+
+
 }
 
 #previous-next-buttons{
@@ -70,11 +82,16 @@ body{
   grid-template-columns: repeat(7, 1fr);
   justify-items: center;
   align-items: end;
-  background-color: rgb(156, 170, 190);
   font-weight: bolder;
-  color: white;
+  color: rgb(24, 41, 65);
+  font-size: xx-small;
+  text-transform: uppercase;
+  background-color: rgb(234, 244, 247);
 
+}
 
+.day {
+  text-align: center;
 }
 
 #days-of-the-month-container{
@@ -94,13 +111,36 @@ body{
 
 #date-selectors{
   display: flex;
-  justify-content: center;
-  width: 25%;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#year-input{
+  font-weight: bolder;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+  text-align: center;
+
+}
+
+.trigger{
+  font-weight: bolder;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+
+
+
+
 }
 
 
 #month{
   padding-right: 10px;
+  text-transform: uppercase;
+  color: rgb(255, 0, 43);
+
 }
 
 #month-year-tabs{
@@ -108,18 +148,34 @@ body{
   justify-content: space-evenly;
 }
 
+.month{
+  text-transform: uppercase;
+}
+
+#month-selector option:hover{
+  background-color: rgb(160, 222, 238);
+}
+
+
+
+
 #today{
   display: flex;
   justify-content: end;
+  margin: 1rem;
+  font-weight: bolder;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
 }
 
 .calendar-days{
   border: 1px solid black;
-  width: 100%;
-  height: 100%;
-  height: 90px;
-  max-height: 90px;
+  /* width: 100%;
+  height: 100%; */
+  min-height: 50px;
   display: block;
+  max-width: 50px;
 }
 
 .inside-of-square{
@@ -154,11 +210,14 @@ input::-webkit-inner-spin-button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
   padding: 1rem 1.5rem;
-  width: 26rem;
+  width: 50%;
   border-radius: 0.5rem;
+  background-color: rgb(160, 222, 238);
+
 }
+
+
 .close-button {
   float: right;
   width: 1.5rem;
@@ -166,11 +225,36 @@ input::-webkit-inner-spin-button {
   text-align: center;
   cursor: pointer;
   border-radius: 0.25rem;
-  background-color: lightgray;
+  background-color: rgb(197, 201, 221);
+  border-radius: 0.5rem;
+
+
 }
 .close-button:hover {
   background-color: darkgray;
 }
+
+.user-input{
+  width: 100%;
+  margin: 5px;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+
+}
+
+#submit-event{
+  padding: 3px;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+  background-color: rgb(24, 41, 65);
+  color: white;
+  font-weight: bolder;
+
+
+}
+
 .show-modal {
   opacity: 1;
   visibility: visible;
@@ -258,13 +342,26 @@ input::-webkit-inner-spin-button {
   display: flex;
   flex-direction: column;
   align-self: center;
-  
+  border-radius: 0.5rem;
+
+}
+
+.ttd{
+  padding: .5rem;
+  text-decoration: none;
+  outline: none;
+  list-style: none;
 }
 
 .displayModal>ul{
   display: flex;
   flex-direction: column;
  justify-content: flex-start;
+ border-radius: 0.5rem;
+ background-color: rgb(234, 244, 247);
+ padding: 1rem;
+
+
 }
 
 #holds-events>ul{
@@ -298,10 +395,48 @@ input::-webkit-inner-spin-button {
 
 #edit-del{
   display: flex;
+  justify-content: space-around;
 }
 
+#edit{
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: bolder;
+
+
+
+}
+
+#delete{
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: bolder;
+
+
+
+}
 #dots{
   display: flex;
   flex-direction: row;
   margin-top: -10px;
 }
+
+.update-month{
+  color:  rgb(24, 41, 65);
+  font-weight: bolder;
+  background-color: rgb(160, 222, 238);
+  text-decoration: none;
+  outline: none;
+}
+
+#year-label{
+  color: white;
+  font-weight: bolder;
+
+}
+
+

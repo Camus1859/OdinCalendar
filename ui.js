@@ -186,12 +186,14 @@ const compareEventToDate = (eventInArray) => {
   content.classList.add('displayModal')
   content.innerHTML = ` 
 <ul>
-<li><strong>Title: </strong>${eventInArray.title}</li>
-<li><strong>Time: </strong>${timer(eventInArray.time)}</li>
-<li><strong>Description: </strong>${eventInArray.description}</li>
+<li class="ttd"><strong>Title: </strong>${eventInArray.title}</li>
+<li class="ttd"><strong>Time: </strong>${timer(eventInArray.time)}</li>
+<li class="ttd"><strong>Description: </strong>${eventInArray.description}</li>
 </ul>
-<div id="edit-del"> <button id="edit">Edit</button>
-<button id="delete">Del</button></div>`
+<div  id="edit-del"> 
+<button id="edit">Edit</button>
+<button id="delete">Delete</button></div>`
+content.style.backgroundColor = 'rgb(160, 222, 238)'
   modal.appendChild(content)
   document.body.appendChild(modal);
   const deletebtn = document.querySelector('#delete')
