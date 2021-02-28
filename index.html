@@ -8,13 +8,14 @@
   </head>
   <body>
     <div id="container-body">
-      <button id="container-all-events">
-        Display All Events In<span id="event-month"></span>
-      </button>
+     
 
       <div id="top">
         <div id="event-container">
-          List Of Events
+          <button id="container-all-events">
+            Display All Events In<span id="event-month"></span>
+          </button>
+          LIST OF EVENTS
           <div id="holds-events"></div>
         </div>
         <div id="body">
@@ -91,7 +92,7 @@
           <button id="today">TODAY</button>
           <div id="date-selectors">
             <select
-              onmousedown="if(this.options.length>8){this.size=8;}"
+              onmousedown="if(this.options.length>8){this.size=4;}"
               onchange="this.size=0;"
               onblur="this.size=0"
               id="month-selector"

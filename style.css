@@ -1,20 +1,17 @@
-
-body{
+body {
   background-color: rgb(24, 41, 65);
   margin-top: 3rem;
-
 }
 
-#body{
+#body {
   display: flex;
   flex-direction: column;
   align-items: center;
   /* width: 50%; */
   justify-content: end;
-  
-} 
+}
 
-#event-container{
+#event-container {
   display: flex;
   flex-direction: column;
   /* width: 10%; */
@@ -23,18 +20,16 @@ body{
   display: none;
 }
 
-#container-all-events{
+#container-all-events {
   /* width: 100%; */
-  display: none
+  display: none;
 }
 
-
-#top{
+#top {
   display: flex;
-
 }
 
-#month-year{
+#month-year {
   display: grid;
   justify-content: space-evenly;
   /* width: 25%; */
@@ -50,32 +45,28 @@ body{
   text-decoration: none;
   outline: none;
   border-radius: 0.5rem;
-
-
 }
 
-#previous-next-buttons{
+#previous-next-buttons {
   display: flex;
   justify-content: space-evenly;
   width: 100%;
 }
 
-.bottom{
+.bottom {
   width: 100%;
 }
 
-.time-title{
+.time-title {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   display: flex;
   width: 100px;
   display: block;
-
 }
 
-
-#days-of-the-week-container{
+#days-of-the-week-container {
   display: grid;
   grid-row: -1/-7;
   grid-column: 1/ 8;
@@ -87,16 +78,15 @@ body{
   font-size: xx-small;
   text-transform: uppercase;
   background-color: rgb(234, 244, 247);
-
 }
 
 .day {
   text-align: center;
 }
 
-#days-of-the-month-container{
+#days-of-the-month-container {
   display: grid;
-  grid-template-rows:  repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   grid-template-columns: repeat(7, 1fr);
   border: 1px solid black;
   width: 100%;
@@ -104,62 +94,52 @@ body{
   background-color: rgb(160, 222, 238);
 }
 
-#previous-next-buttons{
+#previous-next-buttons {
   display: flex;
   justify-content: space-evenly;
 }
 
-#date-selectors{
+#date-selectors {
   display: flex;
   justify-content: space-around;
   width: 100%;
 }
 
-#year-input{
+#year-input {
   font-weight: bolder;
   border-radius: 0.5rem;
   text-decoration: none;
   outline: none;
   text-align: center;
-
 }
 
-.trigger{
+.trigger {
   font-weight: bolder;
   border-radius: 0.5rem;
   text-decoration: none;
   outline: none;
-
-
-
-
 }
 
-
-#month{
+#month {
   padding-right: 10px;
   text-transform: uppercase;
   color: rgb(255, 0, 43);
-
 }
 
-#month-year-tabs{
+#month-year-tabs {
   display: flex;
   justify-content: space-evenly;
 }
 
-.month{
+.month {
   text-transform: uppercase;
 }
 
-#month-selector option:hover{
+#month-selector option:hover {
   background-color: rgb(160, 222, 238);
 }
 
-
-
-
-#today{
+#today {
   display: flex;
   justify-content: end;
   margin: 1rem;
@@ -169,23 +149,20 @@ body{
   outline: none;
 }
 
-.calendar-days{
+.calendar-days {
   border: 1px solid black;
   /* width: 100%;
   height: 100%; */
-  min-height: 50px;
+  height: 50px;
   display: block;
-  max-width: 50px;
+  min-width: 50px;
 }
 
-.inside-of-square{
+.inside-of-square {
   display: flex;
-  flex-direction: column ;
+  flex-direction: column;
   margin-top: -5px;
-  
-  
 }
-
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -214,9 +191,7 @@ input::-webkit-inner-spin-button {
   width: 50%;
   border-radius: 0.5rem;
   background-color: rgb(160, 222, 238);
-
 }
-
 
 .close-button {
   float: right;
@@ -227,23 +202,20 @@ input::-webkit-inner-spin-button {
   border-radius: 0.25rem;
   background-color: rgb(197, 201, 221);
   border-radius: 0.5rem;
-
-
 }
 .close-button:hover {
   background-color: darkgray;
 }
 
-.user-input{
+.user-input {
   width: 100%;
   margin: 5px;
   border-radius: 0.5rem;
   text-decoration: none;
   outline: none;
-
 }
 
-#submit-event{
+#submit-event {
   padding: 3px;
   border-radius: 0.5rem;
   text-decoration: none;
@@ -251,31 +223,26 @@ input::-webkit-inner-spin-button {
   background-color: rgb(24, 41, 65);
   color: white;
   font-weight: bolder;
-
-
 }
 
 .show-modal {
   opacity: 1;
   visibility: visible;
-  transform: scale(1.0);
+  transform: scale(1);
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
 
-.event{
+.event {
   display: flex;
   justify-content: center;
-  font-size: .8rem;
+  font-size: 0.8rem;
   margin: 0%;
   margin-right: 16px;
-
 }
 
-.hidden{
+.hidden {
   visibility: hidden;
 }
-
-
 
 .overlay {
   position: fixed;
@@ -319,7 +286,7 @@ input::-webkit-inner-spin-button {
   color: #333;
 }
 .popup .close:hover {
-  color: #06D85F;
+  color: #06d85f;
 }
 .popup .content {
   max-height: 30%;
@@ -327,46 +294,45 @@ input::-webkit-inner-spin-button {
 }
 
 .modal2 {
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background-color:rgba(226, 225, 225, 0.15);
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(226, 225, 225, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.displayModal{
+.displayModal {
   display: flex;
   flex-direction: column;
   align-self: center;
   border-radius: 0.5rem;
-
+  width: 50%;
 }
 
-.ttd{
-  padding: .5rem;
+.ttd {
+  padding: 0.5rem;
   text-decoration: none;
   outline: none;
   list-style: none;
+  word-wrap: break-word;
 }
 
-.displayModal>ul{
+.displayModal > ul {
   display: flex;
   flex-direction: column;
- justify-content: flex-start;
- border-radius: 0.5rem;
- background-color: rgb(234, 244, 247);
- padding: 1rem;
-
-
+  justify-content: flex-start;
+  border-radius: 0.5rem;
+  background-color: rgb(234, 244, 247);
+  padding: 1rem;
 }
 
-#holds-events>ul{
+#holds-events > ul {
   display: flex;
- justify-content: flex-start;
+  justify-content: flex-start;
 }
 
 .extra-events {
@@ -383,60 +349,137 @@ input::-webkit-inner-spin-button {
 }
 
 .modal2 > div {
-  background-color:#fff;
-  border-radius:4px;
-  box-shadow:0 0 4px 2px rgba(0,0,0, 0.5);
-  padding:1rem;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
 }
 
 .modal2 > div {
-  list-style-type:none;
+  list-style-type: none;
 }
 
-#edit-del{
+#edit-del {
   display: flex;
   justify-content: space-around;
 }
 
-#edit{
+#edit {
   border-radius: 0.5rem;
   text-decoration: none;
   outline: none;
   text-transform: uppercase;
   font-weight: bolder;
-
-
-
 }
 
-#delete{
+#delete {
   border-radius: 0.5rem;
   text-decoration: none;
   outline: none;
   text-transform: uppercase;
   font-weight: bolder;
-
-
-
 }
-#dots{
+
+#dots {
   display: flex;
   flex-direction: row;
   margin-top: -10px;
 }
 
-.update-month{
-  color:  rgb(24, 41, 65);
+.update-month {
+  color: rgb(24, 41, 65);
   font-weight: bolder;
   background-color: rgb(160, 222, 238);
   text-decoration: none;
   outline: none;
 }
 
-#year-label{
+#year-label {
   color: white;
   font-weight: bolder;
-
 }
 
+@media screen and (min-width: 530px) {
+  #days-of-the-week-container {
+    font-size: small;
+  }
+}
 
+@media screen and (min-width: 700px) {
+  .calendar-days {
+    height: 60px;
+    display: block;
+    min-width: 60px;
+  }
+
+  #days-of-the-week-container {
+    font-size: x-small;
+  }
+
+  #top {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #event-container {
+    display: flex;
+    flex-direction: column;
+    /* width: 100%; */
+    align-items: center;
+    color: white;
+    margin-top: 1.3rem;
+  }
+
+  #container-all-events {
+    display: inline;
+    background-color: rgb(160, 222, 238);
+    font-weight: bolder;
+    text-transform: uppercase;
+    text-decoration: none;
+    outline: none;
+    padding: 0.5rem;
+  }
+
+  #body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    width: 70%;
+  }
+}
+
+@media screen and (min-width: 930px) {
+  #days-of-the-week-container {
+    font-size: medium;
+  }
+
+  .top {
+    padding-right: 10px;
+    text-transform: uppercase;
+    color: rgb(255, 0, 43);
+    font-size: 40px;
+  }
+
+  #year {
+    color: rgb(37, 37, 37);
+  }
+
+  .modal-content {
+    width: 25%;
+  }
+}
+
+@media screen and (min-width: 1230px) {
+  #days-of-the-week-container {
+    font-size: large;
+  }
+  .calendar-days {
+    height: 100px;
+    display: block;
+    min-width: 100px;
+  }
+  .modal-content {
+    width: 15%;
+  }
+}
