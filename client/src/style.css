@@ -1,0 +1,493 @@
+body {
+  background-color: rgb(24, 41, 65);
+  margin-top: 3rem;
+}
+
+#body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 50%; */
+  justify-content: end;
+}
+
+#event-container {
+  display: flex;
+  flex-direction: column;
+  /* width: 10%; */
+  align-items: center;
+  /* margin-right: 18rem; */
+  display: none;
+}
+
+#container-all-events {
+  /* width: 100%; */
+  display: none;
+}
+
+#top {
+  display: flex;
+}
+
+#month-year {
+  display: grid;
+  justify-content: space-evenly;
+  /* width: 25%; */
+  grid-row: 1/-8;
+  grid-column: 1/ 8;
+  grid-template-columns: repeat(7, 1fr);
+  font-weight: bolder;
+  font-size: 30px;
+}
+
+#month-selector {
+  font-weight: bolder;
+  text-decoration: none;
+  outline: none;
+  border-radius: 0.5rem;
+}
+
+#previous-next-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.bottom {
+  width: 100%;
+}
+
+.time-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  width: 100px;
+  display: block;
+}
+
+#days-of-the-week-container {
+  display: grid;
+  grid-row: -1/-7;
+  grid-column: 1/ 8;
+  grid-template-columns: repeat(7, 1fr);
+  justify-items: center;
+  align-items: end;
+  font-weight: bolder;
+  color: rgb(24, 41, 65);
+  font-size: xx-small;
+  text-transform: uppercase;
+  background-color: rgb(234, 244, 247);
+}
+
+.day {
+  text-align: center;
+}
+
+#days-of-the-month-container {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+  border: 1px solid black;
+  width: 100%;
+  padding: 40px 0px 0 0px;
+  background-color: rgb(160, 222, 238);
+}
+
+#previous-next-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#date-selectors {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#year-input {
+  font-weight: bolder;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+  text-align: center;
+}
+
+.trigger {
+  font-weight: bolder;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+}
+
+#month {
+  padding-right: 10px;
+  text-transform: uppercase;
+  color: rgb(255, 0, 43);
+}
+
+#month-year-tabs {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.month {
+  text-transform: uppercase;
+}
+
+#month-selector option:hover {
+  background-color: rgb(160, 222, 238);
+}
+
+#today {
+  display: flex;
+  justify-content: end;
+  margin: 1rem;
+  font-weight: bolder;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+}
+
+.calendar-days {
+  border: 1px solid black;
+  /* width: 100%;
+  height: 100%; */
+  height: 50px;
+  display: block;
+  min-width: 50px;
+}
+
+.inside-of-square {
+  display: flex;
+  flex-direction: column;
+  margin-top: -5px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.1);
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem 1.5rem;
+  width: 50%;
+  border-radius: 0.5rem;
+  background-color: rgb(160, 222, 238);
+}
+
+.close-button {
+  float: right;
+  width: 1.5rem;
+  line-height: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  background-color: rgb(197, 201, 221);
+  border-radius: 0.5rem;
+}
+.close-button:hover {
+  background-color: darkgray;
+}
+
+.user-input {
+  width: 100%;
+  margin: 5px;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+}
+
+#submit-event {
+  padding: 3px;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+  background-color: rgb(24, 41, 65);
+  color: white;
+  font-weight: bolder;
+}
+
+.show-modal {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.event {
+  display: flex;
+  justify-content: center;
+  font-size: 0.8rem;
+  margin: 0%;
+  margin-right: 16px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06d85f;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+.modal2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(226, 225, 225, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.displayModal {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  border-radius: 0.5rem;
+  width: 50%;
+}
+
+.ttd {
+  padding: 0.5rem;
+  text-decoration: none;
+  outline: none;
+  list-style: none;
+  word-wrap: break-word;
+}
+
+.displayModal > ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 0.5rem;
+  background-color: rgb(234, 244, 247);
+  padding: 1rem;
+}
+
+#holds-events > ul {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.extra-events {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+  background-color: white;
+  padding: 6rem;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.modal2 > div {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+}
+
+.modal2 > div {
+  list-style-type: none;
+}
+
+#edit-del {
+  display: flex;
+  justify-content: space-around;
+}
+
+#edit {
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+
+#delete {
+  border-radius: 0.5rem;
+  text-decoration: none;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+
+#dots {
+  display: flex;
+  flex-direction: row;
+  margin-top: -10px;
+}
+
+.update-month {
+  color: rgb(24, 41, 65);
+  font-weight: bolder;
+  background-color: rgb(160, 222, 238);
+  text-decoration: none;
+  outline: none;
+}
+
+#year-label {
+  color: white;
+  font-weight: bolder;
+}
+
+@media screen and (min-width: 530px) {
+  #days-of-the-week-container {
+    font-size: small;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .calendar-days {
+    height: 60px;
+    display: block;
+    min-width: 60px;
+  }
+  .displayModal {
+ 
+    width: 35%;
+  }
+
+  #days-of-the-week-container {
+    font-size: x-small;
+  }
+
+  #top {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #event-container {
+    display: flex;
+    flex-direction: column;
+    /* width: 100%; */
+    align-items: center;
+    color: white;
+    margin-top: 1.3rem;
+  }
+
+  #container-all-events {
+    display: inline;
+    background-color: rgb(160, 222, 238);
+    font-weight: bolder;
+    text-transform: uppercase;
+    text-decoration: none;
+    outline: none;
+    padding: 0.5rem;
+  }
+
+  #body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    width: 70%;
+  }
+}
+
+@media screen and (min-width: 930px) {
+  #days-of-the-week-container {
+    font-size: medium;
+  }
+
+  .top {
+    padding-right: 10px;
+    text-transform: uppercase;
+    color: rgb(255, 0, 43);
+    font-size: 40px;
+  }
+
+  #year {
+    color: rgb(37, 37, 37);
+  }
+
+  .modal-content {
+    width: 25%;
+  }
+  .displayModal {
+ 
+    width: 25%;
+  }
+}
+
+@media screen and (min-width: 1230px) {
+  #days-of-the-week-container {
+    font-size: large;
+  }
+  .calendar-days {
+    height: 100px;
+    display: block;
+    min-width: 100px;
+  }
+  .modal-content {
+    width: 15%;
+  }
+}

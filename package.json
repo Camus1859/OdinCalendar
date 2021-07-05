@@ -1,0 +1,30 @@
+{
+  "name": "calendar",
+  "version": "1.0.0",
+  "description": "## I created my own algorithim to make the calendar function. This was very difficult yet extremely rewarding. I enjoyed building this app!",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.6.9",
+    "mongoose": "^5.13.2"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "nodemon": "^2.0.9"
+  },
+  "scripts": {
+    "start": "nodemon server/server.js"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Camus1859/OdinCalendar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Camus1859/OdinCalendar/issues"
+  },
+  "homepage": "https://github.com/Camus1859/OdinCalendar#readme"
+}
