@@ -4,6 +4,7 @@
   "description": "## I created my own algorithim to make the calendar function. This was very difficult yet extremely rewarding. I enjoyed building this app!",
   "main": "index.js",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongodb": "^3.6.9",
     "mongoose": "^5.13.2"
@@ -13,8 +14,7 @@
     "nodemon": "^2.0.9"
   },
   "scripts": {
-    "start": "nodemon server/server.js"
-
+    "dev": "env-cmd -f ./server/config/dev.env nodemon server/server.js"
   },
   "repository": {
     "type": "git",
