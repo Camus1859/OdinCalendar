@@ -22,6 +22,8 @@
             <div class="modal-content">
               <span class="close-button">&times;</span>
               <form action="/event" method="POST">
+                <label for="title"></label>
+
                 <input
                   class="user-input"
                   type="text"
@@ -31,7 +33,7 @@
                   autocomplete="off"
                   name="title"
                 />
-                <div><label for="date"></label></div>
+                <label for="date"></label>
                 <input
                   class="user-input"
                   type="date"
@@ -39,6 +41,8 @@
                   value=""
                   name="date"
                 />
+                <label for="time"></label>
+
                 <input
                   class="user-input"
                   type="time"
@@ -46,6 +50,8 @@
                   value=""
                   name="time"
                 />
+                <label for="description"></label>
+
                 <textarea
                   class="user-input"
                   rows="4"

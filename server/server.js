@@ -1,26 +1,18 @@
 const express = require('express');
-require('./src/db/mongoose');
-//const Event = require('./src/models/event');
 const app = express();
+app.use(express.static('client/src'));
+const cors = require('cors');
+require('./src/db/mongoose');
+const eventRouter = require('./src/routers/event');
+
+app.use(express.json());
+app.use(cors());
+app.use(eventRouter);
+
+
 const port = process.env.PORT || 3000;
 
-// const PostToDb = async () => {
-//   const task = new Event({
-//     title: ']zzzzzzzzzzzzzzzzzzz',
-//     body: '5555555555555',
-//   });
-//   console.log(task);
-
-//   try {
-//     await task.save();
-//     console.log(task);
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
-
-// PostToDb();
 
 app.listen(port, () => {
-  console.log('Server is up on port ' + port);
+  console.log(`Server is listening at http://localhost:${port}`);
 });
