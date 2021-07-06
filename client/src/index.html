@@ -8,8 +8,6 @@
   </head>
   <body>
     <div id="container-body">
-     
-
       <div id="top">
         <div id="event-container">
           <button id="container-all-events">
@@ -23,7 +21,7 @@
           <div class="modal">
             <div class="modal-content">
               <span class="close-button">&times;</span>
-              <form>
+              <form action="/event" method="POST">
                 <input
                   class="user-input"
                   type="text"
@@ -31,6 +29,7 @@
                   placeholder="Add Title"
                   value=""
                   autocomplete="off"
+                  name="title"
                 />
                 <div><label for="date"></label></div>
                 <input
@@ -38,12 +37,14 @@
                   type="date"
                   id="event-date"
                   value=""
+                  name="date"
                 />
                 <input
                   class="user-input"
                   type="time"
                   id="event-time"
                   value=""
+                  name="time"
                 />
                 <textarea
                   class="user-input"
@@ -53,6 +54,7 @@
                   id="event-description"
                   placeholder="Add Description..."
                   value=""
+                  name="description"
                 ></textarea>
                 <button type="submit" value="Submit" id="submit-event">
                   SUBMIT
