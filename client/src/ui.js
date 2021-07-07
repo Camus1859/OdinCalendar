@@ -1,4 +1,4 @@
-import { UserEvent, count } from './userEventClass.js';
+import { UserEvent } from './userEventClass.js';
 import { calendarObject } from './calendarClass.js';
 import {
   generateNumberOfDaysInMonth,
@@ -43,12 +43,13 @@ const getEvent = (title, date, time, description) => {
   const aUsersEvent = new UserEvent(title, date, time, description, count());
   aUsersEvent.setCalendarMonth(calendarObject.getCalendarMonth());
   aUsersEvent.setCalendarYear(calendarObject.getCalendarYear());
-  storingAllUserEvents.getEventList().push(aUsersEvent);
+  // postData('/event', aUsersEvent)
+  //storingAllUserEvents.getEventList().push(aUsersEvent);
   getCurrentYearAndMonthFromCalendar(aUsersEvent);
 };
 
-const getAllEventsFromDB = () => {
-  fetch('/allEvents', {
+const getAllEventsFromDB = async () => {
+  await fetch('/allEvents', {
     method: 'GET',
     headers: {
       'Content-type': 'application/json;charset=UTF-8',
@@ -58,9 +59,8 @@ const getAllEventsFromDB = () => {
     .then((res) => res.json())
     .then((eventsList) => {
       eventsList.forEach((event) => {
-        storingAllUserEvents.placeUserEventInMyArray(event);
+        //storingAllUserEvents.placeUserEventInMyArray(event);
         getCurrentYearAndMonthFromCalendar(event);
-        console.log(storingAllUserEvents);
       });
     })
     .catch((err) => console.log(err));
@@ -156,7 +156,7 @@ const editClicked = (e) => {
   if (e.target === editBtn) {
     const clickedEvent = storingAllUserEvents
       .getEventList()
-      .find((eventt) => eventt.counter === +e.target.getAttribute('data'));
+      .find((eventt) => eventt._id === +e.target.getAttribute('data'));
     document.getElementById('event-title').value = clickedEvent.title;
     document.getElementById('event-date').value = clickedEvent.date;
     document.getElementById('event-time').value = clickedEvent.time;
@@ -171,7 +171,7 @@ const editClicked = (e) => {
       let uniqueID = +e.target.getAttribute('data');
       const arrayOfEvents = storingAllUserEvents
         .getEventList()
-        .filter((event) => event.counter != uniqueID);
+        .filter((event) => event._id != uniqueID);
       storingAllUserEvents.resetEventList(arrayOfEvents);
       document.querySelectorAll(`[data="${uniqueID}"]`).forEach((node) => {
         node.remove();
@@ -186,7 +186,7 @@ const deleteClicked = (e) => {
   if (confirm('Are You Sure')) {
     const arrayOfEvents = storingAllUserEvents
       .getEventList()
-      .filter((event) => event.counter != uniqueID);
+      .filter((event) => event._id != uniqueID);
     storingAllUserEvents.resetEventList(arrayOfEvents);
     document.querySelectorAll(`[data="${uniqueID}"]`).forEach((node) => {
       node.remove();
@@ -194,15 +194,37 @@ const deleteClicked = (e) => {
   }
 };
 
+const getEventClickedFetch = async (url) => {
+  await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json',
+      Accept: 'application/json',
+    },
+  })
+    .then((res) => res.json())
+    .then((event) => console.log(event))
+    .catch((err) => console.log(err));
+};
+
 const handlerForEventsClicked = () => {
   const container = document.getElementById('days-of-the-month-container');
   container.addEventListener('mouseover', (e) => {
     if (e.target.getAttribute('data')) {
-      const clickedEventNumber = +e.target.getAttribute('data');
-      let eventInArray = storingAllUserEvents
-        .getEventList()
-        .find((event) => event.counter === clickedEventNumber);
-      compareEventToDate(eventInArray);
+      const clickedEventNumber = e.target.getAttribute('data');
+
+      console.log(clickedEventNumber)
+
+      //make a call to the database to get event that is hovered
+
+      getEventClickedFetch(`/event/${clickedEventNumber}`);
+
+      // let eventInArray = storingAllUserEvents
+      //   .getEventList()
+
+      //   .find((event) => event._id === clickedEventNumber);
+
+      // compareEventToDate(eventInArray);
     }
   });
 };
@@ -227,10 +249,10 @@ const compareEventToDate = (eventInArray) => {
   const deletebtn = document.querySelector('#delete');
   const editBtn = document.getElementById('edit');
   editBtn.addEventListener('click', editClicked);
-  editBtn.setAttribute('data', eventInArray.counter);
+  editBtn.setAttribute('data', eventInArray._id);
   deletebtn.addEventListener('click', deleteClicked);
-  deletebtn.setAttribute('data', eventInArray.counter);
-  modal.setAttribute('data', eventInArray.counter);
+  deletebtn.setAttribute('data', eventInArray._id);
+  modal.setAttribute('data', eventInArray._id);
   modal.addEventListener('click', (e) => {
     if (e.target.classList.contains('modal2')) {
       e.target.remove();
@@ -306,9 +328,10 @@ const timer = (time) => {
 };
 
 const createElements = (aUsersEvent, element) => {
+  console.log(aUsersEvent);
   const newEventForCalendar = `<h3 data="${
-    aUsersEvent.counter
-  }"class="event"><div data="${aUsersEvent.counter}" class="time-title">${timer(
+    aUsersEvent._id
+  }"class="event"><div data="${aUsersEvent._id}" class="time-title">${timer(
     aUsersEvent.time
   )} ${aUsersEvent.title}</div></h3>`;
   element.firstChild.nextSibling.insertAdjacentHTML(
@@ -344,7 +367,7 @@ const countChildNodes = () => {
       const idNumber = day.lastChild.getAttribute('data');
       const arrayOfEvents = storingAllUserEvents
         .getEventList()
-        .filter((event) => event.counter != idNumber);
+        .filter((event) => event._id != idNumber);
       storingAllUserEvents.resetEventList(arrayOfEvents);
       day.lastChild.remove();
       alert('Only allowed 3 events per day!');

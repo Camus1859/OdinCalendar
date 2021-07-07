@@ -19,11 +19,18 @@ router.post('/event', async (req, res) => {
 });
 
 router.get('/allEvents', async (req, res) => {
-  console.log('rannnnnnnnnnnnnnnnnn')
   const allEvents = await Event.find({})
   res.send(allEvents)
+})
+
+router.get('/event/:id', async (req, res) => {
+  const _id = req.params.id
+
+  console.log(_id)
 
 })
+
+
 
 
 module.exports = router;
