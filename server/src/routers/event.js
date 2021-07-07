@@ -3,7 +3,6 @@ const Event = require('../models/event');
 const router = new express.Router();
 
 router.post('/event', async (req, res) => {
-
   const newEvent = new Event({
     ...req.body,
   });
@@ -19,18 +18,25 @@ router.post('/event', async (req, res) => {
 });
 
 router.get('/allEvents', async (req, res) => {
-  const allEvents = await Event.find({})
-  res.send(allEvents)
-})
+  const allEvents = await Event.find({});
+  res.send(allEvents);
+});
 
 router.get('/event/:id', async (req, res) => {
-  const _id = req.params.id
+  const _id = req.params.id;
 
-  console.log(_id)
+  try {
+    const event = await Event.findOne({
+      _id,
+    });
 
-})
-
-
-
+    if (!event) {
+      return res.status(404).send();
+    }
+    res.send(event);
+  } catch {
+    res.status(500).send();
+  }
+});
 
 module.exports = router;

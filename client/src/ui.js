@@ -213,7 +213,7 @@ const handlerForEventsClicked = () => {
     if (e.target.getAttribute('data')) {
       const clickedEventNumber = e.target.getAttribute('data');
 
-      console.log(clickedEventNumber)
+      console.log(clickedEventNumber);
 
       //make a call to the database to get event that is hovered
 
