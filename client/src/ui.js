@@ -38,7 +38,6 @@ const displayMonth = (month) => {
 
 
 const getUserInfo = (e) => {
-  e.preventDefault()
   const eventTitle = document.getElementById('event-title').value
   const eventDate = document.getElementById('event-date').value
   const eventTime = document.getElementById('event-time').value
