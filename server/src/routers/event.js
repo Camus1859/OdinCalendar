@@ -21,7 +21,7 @@ router.post('/event', async (req, res) => {
 router.get('/allEvents', async (req, res) => {
   console.log('rannnnnnnnnnnnnnnnnn')
   const allEvents = await Event.find({})
-  console.log(allEvents)
+  res.send(allEvents)
 
 })
 

@@ -31,18 +31,26 @@ window.addEventListener('click', windowOnClick);
 const displayAllEvents = document.getElementById('container-all-events');
 displayAllEvents.addEventListener('click', showAllEvents);
 
-let storingAllUserEvents = new ListOfAllUserEvents();
+// let storingAllUserEvents = new ListOfAllUserEvents();
 
-fetch('/allEvents', {
-  method: 'GET',
-  headers: {
-    'Content-type': 'application/json;charset=UTF-8',
-    Accept: 'application/json',
-  },
-})
-  .then((res) => res.json())
-  .then((data) => console.log(data))
-  .catch((err) => console.log(err));
+// fetch('/allEvents', {
+//   method: 'GET',
+//   headers: {
+//     'Content-type': 'application/json;charset=UTF-8',
+//     Accept: 'application/json',
+//   },
+// })
+//   .then((res) => res.json())
+//   .then((data) =>{
+//     data.forEach(datum=>{
+//       storingAllUserEvents.placeUserEventInMyArray(datum)
+//       console.log(storingAllUserEvents)
+//     })
+
+//   })
+//   .catch((err) => console.log(err));
+
+
 
 function toggleModal() {
   modal.classList.toggle('show-modal');
