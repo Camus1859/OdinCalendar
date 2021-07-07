@@ -43,8 +43,6 @@ const getEvent = (title, date, time, description) => {
   const aUsersEvent = new UserEvent(title, date, time, description, count());
   aUsersEvent.setCalendarMonth(calendarObject.getCalendarMonth());
   aUsersEvent.setCalendarYear(calendarObject.getCalendarYear());
-  // postData('/event', aUsersEvent)
-  //storingAllUserEvents.getEventList().push(aUsersEvent);
   getCurrentYearAndMonthFromCalendar(aUsersEvent);
 };
 
@@ -59,7 +57,6 @@ const getAllEventsFromDB = async () => {
     .then((res) => res.json())
     .then((eventsList) => {
       eventsList.forEach((event) => {
-        //storingAllUserEvents.placeUserEventInMyArray(event);
         getCurrentYearAndMonthFromCalendar(event);
       });
     })
@@ -148,23 +145,36 @@ const refreshShowToday = () => {
   colorInEmptySquares();
 };
 
+const getEventToEditFetch = async (url) => {
+  await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json',
+      Accept: 'application/json',
+    },
+  })
+    .then((res) => res.json())
+    .then((clickedEvent) => {
+      document.getElementById('event-title').value = clickedEvent.title;
+      document.getElementById('event-date').value = clickedEvent.date;
+      document.getElementById('event-time').value = clickedEvent.time;
+      document.getElementById('event-description').value =
+        clickedEvent.description;
+      const modal = document.querySelector('.modal');
+      const modal2 = document.querySelector('.modal2');
+
+      modal2.remove();
+      modal.classList.toggle('show-modal');
+    })
+    .catch((err) => console.log(err));
+};
+
 const editClicked = (e) => {
   const editBtn = document.getElementById('edit');
   const submitBtn = document.getElementById('submit-event');
-  const modal = document.querySelector('.modal');
-  const modal2 = document.querySelector('.modal2');
-  if (e.target === editBtn) {
-    const clickedEvent = storingAllUserEvents
-      .getEventList()
-      .find((eventt) => eventt._id === +e.target.getAttribute('data'));
-    document.getElementById('event-title').value = clickedEvent.title;
-    document.getElementById('event-date').value = clickedEvent.date;
-    document.getElementById('event-time').value = clickedEvent.time;
-    document.getElementById('event-description').value =
-      clickedEvent.description;
 
-    modal2.remove();
-    modal.classList.toggle('show-modal');
+  if (e.target === editBtn) {
+    getEventToEditFetch(`/event/${e.target.getAttribute('data')}`);
   }
   document.addEventListener('click', (e) => {
     if (e.target === submitBtn) {
@@ -203,7 +213,9 @@ const getEventClickedFetch = async (url) => {
     },
   })
     .then((res) => res.json())
-    .then((event) => console.log(event))
+    .then((event) => {
+      compareEventToDate(event);
+    })
     .catch((err) => console.log(err));
 };
 
@@ -213,18 +225,7 @@ const handlerForEventsClicked = () => {
     if (e.target.getAttribute('data')) {
       const clickedEventNumber = e.target.getAttribute('data');
 
-      console.log(clickedEventNumber);
-
-      //make a call to the database to get event that is hovered
-
       getEventClickedFetch(`/event/${clickedEventNumber}`);
-
-      // let eventInArray = storingAllUserEvents
-      //   .getEventList()
-
-      //   .find((event) => event._id === clickedEventNumber);
-
-      // compareEventToDate(eventInArray);
     }
   });
 };
