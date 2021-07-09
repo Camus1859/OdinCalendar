@@ -3,19 +3,20 @@ const Event = require('../models/event');
 const router = new express.Router();
 
 router.post('/event', async (req, res) => {
-  console.log('rannnnnnnnnnnnnnnn');
   const newEvent = new Event({
     ...req.body,
   });
 
   try {
     await newEvent.save();
-    res.status(201);
+    res.status(201).send(newEvent);
+    console.log(newEvent)
+    res.redirect('/');
+
   } catch (e) {
     res.status(400);
   }
 
-  res.redirect('/');
 });
 
 router.get('/allEvents', async (req, res) => {

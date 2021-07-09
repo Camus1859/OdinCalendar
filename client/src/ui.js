@@ -30,35 +30,88 @@ const displayMonth = (month) => {
     : (document.getElementById('month').textContent = month);
 };
 
-const getUserInfo = (e) => {
-  console.log('andy');
+const getEventonEdit = (title, date, time, description, id) => {
+  console.log('ran');
+  //for edit, if id is coming in, remove that id from DOM, so I dont have duplicate events
 
-  const eventTitle = document.getElementById('event-title').value;
-  const eventDate = document.getElementById('event-date').value;
-  const eventTime = document.getElementById('event-time').value;
-  const eventDescription = document.getElementById('event-description').value;
-  getEvent(eventTitle, eventDate, eventTime, eventDescription);
-  countChildNodes();
-};
-// document.querySelectorAll(`[data="${uniqueID}"]`)
-
-const getEvent = (title, date, time, description, id) => {
-
-  if(id){
-    const oldEvent = document.querySelector(`[data="${id}"]`)
-    oldEvent.remove()
-
-
+  if (id) {
+    const oldEvent = document.querySelector(`[data="${id}"]`);
+    oldEvent.remove();
   }
 
-
-
   const aUsersEvent = new UserEvent(title, date, time, description, id);
-  console.log(aUsersEvent);
   aUsersEvent.setCalendarMonth(calendarObject.getCalendarMonth());
   aUsersEvent.setCalendarYear(calendarObject.getCalendarYear());
   getCurrentYearAndMonthFromCalendar(aUsersEvent);
 };
+
+const getEvent = (title, date, time, description, id) => {
+  console.log('ran');
+  //for edit, if id is coming in, remove that id from DOM, so I dont have duplicate events
+
+  // if (id) {
+  //   const oldEvent = document.querySelector(`[data="${id}"]`);
+  //   oldEvent.remove();
+  // }
+
+  const aUsersEvent = new UserEvent(title, date, time, description, id);
+  aUsersEvent.setCalendarMonth(calendarObject.getCalendarMonth());
+  aUsersEvent.setCalendarYear(calendarObject.getCalendarYear());
+  getCurrentYearAndMonthFromCalendar(aUsersEvent);
+};
+
+const getUserInfo = (e) => {
+  const submitBtn = document.getElementById('submit-event');
+
+
+  const submitEvent = (e) => {
+    console.log('ran?');
+    e.preventDefault();
+
+    const title = document.getElementById('event-title').value;
+    const date = document.getElementById('event-date').value;
+    const time = document.getElementById('event-time').value;
+    const description = document.getElementById('event-description').value;
+
+    postEventFetch(`/event`, {
+      title,
+      date,
+      time,
+      description,
+    });
+    //getEvent(title, date, time, description);
+    countChildNodes();
+
+    // if (e.target === submitBtn) {
+    // let uniqueID = e.target.getAttribute('data');
+
+    // const arrayOfEvents = storingAllUserEvents
+    //   .getEventList()
+    //   .filter((event) => event._id != uniqueID);
+    // storingAllUserEvents.resetEventList(arrayOfEvents);
+
+    // document.querySelectorAll(`[data="${uniqueID}"]`).forEach((node) => {
+    //   node.remove();
+    // });
+
+    //});
+    submitBtn.removeEventListener('click', submitEvent);
+  };
+
+  submitBtn.addEventListener('click', submitEvent);
+
+
+  // const eventTitle = document.getElementById('event-title').value;
+  // const eventDate = document.getElementById('event-date').value;
+  // const eventTime = document.getElementById('event-time').value;
+  // const eventDescription = document.getElementById('event-description').value;
+};
+
+const prepareToCreateEvent = () => {
+  getUserInfo();
+};
+
+// document.querySelectorAll(`[data="${uniqueID}"]`)
 
 const getAllEventsFromDB = async () => {
   await fetch('/allEvents', {
@@ -184,7 +237,31 @@ const getEventToDisplayFetch = async (url) => {
     .catch((err) => console.log(err));
 };
 
-const getEventToEditFetch = async (url, event) => {
+const postEventFetch = async (url, event) => {
+  await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(event),
+  })
+    .then((res) => res.json())
+    .then((event) => {
+      getEvent(
+        event.title,
+        event.date,
+        event.time,
+        event.description,
+        event._id
+      );
+    });
+  countChildNodes();
+
+  // .catch((err) => console.log(err));
+};
+
+const patchEventFetch = async (url, event) => {
   await fetch(url, {
     method: 'PATCH',
     headers: {
@@ -195,8 +272,7 @@ const getEventToEditFetch = async (url, event) => {
   })
     .then((res) => res.json())
     .then((event) => {
-      console.log(event);
-      getEvent(
+      getEventonEdit(
         event.title,
         event.date,
         event.time,
@@ -224,13 +300,12 @@ const editClicked = (e) => {
     submitBtn.addEventListener('click', (e) => {
       e.preventDefault();
 
-      console.log('bob');
       const title = document.getElementById('event-title').value;
       const date = document.getElementById('event-date').value;
       const time = document.getElementById('event-time').value;
       const description = document.getElementById('event-description').value;
 
-      getEventToEditFetch(`/event/${valuesIdNum}`, {
+      patchEventFetch(`/event/${valuesIdNum}`, {
         title,
         date,
         time,
@@ -393,7 +468,9 @@ const timer = (time) => {
 };
 
 const createElements = (aUsersEvent, element) => {
-  console.log(aUsersEvent);
+  if (!aUsersEvent._id) {
+    return;
+  }
   const newEventForCalendar = `<h3 data="${
     aUsersEvent._id
   }"class="event"><div data="${aUsersEvent._id}" class="time-title">${timer(
@@ -483,7 +560,7 @@ export {
   refreshShowToday,
   dropDownMonth,
   removeOldEventsContent,
-  getUserInfo,
+  //getUserInfo,
   updateMonth,
   yearEntered,
   getCurrentYearAndMonthFromCalendar,
@@ -492,4 +569,5 @@ export {
   colorInEmptySquaresYellow,
   displayEventsInCurrentMonth,
   showAllEvents,
+  prepareToCreateEvent,
 };

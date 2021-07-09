@@ -6,9 +6,10 @@ import {
   updateMonth,
   yearEntered,
   showAllEvents,
+  prepareToCreateEvent
 } from './ui.js';
 
-import { ListOfAllUserEvents } from './listOfAllUserEventsClass.js';
+
 
 const prevNextBtns = document.querySelectorAll('.update-month');
 const todayBtn = document.getElementById('today');
@@ -25,6 +26,8 @@ dropDownMonths.addEventListener('change', dropDownMonth);
 yearEnteredValue.addEventListener('keyup', yearEntered);
 trigger.addEventListener('click', toggleModal);
 trigger.addEventListener('click', removeOldEventsContent);
+trigger.addEventListener('click', prepareToCreateEvent);
+
 closeButton.addEventListener('click', toggleModal);
 submitBtn.addEventListener('click', toggleModal);
 window.addEventListener('click', windowOnClick);
