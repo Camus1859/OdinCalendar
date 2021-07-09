@@ -63,7 +63,6 @@ const getEvent = (title, date, time, description, id) => {
 const getUserInfo = (e) => {
   const submitBtn = document.getElementById('submit-event');
 
-
   const submitEvent = (e) => {
     console.log('ran?');
     e.preventDefault();
@@ -99,7 +98,6 @@ const getUserInfo = (e) => {
   };
 
   submitBtn.addEventListener('click', submitEvent);
-
 
   // const eventTitle = document.getElementById('event-title').value;
   // const eventDate = document.getElementById('event-date').value;
@@ -284,6 +282,26 @@ const patchEventFetch = async (url, event) => {
     .catch((err) => console.log(err));
 };
 
+const deleteEventFetch = async (url, event) => {
+  await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(event),
+  })
+    .then((res) => res.json())
+    .then((event) => {
+      console.log(event)
+      const unWantedEvent = document.querySelector(`[data="${event._id}"]`);
+      unWantedEvent.remove();
+      const modal2 = document.querySelector('.modal2');
+      modal2.remove();
+    })
+    .catch((err) => console.log(err));
+};
+
 const editClicked = (e) => {
   const editBtn = document.getElementById('edit');
   const submitBtn = document.getElementById('submit-event');
@@ -331,15 +349,17 @@ const editClicked = (e) => {
 
 const deleteClicked = (e) => {
   let uniqueID = e.target.getAttribute('data');
-  uniqueID = Number(uniqueID);
   if (confirm('Are You Sure')) {
-    const arrayOfEvents = storingAllUserEvents
-      .getEventList()
-      .filter((event) => event._id != uniqueID);
-    storingAllUserEvents.resetEventList(arrayOfEvents);
-    document.querySelectorAll(`[data="${uniqueID}"]`).forEach((node) => {
-      node.remove();
-    });
+    console.log('deletion confirmed')
+    console.log(uniqueID)
+    // const arrayOfEvents = storingAllUserEvents.getEventList().filter((event) => event._id != uniqueID);
+    deleteEventFetch(`/event/${uniqueID}`);
+
+    //storingAllUserEvents.resetEventList(arrayOfEvents);
+
+    // document.querySelectorAll(`[data="${uniqueID}"]`).forEach((node) => {
+    //   node.remove();
+    // });
   }
 };
 

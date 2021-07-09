@@ -10,13 +10,11 @@ router.post('/event', async (req, res) => {
   try {
     await newEvent.save();
     res.status(201).send(newEvent);
-    console.log(newEvent)
+    console.log(newEvent);
     res.redirect('/');
-
   } catch (e) {
     res.status(400);
   }
-
 });
 
 router.get('/allEvents', async (req, res) => {
@@ -59,6 +57,22 @@ router.patch('/event/:id', async (req, res) => {
     res.send(event);
   } catch (e) {
     res.status(400).send(e);
+  }
+});
+
+router.delete('/event/:id', async (req, res) => {
+  try {
+    const eventTodelete = await Event.findOneAndDelete({
+      _id: req.params.id,
+    });
+
+    if (!eventTodelete) {
+      return res.status(404).send();
+    }
+    res.send(eventTodelete);
+    console.log(eventTodelete)
+  } catch (e) {
+    res.status(500).send(e);
   }
 });
 
