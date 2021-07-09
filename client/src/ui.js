@@ -31,6 +31,7 @@ const displayMonth = (month) => {
 };
 
 const getUserInfo = (e) => {
+  e.preventDefault();
   const eventTitle = document.getElementById('event-title').value;
   const eventDate = document.getElementById('event-date').value;
   const eventTime = document.getElementById('event-time').value;
@@ -40,7 +41,7 @@ const getUserInfo = (e) => {
 };
 
 const getEvent = (title, date, time, description) => {
-  const aUsersEvent = new UserEvent(title, date, time, description, count());
+  const aUsersEvent = new UserEvent(title, date, time, description);
   aUsersEvent.setCalendarMonth(calendarObject.getCalendarMonth());
   aUsersEvent.setCalendarYear(calendarObject.getCalendarYear());
   getCurrentYearAndMonthFromCalendar(aUsersEvent);
@@ -145,8 +146,9 @@ const refreshShowToday = () => {
   colorInEmptySquares();
 };
 
-const getEventToEditFetch = async (url) => {
-  await fetch(url, {
+const getEventToDisplayFetch = async (url) => {
+  console.log('ram');
+  return await fetch(url, {
     method: 'GET',
     headers: {
       'Content-type': 'application/json',
@@ -162,32 +164,73 @@ const getEventToEditFetch = async (url) => {
         clickedEvent.description;
       const modal = document.querySelector('.modal');
       const modal2 = document.querySelector('.modal2');
-
       modal2.remove();
       modal.classList.toggle('show-modal');
+      return clickedEvent;
     })
     .catch((err) => console.log(err));
+};
+
+const getEventToEditFetch = async (url, event) => {
+  console.log(event)
+   await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'Content-type': 'application/json',
+       Accept: 'application/json',
+    },
+    body: JSON.stringify(event),
+
+  })
+    // .then((res) => res.json())
+    // .then((event) => console.log(event))
+    // .catch((err) => console.log(err));
 };
 
 const editClicked = (e) => {
   const editBtn = document.getElementById('edit');
   const submitBtn = document.getElementById('submit-event');
+  const valuesIdNum = e.target.getAttribute('data');
 
   if (e.target === editBtn) {
-    getEventToEditFetch(`/event/${e.target.getAttribute('data')}`);
-  }
-  document.addEventListener('click', (e) => {
-    if (e.target === submitBtn) {
-      let uniqueID = +e.target.getAttribute('data');
-      const arrayOfEvents = storingAllUserEvents
-        .getEventList()
-        .filter((event) => event._id != uniqueID);
-      storingAllUserEvents.resetEventList(arrayOfEvents);
-      document.querySelectorAll(`[data="${uniqueID}"]`).forEach((node) => {
-        node.remove();
+    getEventToDisplayFetch(`/event/${valuesIdNum}`).then((event) =>
+      console.log(event)
+    );
+
+    //  document.getElementById('myform').method = 'PATCH'
+    //  document.getElementById('myform').action = `/event/${e.target.getAttribute('data')}`
+    //  if (e.target === submitBtn) {
+    //  }
+
+    submitBtn.addEventListener('click', (e) => {
+      const title = document.getElementById('event-title').value;
+      const date = document.getElementById('event-date').value;
+      const time = document.getElementById('event-time').value;
+      const description = document.getElementById('event-description').value;
+
+      getEventToEditFetch(`/event/${valuesIdNum}`, {
+        title,
+        date,
+        time,
+        description,
       });
-    }
-  });
+
+      // if (e.target === submitBtn) {
+      // let uniqueID = e.target.getAttribute('data');
+
+      // const arrayOfEvents = storingAllUserEvents
+      //   .getEventList()
+      //   .filter((event) => event._id != uniqueID);
+      // storingAllUserEvents.resetEventList(arrayOfEvents);
+
+      // document.querySelectorAll(`[data="${uniqueID}"]`).forEach((node) => {
+      //   node.remove();
+      // });
+
+      //});
+
+    });
+  }
 };
 
 const deleteClicked = (e) => {
@@ -249,7 +292,7 @@ const compareEventToDate = (eventInArray) => {
   document.body.appendChild(modal);
   const deletebtn = document.querySelector('#delete');
   const editBtn = document.getElementById('edit');
-  editBtn.addEventListener('click', editClicked);
+  document.addEventListener('click', editClicked);
   editBtn.setAttribute('data', eventInArray._id);
   deletebtn.addEventListener('click', deleteClicked);
   deletebtn.setAttribute('data', eventInArray._id);

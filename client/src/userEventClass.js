@@ -9,7 +9,7 @@ class UserEvent extends Calendar {
       this.date = date
       this.time = time
       this.description = description
-      this.id = id
+      //this.id = id
       //this.counter = counter
 
   }

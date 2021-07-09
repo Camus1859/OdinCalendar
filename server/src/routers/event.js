@@ -3,6 +3,7 @@ const Event = require('../models/event');
 const router = new express.Router();
 
 router.post('/event', async (req, res) => {
+  console.log('rannnnnnnnnnnnnnnn');
   const newEvent = new Event({
     ...req.body,
   });
@@ -36,6 +37,30 @@ router.get('/event/:id', async (req, res) => {
     res.send(event);
   } catch {
     res.status(500).send();
+  }
+});
+
+router.patch('/event/:id', async (req, res) => {
+  const updates = Object.keys(req.body);
+
+  try {
+    const event = await Event.findOne({
+      _id: req.params.id,
+    });
+
+    if (!event) {
+      res.status(404).send();
+    }
+
+
+
+    updates.forEach((update) => (event[update] = req.body[update]));
+
+
+    await event.save();
+    res.send(event);
+  } catch (e) {
+    res.status(400).send(e);
   }
 });
 
