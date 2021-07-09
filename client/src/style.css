@@ -131,9 +131,9 @@ body {
   justify-content: space-evenly;
 }
 
-.month {
+/* .month {
   text-transform: uppercase;
-}
+} */
 
 #month-selector option:hover {
   background-color: rgb(160, 222, 238);

@@ -130,6 +130,36 @@ const getAllEventsFromDB = async () => {
 
 getAllEventsFromDB();
 
+
+const getAllEventsFromDB2 = async (thisYear, thisMonthNum) => {
+  await fetch('/allEvents', {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json;charset=UTF-8',
+      Accept: 'application/json',
+    },
+  })
+    .then((res) => res.json())
+    .then((eventsList) => {
+      eventsList.forEach((item) => {
+
+        const date = item.date.split('-');
+        const eventYear = Number(date[0]);
+        const eventMonth = Number(date[1]);
+        const eventDay = Number(date[2]);
+        if (thisYear === eventYear && thisMonthNum === eventMonth) {
+          getDayOfEvent(item, eventDay);
+        }
+    
+
+
+        
+
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 const clearCalendar = () => {
   const daysOfMonthNodes = document.querySelectorAll('.calendar-days');
   daysOfMonthNodes.forEach((day) => {
@@ -153,6 +183,17 @@ const dropDownMonth = (e) => {
   document.getElementById(
     'month'
   ).textContent = calendarObject.setCalendarMonth(e.target.value);
+  document.getElementById(
+    'year'
+  ).textContent = calendarObject.getCalendarYear()
+
+
+  setFirstDayOfCalendar(calendarObject.getCalendarYear());
+  checksMonthYearToCalendar();
+  getAllEventsFromDB()
+
+
+
 };
 
 const yearEntered = (e) => {
@@ -163,6 +204,9 @@ const yearEntered = (e) => {
     ).textContent = calendarObject.setCalendarYear(year);
     setFirstDayOfCalendar(year);
     checksMonthYearToCalendar();
+
+
+    getAllEventsFromDB()
   }
 };
 
@@ -208,6 +252,20 @@ const refreshShowToday = () => {
   checksMonthYearToCalendar();
   colorInEmptySquaresYellow();
   colorInEmptySquares();
+  getAllEventsFromDB()
+
+  document.getElementById('year-input').value =
+    new Date().getFullYear()
+
+    document.getElementById('month-selector').value = calendarObject.getCalendarMonth()
+   
+
+  // document.getElementById(
+  //   'month'
+  // ).textContent = calendarObject.setCalendarMonth(e.target.value);
+  // document.getElementById(
+  //   'year'
+  // ).textContent = calendarObject.getCalendarYear()
 };
 
 const getEventToDisplayFetch = async (url) => {
@@ -462,20 +520,28 @@ const separatingYearMonthDayOfUserEvent = (
 const checksForMatchedWhenPrevNextClicked = () => {
   setFirstDayOfCalendar(calendarObject.getCalendarYear());
   checksMonthYearToCalendar();
+  getAllEventsFromDB()
 };
 
 const checksMonthYearToCalendar = () => {
   const thisYear = calendarObject.getCalendarYear();
   const thisMonthNum = calendarObject.getCalendarMonthNumber() + 1;
-  storingAllUserEvents.getEventList().forEach((item) => {
-    const date = item.date.split('-');
-    const eventYear = Number(date[0]);
-    const eventMonth = Number(date[1]);
-    const eventDay = Number(date[2]);
-    if (thisYear === eventYear && thisMonthNum === eventMonth) {
-      getDayOfEvent(item, eventDay);
-    }
-  });
+
+ // getAllEventsFromDB2(thisYear,  thisMonthNum )
+
+
+
+
+  // storingAllUserEvents.getEventList().forEach((item) => {
+  //   const date = item.date.split('-');
+  //   const eventYear = Number(date[0]);
+  //   const eventMonth = Number(date[1]);
+  //   const eventDay = Number(date[2]);
+  //   if (thisYear === eventYear && thisMonthNum === eventMonth) {
+  //     getDayOfEvent(item, eventDay);
+  //   }
+  // });
+
 };
 
 const timer = (time) => {
