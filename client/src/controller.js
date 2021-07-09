@@ -2,7 +2,7 @@ import {
   refreshShowToday,
   dropDownMonth,
   removeOldEventsContent,
-  getUserInfo,
+  //getUserInfo,
   updateMonth,
   yearEntered,
   showAllEvents,
@@ -18,7 +18,7 @@ const modal = document.querySelector('.modal');
 const trigger = document.querySelector('.trigger');
 const closeButton = document.querySelector('.close-button');
 const submitBtn = document.getElementById('submit-event');
-submitBtn.addEventListener('click', getUserInfo);
+//submitBtn.addEventListener('click', getUserInfo);
 todayBtn.addEventListener('click', refreshShowToday);
 prevNextBtns.forEach((button) => button.addEventListener('click', updateMonth));
 dropDownMonths.addEventListener('change', dropDownMonth);

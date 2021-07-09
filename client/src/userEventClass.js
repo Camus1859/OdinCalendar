@@ -3,13 +3,13 @@ import {
 } from "./calendarClass.js"
 
 class UserEvent extends Calendar {
-  constructor(title, date, time, description) {
+  constructor(title, date, time, description, _id) {
       super()
       this.title = title
       this.date = date
       this.time = time
       this.description = description
-      //this.id = id
+      this._id = _id
       //this.counter = counter
 
   }
@@ -20,7 +20,7 @@ class UserEvent extends Calendar {
       }
   }
   getCounter() {
-      return this.id
+      return this._id
   }
 }
 

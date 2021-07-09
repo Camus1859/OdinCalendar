@@ -31,7 +31,8 @@ const displayMonth = (month) => {
 };
 
 const getUserInfo = (e) => {
-  e.preventDefault();
+  console.log('andy');
+
   const eventTitle = document.getElementById('event-title').value;
   const eventDate = document.getElementById('event-date').value;
   const eventTime = document.getElementById('event-time').value;
@@ -39,9 +40,21 @@ const getUserInfo = (e) => {
   getEvent(eventTitle, eventDate, eventTime, eventDescription);
   countChildNodes();
 };
+// document.querySelectorAll(`[data="${uniqueID}"]`)
 
-const getEvent = (title, date, time, description) => {
-  const aUsersEvent = new UserEvent(title, date, time, description);
+const getEvent = (title, date, time, description, id) => {
+
+  if(id){
+    const oldEvent = document.querySelector(`[data="${id}"]`)
+    oldEvent.remove()
+
+
+  }
+
+
+
+  const aUsersEvent = new UserEvent(title, date, time, description, id);
+  console.log(aUsersEvent);
   aUsersEvent.setCalendarMonth(calendarObject.getCalendarMonth());
   aUsersEvent.setCalendarYear(calendarObject.getCalendarYear());
   getCurrentYearAndMonthFromCalendar(aUsersEvent);
@@ -172,19 +185,27 @@ const getEventToDisplayFetch = async (url) => {
 };
 
 const getEventToEditFetch = async (url, event) => {
-  console.log(event)
-   await fetch(url, {
+  await fetch(url, {
     method: 'PATCH',
     headers: {
       'Content-type': 'application/json',
-       Accept: 'application/json',
+      Accept: 'application/json',
     },
     body: JSON.stringify(event),
-
   })
-    // .then((res) => res.json())
-    // .then((event) => console.log(event))
-    // .catch((err) => console.log(err));
+    .then((res) => res.json())
+    .then((event) => {
+      console.log(event);
+      getEvent(
+        event.title,
+        event.date,
+        event.time,
+        event.description,
+        event._id
+      );
+      countChildNodes();
+    })
+    .catch((err) => console.log(err));
 };
 
 const editClicked = (e) => {
@@ -193,9 +214,7 @@ const editClicked = (e) => {
   const valuesIdNum = e.target.getAttribute('data');
 
   if (e.target === editBtn) {
-    getEventToDisplayFetch(`/event/${valuesIdNum}`).then((event) =>
-      console.log(event)
-    );
+    getEventToDisplayFetch(`/event/${valuesIdNum}`);
 
     //  document.getElementById('myform').method = 'PATCH'
     //  document.getElementById('myform').action = `/event/${e.target.getAttribute('data')}`
@@ -203,6 +222,9 @@ const editClicked = (e) => {
     //  }
 
     submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      console.log('bob');
       const title = document.getElementById('event-title').value;
       const date = document.getElementById('event-date').value;
       const time = document.getElementById('event-time').value;
@@ -228,7 +250,6 @@ const editClicked = (e) => {
       // });
 
       //});
-
     });
   }
 };

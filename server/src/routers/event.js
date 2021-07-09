@@ -52,10 +52,7 @@ router.patch('/event/:id', async (req, res) => {
       res.status(404).send();
     }
 
-
-
     updates.forEach((update) => (event[update] = req.body[update]));
-
 
     await event.save();
     res.send(event);
