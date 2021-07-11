@@ -161,7 +161,15 @@ body {
 .inside-of-square {
   display: flex;
   flex-direction: column;
-  margin-top: -5px;
+  justify-content: space-evenly;
+  /* flex-basis: 23%; */
+  /* margin: 0 1% 1px; */
+  height: 80%; 
+
+  /* height: 100px; */
+  /* margin-top: -5px;
+  height: 100%;  */
+
 }
 
 input::-webkit-outer-spin-button,

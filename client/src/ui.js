@@ -46,7 +46,6 @@ const getEventonEdit = (title, date, time, description, id) => {
 };
 
 const getEvent = (title, date, time, description, id) => {
-  console.log('ran');
   //for edit, if id is coming in, remove that id from DOM, so I dont have duplicate events
 
   // if (id) {
@@ -60,11 +59,28 @@ const getEvent = (title, date, time, description, id) => {
   getCurrentYearAndMonthFromCalendar(aUsersEvent);
 };
 
-const getUserInfo = (e) => {
+const getUserInfo =  (e) => {
+  let count = 0;
   const submitBtn = document.getElementById('submit-event');
 
-  const submitEvent = (e) => {
-    console.log('ran?');
+  const submitEvent = async (e) => {
+
+
+    //instead of checking like this, check all documents in database and see if any 3 documents have the current date, if so, stop code, if not run
+
+  //     const days = Array.from(document.querySelectorAll('.inside-of-square'));
+  // days.forEach((day) => {
+  //   if (day.childElementCount === 3) {
+  //     // const idNumber = day.lastChild.getAttribute('data');
+  //     // const arrayOfEvents = storingAllUserEvents
+  //     //   .getEventList()
+  //     //   .filter((event) => event._id != idNumber);
+  //     // storingAllUserEvents.resetEventList(arrayOfEvents);
+  //     // day.lastChild.remove();
+  //    return alert('Only allowed 3 events per day!');
+  //   }
+  // });
+
     e.preventDefault();
 
     const title = document.getElementById('event-title').value;
@@ -72,6 +88,31 @@ const getUserInfo = (e) => {
     const time = document.getElementById('event-time').value;
     const description = document.getElementById('event-description').value;
 
+
+    await fetch('/allEvents', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+        Accept: 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((eventsList) => {
+        eventsList.forEach((event) => {
+           console.log(event.date)
+         if( event.date === date) {
+           count = count + 1
+           console.log(count)
+         }
+          
+        });
+      })
+      .catch((err) => console.log(err));
+
+if (count === 3) {
+  return alert('Only allowed 3 events per day!');
+
+}
     postEventFetch(`/event`, {
       title,
       date,
@@ -79,7 +120,7 @@ const getUserInfo = (e) => {
       description,
     });
     //getEvent(title, date, time, description);
-    countChildNodes();
+    // countChildNodes();
 
     // if (e.target === submitBtn) {
     // let uniqueID = e.target.getAttribute('data');
@@ -130,8 +171,7 @@ const getAllEventsFromDB = async () => {
 
 getAllEventsFromDB();
 
-
-const getAllEventsFromDB2 = async (thisYear, thisMonthNum) => {
+const getAllEventsFromDB3 = async (thisDate) => {
   await fetch('/allEvents', {
     method: 'GET',
     headers: {
@@ -141,21 +181,52 @@ const getAllEventsFromDB2 = async (thisYear, thisMonthNum) => {
   })
     .then((res) => res.json())
     .then((eventsList) => {
-      eventsList.forEach((item) => {
+      eventsList.forEach((event) => {
+        const count = 0
+       if( event.date === thisDate) {
+         count++
+         if (count === 3){
+           return
+         }
 
-        const date = item.date.split('-');
-        const eventYear = Number(date[0]);
-        const eventMonth = Number(date[1]);
-        const eventDay = Number(date[2]);
-        if (thisYear === eventYear && thisMonthNum === eventMonth) {
-          getDayOfEvent(item, eventDay);
-        }
-    
-
-
+       }
         
-
       });
+    })
+    .catch((err) => console.log(err));
+};
+
+
+const getAllEventsFromDB2 = async () => {
+  const holdEvents = document.getElementById('holds-events');
+
+ return await fetch('/allEvents', {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json;charset=UTF-8',
+      Accept: 'application/json',
+    },
+  })
+    .then((res) => res.json())
+    .then((eventsList) => {
+       eventsList.filter((eventt) => {
+        const date = eventt.date.split('-');
+        const eventYear = Number(date[0]);
+        const eventMonth = Number(date[1]) - 1;
+        const eventDay = Number(date[2]);
+        if (
+          eventYear === calendarObject.getCalendarYear() &&
+          eventMonth === calendarObject.getCalendarMonthNumber()
+        ) {
+          const allEvents = `
+        <ul>
+          <li id="listing">${eventt.title} ${eventDay}th</li>
+        <ul>`;
+          holdEvents.insertAdjacentHTML('beforeend', allEvents);
+        }
+      });
+      const displayAllEvents = document.getElementById('container-all-events');
+      displayAllEvents.removeEventListener('click', showAllEvents);
     })
     .catch((err) => console.log(err));
 };
@@ -312,7 +383,7 @@ const postEventFetch = async (url, event) => {
         event._id
       );
     });
-  countChildNodes();
+  // countChildNodes();
 
   // .catch((err) => console.log(err));
 };
@@ -335,7 +406,7 @@ const patchEventFetch = async (url, event) => {
         event.description,
         event._id
       );
-      countChildNodes();
+     // countChildNodes();
     })
     .catch((err) => console.log(err));
 };
@@ -591,14 +662,14 @@ const colorInEmptySquaresYellow = () => {
 const countChildNodes = () => {
   const days = Array.from(document.querySelectorAll('.inside-of-square'));
   days.forEach((day) => {
-    if (day.childElementCount === 4) {
-      const idNumber = day.lastChild.getAttribute('data');
-      const arrayOfEvents = storingAllUserEvents
-        .getEventList()
-        .filter((event) => event._id != idNumber);
-      storingAllUserEvents.resetEventList(arrayOfEvents);
-      day.lastChild.remove();
-      alert('Only allowed 3 events per day!');
+    if (day.childElementCount === 3) {
+      // const idNumber = day.lastChild.getAttribute('data');
+      // const arrayOfEvents = storingAllUserEvents
+      //   .getEventList()
+      //   .filter((event) => event._id != idNumber);
+      // storingAllUserEvents.resetEventList(arrayOfEvents);
+      // day.lastChild.remove();
+     return alert('Only allowed 3 events per day!');
     }
   });
 };
@@ -609,25 +680,34 @@ const displayEventsInCurrentMonth = () => {
 };
 
 const showAllEvents = () => {
-  const holdEvents = document.getElementById('holds-events');
-  storingAllUserEvents.getEventList().filter((eventt) => {
-    const date = eventt.date.split('-');
-    const eventYear = Number(date[0]);
-    const eventMonth = Number(date[1]) - 1;
-    const eventDay = Number(date[2]);
-    if (
-      eventYear === calendarObject.getCalendarYear() &&
-      eventMonth === calendarObject.getCalendarMonthNumber()
-    ) {
-      const allEvents = `
-    <ul>
-      <li id="listing">${eventt.title} ${eventDay}th</li>
-    <ul>`;
-      holdEvents.insertAdjacentHTML('beforeend', allEvents);
-    }
-  });
-  const displayAllEvents = document.getElementById('container-all-events');
-  displayAllEvents.removeEventListener('click', showAllEvents);
+
+
+ getAllEventsFromDB2()
+
+
+
+
+
+
+  
+  //   .filter((eventt) => {
+  //   const date = eventt.date.split('-');
+  //   const eventYear = Number(date[0]);
+  //   const eventMonth = Number(date[1]) - 1;
+  //   const eventDay = Number(date[2]);
+  //   if (
+  //     eventYear === calendarObject.getCalendarYear() &&
+  //     eventMonth === calendarObject.getCalendarMonthNumber()
+  //   ) {
+  //     const allEvents = `
+  //   <ul>
+  //     <li id="listing">${eventt.title} ${eventDay}th</li>
+  //   <ul>`;
+  //     holdEvents.insertAdjacentHTML('beforeend', allEvents);
+  //   }
+  // });
+  // const displayAllEvents = document.getElementById('container-all-events');
+  // displayAllEvents.removeEventListener('click', showAllEvents);
 };
 
 const clearShowAllEvents = () => {
@@ -650,7 +730,7 @@ export {
   updateMonth,
   yearEntered,
   getCurrentYearAndMonthFromCalendar,
-  countChildNodes,
+  // countChildNodes,
   colorInEmptySquares,
   colorInEmptySquaresYellow,
   displayEventsInCurrentMonth,
