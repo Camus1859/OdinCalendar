@@ -1,6 +1,8 @@
 const express = require('express');
 const Event = require('../models/event');
 const router = new express.Router();
+require('dotenv').config();
+const unirest = require('unirest');
 
 router.post('/event', async (req, res) => {
   const newEvent = new Event({
@@ -70,10 +72,36 @@ router.delete('/event/:id', async (req, res) => {
       return res.status(404).send();
     }
     res.send(eventTodelete);
-    console.log(eventTodelete)
+    console.log(eventTodelete);
   } catch (e) {
     res.status(500).send(e);
   }
 });
+
+
+router.get('/holidays/', async (req, res) => {
+  
+  const currentYear = new Date().getFullYear();
+
+
+  const data = unirest(
+    'GET',
+    `https://public-holiday.p.rapidapi.com/${currentYear}/US`
+  );
+  
+  data.headers({
+    'x-rapidapi-key': process.env.API_KEY,
+    'x-rapidapi-host': 'public-holiday.p.rapidapi.com',
+    useQueryString: true,
+  });
+  
+  data.end(function (res) {
+    if (res.error) throw new Error(res.error);
+    res.body;
+  });
+
+})
+
+
 
 module.exports = router;

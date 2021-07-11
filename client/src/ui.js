@@ -4,9 +4,13 @@ import {
   generateNumberOfDaysInMonth,
   setFirstDayOfCalendar,
 } from './dateGenerator.js';
-import { ListOfAllUserEvents } from './listOfAllUserEventsClass.js';
 import { displayYear } from './dateGenerator.js';
-let storingAllUserEvents = new ListOfAllUserEvents();
+
+
+
+
+
+
 
 const generatingAllSquaresInCalendar = () => {
   let daysInMonthContainer = document.getElementById(
@@ -171,7 +175,7 @@ const getAllEventsFromDB = async () => {
 
 getAllEventsFromDB();
 
-const getAllEventsFromDB3 = async (thisDate) => {
+const getAllEventsFromDB3 = async () => {
   await fetch('/allEvents', {
     method: 'GET',
     headers: {
