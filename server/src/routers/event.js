@@ -2,7 +2,7 @@ const express = require('express');
 const Event = require('../models/event');
 const router = new express.Router();
 require('dotenv').config();
-const unirest = require('unirest');
+const fetch = require('node-fetch');
 
 router.post('/event', async (req, res) => {
   const newEvent = new Event({
@@ -18,6 +18,13 @@ router.post('/event', async (req, res) => {
     res.status(400);
   }
 });
+
+router.post('/holidays', async (req, res)=> {
+const holidays = n
+
+
+
+})
 
 router.get('/allEvents', async (req, res) => {
   const allEvents = await Event.find({});
@@ -78,30 +85,25 @@ router.delete('/event/:id', async (req, res) => {
   }
 });
 
-
 router.get('/holidays/', async (req, res) => {
-  
   const currentYear = new Date().getFullYear();
 
-
-  const data = unirest(
-    'GET',
-    `https://public-holiday.p.rapidapi.com/${currentYear}/US`
-  );
-  
-  data.headers({
-    'x-rapidapi-key': process.env.API_KEY,
-    'x-rapidapi-host': 'public-holiday.p.rapidapi.com',
-    useQueryString: true,
-  });
-  
-  data.end(function (res) {
-    if (res.error) throw new Error(res.error);
-    res.body;
-  });
-
-})
-
-
+  try {
+    const response = await fetch(
+      `https://calendarific.com/api/v2/holidays?&api_key=${process.env.API_KEY}&country=US&year=${currentYear}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8',
+          Accept: 'application/json',
+        },
+      }
+    );
+    const holidays = await response.json();
+    res.send(holidays);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 module.exports = router;

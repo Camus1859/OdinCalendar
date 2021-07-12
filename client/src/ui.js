@@ -6,12 +6,6 @@ import {
 } from './dateGenerator.js';
 import { displayYear } from './dateGenerator.js';
 
-
-
-
-
-
-
 const generatingAllSquaresInCalendar = () => {
   let daysInMonthContainer = document.getElementById(
     'days-of-the-month-container'
@@ -63,27 +57,25 @@ const getEvent = (title, date, time, description, id) => {
   getCurrentYearAndMonthFromCalendar(aUsersEvent);
 };
 
-const getUserInfo =  (e) => {
+const getUserInfo = (e) => {
   let count = 0;
   const submitBtn = document.getElementById('submit-event');
 
   const submitEvent = async (e) => {
-
-
     //instead of checking like this, check all documents in database and see if any 3 documents have the current date, if so, stop code, if not run
 
-  //     const days = Array.from(document.querySelectorAll('.inside-of-square'));
-  // days.forEach((day) => {
-  //   if (day.childElementCount === 3) {
-  //     // const idNumber = day.lastChild.getAttribute('data');
-  //     // const arrayOfEvents = storingAllUserEvents
-  //     //   .getEventList()
-  //     //   .filter((event) => event._id != idNumber);
-  //     // storingAllUserEvents.resetEventList(arrayOfEvents);
-  //     // day.lastChild.remove();
-  //    return alert('Only allowed 3 events per day!');
-  //   }
-  // });
+    //     const days = Array.from(document.querySelectorAll('.inside-of-square'));
+    // days.forEach((day) => {
+    //   if (day.childElementCount === 3) {
+    //     // const idNumber = day.lastChild.getAttribute('data');
+    //     // const arrayOfEvents = storingAllUserEvents
+    //     //   .getEventList()
+    //     //   .filter((event) => event._id != idNumber);
+    //     // storingAllUserEvents.resetEventList(arrayOfEvents);
+    //     // day.lastChild.remove();
+    //    return alert('Only allowed 3 events per day!');
+    //   }
+    // });
 
     e.preventDefault();
 
@@ -91,7 +83,6 @@ const getUserInfo =  (e) => {
     const date = document.getElementById('event-date').value;
     const time = document.getElementById('event-time').value;
     const description = document.getElementById('event-description').value;
-
 
     await fetch('/allEvents', {
       method: 'GET',
@@ -103,20 +94,18 @@ const getUserInfo =  (e) => {
       .then((res) => res.json())
       .then((eventsList) => {
         eventsList.forEach((event) => {
-           console.log(event.date)
-         if( event.date === date) {
-           count = count + 1
-           console.log(count)
-         }
-          
+          console.log(event.date);
+          if (event.date === date) {
+            count = count + 1;
+            console.log(count);
+          }
         });
       })
       .catch((err) => console.log(err));
 
-if (count === 3) {
-  return alert('Only allowed 3 events per day!');
-
-}
+    if (count === 3) {
+      return alert('Only allowed 3 events per day!');
+    }
     postEventFetch(`/event`, {
       title,
       date,
@@ -175,36 +164,32 @@ const getAllEventsFromDB = async () => {
 
 getAllEventsFromDB();
 
-const getAllEventsFromDB3 = async () => {
-  await fetch('/allEvents', {
+const getHolidays = async () => {
+  let response = await fetch('/holidays/', {
     method: 'GET',
     headers: {
       'Content-type': 'application/json;charset=UTF-8',
       Accept: 'application/json',
     },
-  })
-    .then((res) => res.json())
-    .then((eventsList) => {
-      eventsList.forEach((event) => {
-        const count = 0
-       if( event.date === thisDate) {
-         count++
-         if (count === 3){
-           return
-         }
-
-       }
-        
-      });
-    })
-    .catch((err) => console.log(err));
+  });
+  let holidays = await response.json();
+  const USNationalHolidays = holidays.response.holidays.filter(
+    (holiday) => holiday.type[0] === 'National holiday'
+  );
+  USNationalHolidays.forEach((holiday) => {
+    let date = holiday.date.iso;
+    let title = holiday.name;
+    let description = holiday.description;
+    const myHoliday = { date, title, description };
+    holidayYearAndMonth(myHoliday);
+  });
 };
-
+getHolidays();
 
 const getAllEventsFromDB2 = async () => {
   const holdEvents = document.getElementById('holds-events');
 
- return await fetch('/allEvents', {
+  return await fetch('/allEvents', {
     method: 'GET',
     headers: {
       'Content-type': 'application/json;charset=UTF-8',
@@ -213,7 +198,7 @@ const getAllEventsFromDB2 = async () => {
   })
     .then((res) => res.json())
     .then((eventsList) => {
-       eventsList.filter((eventt) => {
+      eventsList.filter((eventt) => {
         const date = eventt.date.split('-');
         const eventYear = Number(date[0]);
         const eventMonth = Number(date[1]) - 1;
@@ -260,15 +245,11 @@ const dropDownMonth = (e) => {
   ).textContent = calendarObject.setCalendarMonth(e.target.value);
   document.getElementById(
     'year'
-  ).textContent = calendarObject.getCalendarYear()
-
+  ).textContent = calendarObject.getCalendarYear();
 
   setFirstDayOfCalendar(calendarObject.getCalendarYear());
   checksMonthYearToCalendar();
-  getAllEventsFromDB()
-
-
-
+  getAllEventsFromDB();
 };
 
 const yearEntered = (e) => {
@@ -279,9 +260,7 @@ const yearEntered = (e) => {
     ).textContent = calendarObject.setCalendarYear(year);
     setFirstDayOfCalendar(year);
     checksMonthYearToCalendar();
-
-
-    getAllEventsFromDB()
+    getAllEventsFromDB();
   }
 };
 
@@ -327,13 +306,13 @@ const refreshShowToday = () => {
   checksMonthYearToCalendar();
   colorInEmptySquaresYellow();
   colorInEmptySquares();
-  getAllEventsFromDB()
+  getAllEventsFromDB();
 
-  document.getElementById('year-input').value =
-    new Date().getFullYear()
+  document.getElementById('year-input').value = new Date().getFullYear();
 
-    document.getElementById('month-selector').value = calendarObject.getCalendarMonth()
-   
+  document.getElementById(
+    'month-selector'
+  ).value = calendarObject.getCalendarMonth();
 
   // document.getElementById(
   //   'month'
@@ -410,7 +389,7 @@ const patchEventFetch = async (url, event) => {
         event.description,
         event._id
       );
-     // countChildNodes();
+      // countChildNodes();
     })
     .catch((err) => console.log(err));
 };
@@ -426,7 +405,7 @@ const deleteEventFetch = async (url, event) => {
   })
     .then((res) => res.json())
     .then((event) => {
-      console.log(event)
+      console.log(event);
       const unWantedEvent = document.querySelector(`[data="${event._id}"]`);
       unWantedEvent.remove();
       const modal2 = document.querySelector('.modal2');
@@ -483,8 +462,8 @@ const editClicked = (e) => {
 const deleteClicked = (e) => {
   let uniqueID = e.target.getAttribute('data');
   if (confirm('Are You Sure')) {
-    console.log('deletion confirmed')
-    console.log(uniqueID)
+    console.log('deletion confirmed');
+    console.log(uniqueID);
     // const arrayOfEvents = storingAllUserEvents.getEventList().filter((event) => event._id != uniqueID);
     deleteEventFetch(`/event/${uniqueID}`);
 
@@ -560,6 +539,12 @@ const getCurrentYearAndMonthFromCalendar = (aUsersEvent) => {
   comparingEventDatesToCurrentCalendar(aUsersEvent, thisYear, thisMonthNum);
 };
 
+const holidayYearAndMonth = (holiday) => {
+  const thisYear = calendarObject.getCalendarYear();
+  const thisMonthNum = calendarObject.getCalendarMonthNumber() + 1;
+  seperateHolidayYearAndMonth(holiday, thisYear, thisMonthNum);
+};
+
 const comparingEventDatesToCurrentCalendar = (
   aUsersEvent,
   thisYear,
@@ -592,20 +577,53 @@ const separatingYearMonthDayOfUserEvent = (
   }
 };
 
+const seperateHolidayYearAndMonth = (holiday, thisYear, thisMonthNum) => {
+  const date = holiday.date.split('-');
+  const holidayYear = Number(date[0]);
+  const holidayMonth = Number(date[1]);
+  const holidayDay = Number(date[2]);
+  
+  if (thisYear === holidayYear && thisMonthNum === holidayMonth) {
+  
+    getDayOfHoliday(holiday, holidayDay);
+  }
+};
+
+const getDayOfHoliday = (thisHoliday, holidayDay) => {
+  const daysInTheMonth = Array.from(
+    document.querySelectorAll('.calendar-days')
+  );
+  let dayOfHoliday = daysInTheMonth.find(
+    (listOfDays) => +listOfDays.getAttribute('data-number') === holidayDay
+  );
+
+  createElementsForHoliday(thisHoliday, dayOfHoliday);
+};
+
+
+
+const createElementsForHoliday = (thisHoliday, element) => {
+  console.log(thisHoliday)
+  console.log(element)
+  const newEventForCalendar = `<h3 class=event><div> ${thisHoliday.title}</div></h3>`;
+  element.firstChild.nextSibling.insertAdjacentHTML(
+    'beforeend',
+    newEventForCalendar
+  );
+  colorInEmptySquares();
+};
+
 const checksForMatchedWhenPrevNextClicked = () => {
   setFirstDayOfCalendar(calendarObject.getCalendarYear());
   checksMonthYearToCalendar();
-  getAllEventsFromDB()
+  getAllEventsFromDB();
 };
 
 const checksMonthYearToCalendar = () => {
   const thisYear = calendarObject.getCalendarYear();
   const thisMonthNum = calendarObject.getCalendarMonthNumber() + 1;
 
- // getAllEventsFromDB2(thisYear,  thisMonthNum )
-
-
-
+  // getAllEventsFromDB2(thisYear,  thisMonthNum )
 
   // storingAllUserEvents.getEventList().forEach((item) => {
   //   const date = item.date.split('-');
@@ -616,7 +634,6 @@ const checksMonthYearToCalendar = () => {
   //     getDayOfEvent(item, eventDay);
   //   }
   // });
-
 };
 
 const timer = (time) => {
@@ -632,9 +649,7 @@ const createElements = (aUsersEvent, element) => {
   if (!aUsersEvent._id) {
     return;
   }
-  const newEventForCalendar = `<h3 data="${
-    aUsersEvent._id
-  }"class="event"><div data="${aUsersEvent._id}" class="time-title">${timer(
+  const newEventForCalendar = `<h3 data="${aUsersEvent._id}"class="event"><div data="${aUsersEvent._id}" class="time-title">${timer(
     aUsersEvent.time
   )} ${aUsersEvent.title}</div></h3>`;
   element.firstChild.nextSibling.insertAdjacentHTML(
@@ -673,7 +688,7 @@ const countChildNodes = () => {
       //   .filter((event) => event._id != idNumber);
       // storingAllUserEvents.resetEventList(arrayOfEvents);
       // day.lastChild.remove();
-     return alert('Only allowed 3 events per day!');
+      return alert('Only allowed 3 events per day!');
     }
   });
 };
@@ -684,16 +699,8 @@ const displayEventsInCurrentMonth = () => {
 };
 
 const showAllEvents = () => {
+  getAllEventsFromDB2();
 
-
- getAllEventsFromDB2()
-
-
-
-
-
-
-  
   //   .filter((eventt) => {
   //   const date = eventt.date.split('-');
   //   const eventYear = Number(date[0]);

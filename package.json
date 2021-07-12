@@ -18,7 +18,7 @@
     "nodemon": "^2.0.9"
   },
   "scripts": {
-    "dev": "env-cmd -f ./server/config/dev.env nodemon server/server.js"
+    "dev": "env-cmd -f .env nodemon server/server.js"
   },
   "repository": {
     "type": "git",
