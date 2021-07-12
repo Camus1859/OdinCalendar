@@ -2,16 +2,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const HolidaySchema = new Schema({
-  holidays: [
+  USNationalHolidays: [
     {
-      title: { type: String },
+      name: { type: String },
       description: { type: String },
-      date: { type: String },
+      country: { type: Object },
+      date: { type: Object },
+      type: { type: Array },
+      locations: { type: String },
+      states: { types: String },
     },
   ],
 });
 
+const Holiday = mongoose.model('holiday', HolidaySchema);
 
-const HolidaySchema = mongoose.model('holiday', HolidaySchema)
-
-module.exports = HolidaySchema
+module.exports = Holiday;

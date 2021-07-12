@@ -6,6 +6,28 @@ import {
 } from './dateGenerator.js';
 import { displayYear } from './dateGenerator.js';
 
+const postHolidays = async () => {
+  let response = await fetch('/holidays', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json;charset=UTF-8',
+      Accept: 'application/json',
+    },
+  });
+  // let holidays = await response.json();
+  // const USNationalHolidays = holidays.response.holidays.filter(
+  //   (holiday) => holiday.type[0] === 'National holiday'
+  // );
+  // USNationalHolidays.forEach((holiday) => {
+  //   let date = holiday.date.iso;
+  //   let title = holiday.name;
+  //   let description = holiday.description;
+  //   const myHoliday = { date, title, description };
+  //   holidayYearAndMonth(myHoliday);
+  //});
+};
+//postHolidays()
+
 const generatingAllSquaresInCalendar = () => {
   let daysInMonthContainer = document.getElementById(
     'days-of-the-month-container'
@@ -165,7 +187,7 @@ const getAllEventsFromDB = async () => {
 getAllEventsFromDB();
 
 const getHolidays = async () => {
-  let response = await fetch('/holidays/', {
+  let response = await fetch('/holidays', {
     method: 'GET',
     headers: {
       'Content-type': 'application/json;charset=UTF-8',
@@ -173,10 +195,8 @@ const getHolidays = async () => {
     },
   });
   let holidays = await response.json();
-  const USNationalHolidays = holidays.response.holidays.filter(
-    (holiday) => holiday.type[0] === 'National holiday'
-  );
-  USNationalHolidays.forEach((holiday) => {
+  console.log(holidays[0].USNationalHolidays);
+  holidays[0].USNationalHolidays.forEach((holiday) => {
     let date = holiday.date.iso;
     let title = holiday.name;
     let description = holiday.description;
@@ -307,6 +327,8 @@ const refreshShowToday = () => {
   colorInEmptySquaresYellow();
   colorInEmptySquares();
   getAllEventsFromDB();
+  getHolidays()
+
 
   document.getElementById('year-input').value = new Date().getFullYear();
 
@@ -582,9 +604,8 @@ const seperateHolidayYearAndMonth = (holiday, thisYear, thisMonthNum) => {
   const holidayYear = Number(date[0]);
   const holidayMonth = Number(date[1]);
   const holidayDay = Number(date[2]);
-  
+
   if (thisYear === holidayYear && thisMonthNum === holidayMonth) {
-  
     getDayOfHoliday(holiday, holidayDay);
   }
 };
@@ -600,11 +621,7 @@ const getDayOfHoliday = (thisHoliday, holidayDay) => {
   createElementsForHoliday(thisHoliday, dayOfHoliday);
 };
 
-
-
 const createElementsForHoliday = (thisHoliday, element) => {
-  console.log(thisHoliday)
-  console.log(element)
   const newEventForCalendar = `<h3 class=event><div> ${thisHoliday.title}</div></h3>`;
   element.firstChild.nextSibling.insertAdjacentHTML(
     'beforeend',
@@ -617,6 +634,7 @@ const checksForMatchedWhenPrevNextClicked = () => {
   setFirstDayOfCalendar(calendarObject.getCalendarYear());
   checksMonthYearToCalendar();
   getAllEventsFromDB();
+  getHolidays()
 };
 
 const checksMonthYearToCalendar = () => {
@@ -649,7 +667,9 @@ const createElements = (aUsersEvent, element) => {
   if (!aUsersEvent._id) {
     return;
   }
-  const newEventForCalendar = `<h3 data="${aUsersEvent._id}"class="event"><div data="${aUsersEvent._id}" class="time-title">${timer(
+  const newEventForCalendar = `<h3 data="${
+    aUsersEvent._id
+  }"class="event"><div data="${aUsersEvent._id}" class="time-title">${timer(
     aUsersEvent.time
   )} ${aUsersEvent.title}</div></h3>`;
   element.firstChild.nextSibling.insertAdjacentHTML(

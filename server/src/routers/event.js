@@ -1,5 +1,6 @@
 const express = require('express');
 const Event = require('../models/event');
+const Holiday = require('../models/holiday');
 const router = new express.Router();
 require('dotenv').config();
 const fetch = require('node-fetch');
@@ -18,13 +19,6 @@ router.post('/event', async (req, res) => {
     res.status(400);
   }
 });
-
-router.post('/holidays', async (req, res)=> {
-const holidays = n
-
-
-
-})
 
 router.get('/allEvents', async (req, res) => {
   const allEvents = await Event.find({});
@@ -85,7 +79,12 @@ router.delete('/event/:id', async (req, res) => {
   }
 });
 
-router.get('/holidays/', async (req, res) => {
+router.get('/holidays', async (req, res) => {
+  const allHolidays = await Holiday.find({});
+  res.send(allHolidays);
+});
+
+router.post('/holidays', async (req, res) => {
   const currentYear = new Date().getFullYear();
 
   try {
@@ -100,7 +99,22 @@ router.get('/holidays/', async (req, res) => {
       }
     );
     const holidays = await response.json();
-    res.send(holidays);
+
+    const USNationalHolidays = holidays.response.holidays.filter(
+      (holiday) => holiday.type[0] === 'National holiday'
+    );
+    const USHolidays = new Holiday({
+      USNationalHolidays,
+    });
+
+ 
+
+    try {
+      await USHolidays.save();
+      res.status(201);
+    } catch (err) {
+      console.log(err);
+    }
   } catch (err) {
     console.log(err);
   }
