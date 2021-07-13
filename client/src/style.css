@@ -58,12 +58,13 @@ body {
 }
 
 .time-title {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  display: flex;
-  width: 100px;
-  display: block;
+   text-overflow: ellipsis;
+  /* overflow: hidden;  */
+  white-space: nowrap; 
+  /* display: flex; */
+ width: 100%;
+   /* display: block; */
+  /* font: bolder */
 }
 
 #days-of-the-week-container {
@@ -164,7 +165,7 @@ body {
   justify-content: space-evenly;
   /* flex-basis: 23%; */
   /* margin: 0 1% 1px; */
-  height: 80%; 
+  height: 60%; 
 
   /* height: 100px; */
   /* margin-top: -5px;
@@ -239,13 +240,51 @@ input::-webkit-inner-spin-button {
   transform: scale(1);
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
+/* .close-button:hover {
+  background-color: darkgray;
+} */
 
 .event {
   display: flex;
   justify-content: center;
   font-size: 0.8rem;
+  margin-bottom: 0px;
+  margin-top: 0px;
+
+  /* margin-right: 16px; */
+  cursor: pointer;
+  width: 100%;
+  padding-left: 20px;
+
+}
+
+ul {
+  list-style: none;
+}
+
+ul li::before {
+  content: "\2022";
+  color: red;
+  font-weight: bold;
+  display: inline-block; 
+  width: .5em;
+  margin-left: -1em;
+  font-size: larger;
+}
+
+.time-title:hover{
+ color: rgb(24, 41, 65);
+}
+.holiday {
+  display: flex;
+  align-self: flex-start; 
+  font-size: 0.8rem;
   margin: 0%;
   margin-right: 16px;
+}
+
+.myholiday{
+  color: gray
 }
 
 .hidden {

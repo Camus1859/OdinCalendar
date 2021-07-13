@@ -26,7 +26,9 @@ const postHolidays = async () => {
   //   holidayYearAndMonth(myHoliday);
   //});
 };
-//postHolidays()
+
+
+postHolidays()
 
 const generatingAllSquaresInCalendar = () => {
   let daysInMonthContainer = document.getElementById(
@@ -514,7 +516,7 @@ const getEventClickedFetch = async (url) => {
 
 const handlerForEventsClicked = () => {
   const container = document.getElementById('days-of-the-month-container');
-  container.addEventListener('mouseover', (e) => {
+  container.addEventListener('click', (e) => {
     if (e.target.getAttribute('data')) {
       const clickedEventNumber = e.target.getAttribute('data');
 
@@ -622,9 +624,9 @@ const getDayOfHoliday = (thisHoliday, holidayDay) => {
 };
 
 const createElementsForHoliday = (thisHoliday, element) => {
-  const newEventForCalendar = `<h3 class=event><div> ${thisHoliday.title}</div></h3>`;
+  const newEventForCalendar = `<div class=holiday><div class=myholiday> ${thisHoliday.title}</div></div>`;
   element.firstChild.nextSibling.insertAdjacentHTML(
-    'beforeend',
+    'beforebegin',
     newEventForCalendar
   );
   colorInEmptySquares();
@@ -667,15 +669,22 @@ const createElements = (aUsersEvent, element) => {
   if (!aUsersEvent._id) {
     return;
   }
-  const newEventForCalendar = `<h3 data="${
-    aUsersEvent._id
-  }"class="event"><div data="${aUsersEvent._id}" class="time-title">${timer(
-    aUsersEvent.time
-  )} ${aUsersEvent.title}</div></h3>`;
-  element.firstChild.nextSibling.insertAdjacentHTML(
-    'beforeend',
-    newEventForCalendar
-  );
+  const newEventForCalendar = 
+  
+  // `<div data="${aUsersEvent._id}"class="event">
+  
+  
+ ` <ul data="${aUsersEvent._id}"class="event">
+
+
+     <li data="${aUsersEvent._id}" class="time-title">${timer(aUsersEvent.time)} ${aUsersEvent.title}</li>
+
+     </ul>
+  
+  `
+  
+  // </div>`;
+  element.firstChild.nextSibling.insertAdjacentHTML('beforeend', newEventForCalendar);
   colorInEmptySquares();
 };
 
