@@ -250,6 +250,8 @@ input::-webkit-inner-spin-button {
   font-size: 0.8rem;
   margin-bottom: 0px;
   margin-top: 0px;
+  font-weight: bolder;
+  color: rgb(64, 62, 62);
 
   /* margin-right: 16px; */
   cursor: pointer;

@@ -6,13 +6,13 @@ import {
 } from './dateGenerator.js';
 import { displayYear } from './dateGenerator.js';
 
-const postHolidays = async () => {
-  let response = await fetch('/holidays', {
+const postHolidays = async (currentYear) => {
+  await fetch(`/holidays/${currentYear}`, {
     method: 'POST',
     headers: {
-      'Content-type': 'application/json;charset=UTF-8',
-      Accept: 'application/json',
+      'Content-type': 'application/json',
     },
+    // body: JSON.stringify(currentYear),
   });
   // let holidays = await response.json();
   // const USNationalHolidays = holidays.response.holidays.filter(
@@ -27,8 +27,7 @@ const postHolidays = async () => {
   //});
 };
 
-
-postHolidays()
+//postHolidays(new Date().getFullYear());
 
 const generatingAllSquaresInCalendar = () => {
   let daysInMonthContainer = document.getElementById(
@@ -188,17 +187,17 @@ const getAllEventsFromDB = async () => {
 
 getAllEventsFromDB();
 
-const getHolidays = async () => {
-  let response = await fetch('/holidays', {
+const getHolidays = async (year) => {
+  let response = await fetch(`/holidays/${year}`, {
     method: 'GET',
     headers: {
       'Content-type': 'application/json;charset=UTF-8',
       Accept: 'application/json',
     },
   });
-  let holidays = await response.json();
-  console.log(holidays[0].USNationalHolidays);
-  holidays[0].USNationalHolidays.forEach((holiday) => {
+  let nationalHolidaysArr = await response.json();
+
+  nationalHolidaysArr.forEach((holiday) => {
     let date = holiday.date.iso;
     let title = holiday.name;
     let description = holiday.description;
@@ -206,7 +205,7 @@ const getHolidays = async () => {
     holidayYearAndMonth(myHoliday);
   });
 };
-getHolidays();
+getHolidays(new Date().getFullYear());
 
 const getAllEventsFromDB2 = async () => {
   const holdEvents = document.getElementById('holds-events');
@@ -311,6 +310,7 @@ const updateMonth = (e) => {
   colorInEmptySquares();
   clearShowAllEvents();
   displayEventsInCurrentMonth();
+
   const displayAllEvents = document.getElementById('container-all-events');
   displayAllEvents.addEventListener('click', showAllEvents);
 };
@@ -329,8 +329,7 @@ const refreshShowToday = () => {
   colorInEmptySquaresYellow();
   colorInEmptySquares();
   getAllEventsFromDB();
-  getHolidays()
-
+  getHolidays(calendarObject.getCalendarYear());
 
   document.getElementById('year-input').value = new Date().getFullYear();
 
@@ -636,7 +635,7 @@ const checksForMatchedWhenPrevNextClicked = () => {
   setFirstDayOfCalendar(calendarObject.getCalendarYear());
   checksMonthYearToCalendar();
   getAllEventsFromDB();
-  getHolidays()
+  getHolidays(calendarObject.getCalendarYear());
 };
 
 const checksMonthYearToCalendar = () => {
@@ -669,22 +668,25 @@ const createElements = (aUsersEvent, element) => {
   if (!aUsersEvent._id) {
     return;
   }
-  const newEventForCalendar = 
-  
-  // `<div data="${aUsersEvent._id}"class="event">
-  
-  
- ` <ul data="${aUsersEvent._id}"class="event">
+  const newEventForCalendar =
+    // `<div data="${aUsersEvent._id}"class="event">
+
+    ` <ul data="${aUsersEvent._id}"class="event">
 
 
-     <li data="${aUsersEvent._id}" class="time-title">${timer(aUsersEvent.time)} ${aUsersEvent.title}</li>
+     <li data="${aUsersEvent._id}" class="time-title">${timer(
+      aUsersEvent.time
+    )} ${aUsersEvent.title}</li>
 
      </ul>
   
-  `
-  
+  `;
+
   // </div>`;
-  element.firstChild.nextSibling.insertAdjacentHTML('beforeend', newEventForCalendar);
+  element.firstChild.nextSibling.insertAdjacentHTML(
+    'beforeend',
+    newEventForCalendar
+  );
   colorInEmptySquares();
 };
 

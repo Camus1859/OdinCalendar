@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const HolidaySchema = new Schema({
+  year: { type: String },
+
   USNationalHolidays: [
     {
       name: { type: String },

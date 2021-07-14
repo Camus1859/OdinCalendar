@@ -79,17 +79,17 @@ router.delete('/event/:id', async (req, res) => {
   }
 });
 
-router.get('/holidays', async (req, res) => {
-  const allHolidays = await Holiday.find({});
-  res.send(allHolidays);
-});
-
-router.post('/holidays', async (req, res) => {
-  const currentYear = new Date().getFullYear();
-
+router.get('/holidays/:id', async (req, res) => {
   try {
+    const holidayDocument = await Holiday.findOne({ year: req.params.id })
+
+    if (holidayDocument) {
+      const nationalHolidaysArr = holidayDocument.USNationalHolidays;
+      return res.status(201).send(nationalHolidaysArr);
+    }
+
     const response = await fetch(
-      `https://calendarific.com/api/v2/holidays?&api_key=${process.env.API_KEY}&country=US&year=${currentYear}`,
+      `https://calendarific.com/api/v2/holidays?&api_key=${process.env.API_KEY}&country=US&year=${req.params.id}`,
       {
         method: 'GET',
         headers: {
@@ -98,23 +98,18 @@ router.post('/holidays', async (req, res) => {
         },
       }
     );
-    const holidays = await response.json();
+    const allHolidays = await response.json();
 
-    const USNationalHolidays = holidays.response.holidays.filter(
+    const USNationalHolidays = allHolidays.response.holidays.filter(
       (holiday) => holiday.type[0] === 'National holiday'
     );
-    const USHolidays = new Holiday({
+
+    new Holiday.create({
+      year: req.params.id,
       USNationalHolidays,
     });
 
- 
-
-    try {
-      await USHolidays.save();
-      res.status(201);
-    } catch (err) {
-      console.log(err);
-    }
+    res.status(201).send(USNationalHolidays);
   } catch (err) {
     console.log(err);
   }
