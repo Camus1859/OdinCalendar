@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(24, 41, 65);
+  background-color: rgb(213, 213, 213);
   margin-top: 3rem;
 }
 
@@ -260,11 +260,11 @@ input::-webkit-inner-spin-button {
 
 }
 
-ul {
+.inside-of-square > ul {
   list-style: none;
 }
 
-ul li::before {
+.inside-of-square > ul li::before {
   content: "\2022";
   color: red;
   font-weight: bold;
@@ -362,6 +362,10 @@ ul li::before {
   width: 50%;
 }
 
+#listing{
+  width: 50%;
+}
+
 .ttd {
   padding: 0.5rem;
   text-decoration: none;
@@ -382,6 +386,10 @@ ul li::before {
 #holds-events > ul {
   display: flex;
   justify-content: flex-start;
+}
+
+#holds-events{
+  width: 100%;
 }
 
 .extra-events {
@@ -477,7 +485,7 @@ ul li::before {
   #event-container {
     display: flex;
     flex-direction: column;
-    /* width: 100%; */
+    width: 25%;
     align-items: center;
     color: white;
     margin-top: 1.3rem;
