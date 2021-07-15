@@ -674,9 +674,7 @@ const createElements = (aUsersEvent, element) => {
     ` <ul data="${aUsersEvent._id}"class="event">
 
 
-     <li data="${aUsersEvent._id}" class="time-title">${timer(
-      aUsersEvent.time
-    )} ${aUsersEvent.title}</li>
+     <li data="${aUsersEvent._id}" class="time-title"><span class="time">${timer(aUsersEvent.time)}</span> <span class="title">${aUsersEvent.title}</span></li>
 
      </ul>
   
@@ -705,7 +703,7 @@ const colorInEmptySquares = () => {
 const colorInEmptySquaresYellow = () => {
   const days = Array.from(document.querySelectorAll('.calendar-days'));
   days.forEach((day) => {
-    day.style.backgroundColor = '#e6e6e6';
+    day.style.backgroundColor = '#f9f9f9';
   });
 };
 
