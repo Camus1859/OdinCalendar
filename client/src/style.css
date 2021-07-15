@@ -302,12 +302,15 @@ input::-webkit-inner-spin-button {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: rgba(152, 150, 150, 0.442); */
   opacity: 0;
   visibility: hidden;
   transform: scale(1.1);
   transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
 }
+
+
+
 .modal-content {
   position: absolute;
   top: 50%;
@@ -319,6 +322,7 @@ input::-webkit-inner-spin-button {
   padding-right: .5rem;
   padding-left: .5rem;
   border-radius: .5rem;
+  box-shadow: 0 0 4px 2px rgb(0 0 0 / 50%)
 
 
 }
@@ -523,11 +527,24 @@ input::-webkit-inner-spin-button {
   align-items: center;
 }
 
+/* position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+padding: 2rem 2rem;
+width: 100%;
+background-color: white;
+padding-right: .5rem;
+padding-left: .5rem;
+border-radius: .5rem; */
+
+
 .displayModal {
   display: flex;
   flex-direction: column;
   align-self: center;
   /* border-radius: 0.5rem; */
+  background-color: white;
   width: 50%;
 }
 
@@ -548,7 +565,7 @@ input::-webkit-inner-spin-button {
   flex-direction: column;
   justify-content: flex-start;
   /* border-radius: 0.5rem; */
-  background-color: rgb(234, 244, 247);
+  background-color: white;
   padding: 1rem;
 }
 
@@ -595,19 +612,29 @@ input::-webkit-inner-spin-button {
 }
 
 #edit {
-  border-radius: 0.5rem;
+  font-weight: bolder;
   text-decoration: none;
   outline: none;
-  text-transform: uppercase;
-  font-weight: bolder;
+  height: 100%;
+  box-shadow: 1px 1px 2px #ff0000;
+
+
+  padding: 10px;
+  border: none;
+  cursor: pointer;
 }
 
 #delete {
-  border-radius: 0.5rem;
+  font-weight: bolder;
   text-decoration: none;
   outline: none;
-  text-transform: uppercase;
-  font-weight: bolder;
+  height: 100%;
+  box-shadow: 1px 1px 2px #ff0000;
+
+
+  padding: 10px;
+  border: none;
+  cursor: pointer;
 }
 
 #dots {

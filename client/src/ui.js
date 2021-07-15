@@ -546,7 +546,7 @@ const compareEventToDate = (eventInArray) => {
 <div  id="edit-del"> 
 <button id="edit">Edit</button>
 <button id="delete">Delete</button></div>`;
-  content.style.backgroundColor = 'rgb(160, 222, 238)';
+  content.style.backgroundColor = 'white';
   modal.appendChild(content);
   document.body.appendChild(modal);
   const deletebtn = document.querySelector('#delete');
