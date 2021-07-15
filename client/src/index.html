@@ -17,7 +17,7 @@
           <div id="holds-events"></div>
         </div>
         <div id="body">
-          <button class="trigger">CREATE</button>
+          <button class="trigger">Add Event</button>
           <div class="modal">
             <div class="modal-content">
               <span class="close-button">&times;</span>
@@ -71,7 +71,14 @@
           <div id="days-of-the-month-container">
             <div id="month-year">
               <span id="month" class="top"></span>
-              <span id="year" class="top"></span>
+              <span id="year" class="top"> </span>
+
+              <span id="previous-next-buttons">
+                <button class="bottom update-month" id="previous-btn">
+                  &#60;
+                </button>
+                <button class="bottom update-month" id="next-btn">&#62;</button>
+              </span>
             </div>
 
             <div id="days-of-the-week-container">
@@ -83,13 +90,6 @@
               <div class="day">Fri</div>
               <div class="day">Sat</div>
             </div>
-          </div>
-
-          <div id="previous-next-buttons">
-            <button class="bottom update-month" id="previous-btn">
-              PREVIOUS
-            </button>
-            <button class="bottom update-month" id="next-btn">NEXT</button>
           </div>
 
           <div id="month-year-tabs">
