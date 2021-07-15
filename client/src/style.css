@@ -313,42 +313,94 @@ input::-webkit-inner-spin-button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 1rem 1.5rem;
-  width: 50%;
-  border-radius: 0.5rem;
-  background-color: rgb(160, 222, 238);
+  /* padding: 2rem 2rem; */
+  width: 100%;
+  background-color: white;
+  padding-right: .5rem;
+  padding-left: .5rem;
+  border-radius: .5rem;
+
+
+}
+
+
+
+#myform{
+  width: 100%;
+  
+
 }
 
 .close-button {
   float: right;
-  width: 1.5rem;
-  line-height: 1.5rem;
+  width: 2.5rem;
+  line-height: 2.5rem;
   text-align: center;
   cursor: pointer;
+  font-size: 3rem;
   border-radius: 0.25rem;
-  background-color: rgb(197, 201, 221);
   border-radius: 0.5rem;
+  padding-top: 1rem;
 }
-.close-button:hover {
+/* .close-button:hover {
   background-color: darkgray;
-}
+} */
 
 .user-input {
-  width: 100%;
-  margin: 5px;
-  border-radius: 0.5rem;
+  width: 90%;
+  /* margin: 5px; */
+  /* border-radius: 0.5rem; */
   text-decoration: none;
   outline: none;
+  padding: 20px;
+  padding-bottom: 5px ;
+  font-size: 1.1rem;
+  height: 25px;
+}
+
+#submit-event-container{
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  background-color:rgb(240, 240, 240)
+}
+
+#event-title{
+  border: none;
+  border-bottom:  2px solid rgb(99, 99, 99);
+
+
+}
+
+#event-date{
+  border: none;
+  border-bottom:  2px solid rgb(99, 99, 99);
+
+}
+
+#event-time{
+  border: none;
+  border-bottom:  2px solid rgb(99, 99, 99);
+
+}
+
+#event-description{
+  border: none;
+  border-bottom:  2px solid rgb(99, 99, 99);
+
 }
 
 #submit-event {
-  padding: 3px;
-  border-radius: 0.5rem;
+  font-weight: bolder;
   text-decoration: none;
   outline: none;
-  background-color: rgb(24, 41, 65);
-  color: white;
-  font-weight: bolder;
+  height: 100%;
+  box-shadow: 1px 1px 2px #ff0000;
+
+
+  padding: 10px;
+  border: none;
+  cursor: pointer;
 }
 
 .show-modal {
@@ -430,7 +482,7 @@ input::-webkit-inner-spin-button {
   margin: 70px auto;
   padding: 20px;
   background: #fff;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   width: 30%;
   position: relative;
   transition: all 5s ease-in-out;
@@ -475,7 +527,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   flex-direction: column;
   align-self: center;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   width: 50%;
 }
 
@@ -495,7 +547,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   background-color: rgb(234, 244, 247);
   padding: 1rem;
 }
@@ -669,6 +721,6 @@ input::-webkit-inner-spin-button {
     min-width: 100px;
   }
   .modal-content {
-    width: 15%;
+    width: 25%;
   }
 }

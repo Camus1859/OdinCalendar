@@ -62,7 +62,9 @@
         <div id="body">
           <div class="modal">
             <div class="modal-content">
-              <span class="close-button">&times;</span>
+              <div class="close-button-container">
+                <span class="close-button">&times;</span>
+              </div>
               <form id="myform">
                 <label for="title"></label>
 
@@ -102,31 +104,24 @@
                   placeholder="Add Description..."
                   value=""
                   name="description"
+                  type="text"
                 ></textarea>
-                <button type="submit" value="Submit" id="submit-event">
-                  SUBMIT
-                </button>
+                <div id="submit-event-container">
+                  <button type="submit" value="Submit" id="submit-event">
+                    Save
+                  </button>
+                </div>
               </form>
             </div>
           </div>
 
           <div id="addEvent-prev-next-btns-container">
-
-
-
-
             <span id="addEvent-prev-next-btns">
-             
-              
               <button class="trigger">Add Event</button>
             </span>
           </div>
 
           <div id="days-of-the-month-container">
-
-
-
-
             <div id="month-year">
               <span id="month" class="top"></span>
               <span id="year" class="top"> </span>
@@ -147,9 +142,6 @@
               <div class="day">Fri</div>
               <div class="day">Sat</div>
             </div>
-
-
-
           </div>
           <div id="calendar"></div>
         </div>
