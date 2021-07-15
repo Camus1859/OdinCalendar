@@ -280,6 +280,7 @@ const yearEntered = (e) => {
     setFirstDayOfCalendar(year);
     checksMonthYearToCalendar();
     getAllEventsFromDB();
+    getHolidays(year);
   }
 };
 
@@ -343,16 +344,13 @@ const refreshShowToday = () => {
   // ).textContent = calendarObject.getCalendarYear()
 };
 
-const showHolidaysWhenMonthSelected = (e)=> {
-  if(e.target.value === ""){
-    return
+const showHolidaysWhenMonthSelected = (e) => {
+  if (e.target.value === '') {
+    return;
   }
 
-
-  getHolidays(calendarObject.getCalendarYear())
-
-
-}
+  getHolidays(calendarObject.getCalendarYear());
+};
 
 const getEventToDisplayFetch = async (url) => {
   console.log('ram');
@@ -686,11 +684,11 @@ const createElements = (aUsersEvent, element) => {
 
      <li data="${
        aUsersEvent._id
-     }" class="time-title2"><span class="time" data="${aUsersEvent._id}">${timer(
-      aUsersEvent.time
-    )}</span> <span class="time-title" data="${aUsersEvent._id}">${
-      aUsersEvent.title
-    }</span></li>
+     }" class="time-title2"><span class="time" data="${
+      aUsersEvent._id
+    }">${timer(aUsersEvent.time)}</span> <span class="time-title" data="${
+      aUsersEvent._id
+    }">${aUsersEvent.title}</span></li>
 
      </ul>
   
@@ -792,5 +790,5 @@ export {
   displayEventsInCurrentMonth,
   showAllEvents,
   prepareToCreateEvent,
-  showHolidaysWhenMonthSelected
+  showHolidaysWhenMonthSelected,
 };

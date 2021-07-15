@@ -7,7 +7,7 @@ import {
   yearEntered,
   showAllEvents,
   prepareToCreateEvent,
-  showHolidaysWhenMonthSelected
+  showHolidaysWhenMonthSelected,
 } from './ui.js';
 
 
@@ -34,6 +34,8 @@ trigger.addEventListener('click', removeOldEventsContent);
 trigger.addEventListener('click', prepareToCreateEvent);
 
 monthSelector.addEventListener('click', showHolidaysWhenMonthSelected)
+
+
 
 
 closeButton.addEventListener('click', toggleModal);
