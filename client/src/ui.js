@@ -674,7 +674,7 @@ const createElements = (aUsersEvent, element) => {
     ` <ul data="${aUsersEvent._id}"class="event">
 
 
-     <li data="${aUsersEvent._id}" class="time-title"><span class="time">${timer(aUsersEvent.time)}</span> <span class="title">${aUsersEvent.title}</span></li>
+     <li data="${aUsersEvent._id}" class="time-title2"><span class="time">${timer(aUsersEvent.time)}</span> <span class="time-title">${aUsersEvent.title}</span></li>
 
      </ul>
   

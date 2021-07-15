@@ -1,7 +1,15 @@
-body {
-  background-color:white;
-  margin-top: 3rem;
+body{
+  background-color: red;
 }
+
+#top {
+    display: flex;
+    justify-content: space-evenly; 
+    background-color: rgb(196, 192, 71);
+    height: 100vh;
+    margin: 0;
+ 
+  }
 
 #body {
   display: flex;
@@ -9,25 +17,52 @@ body {
   align-items: center;
   /* width: 50%; */
   justify-content: end;
+  width: 60%;
+
 }
+
+#vertical-line{
+  border-left: 1px solid black;
+  height: 500px;
+  /* left: 12%; */
+  /* margin-left: -3px; */
+  margin-right:1rem ;
+}
+
+#vertical-line-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+
 
 #event-container {
   display: flex;
   flex-direction: column;
-  /* width: 10%; */
   align-items: center;
   /* margin-right: 18rem; */
   display: none;
+
+
 }
 
-#container-all-events {
-  /* width: 100%; */
+/* #container-all-events {
   display: none;
+} */
+
+.dropdown-month-year{
+  display: flex;
+  flex-direction: column;
+  background-color: #06d85f;
+  align-items: center;
+  justify-content: space-around;
+  width: 10%;
+  
+
 }
 
-#top {
-  display: flex;
-}
 
 #month-year {
   display: grid;
@@ -44,7 +79,12 @@ body {
   font-weight: bolder;
   text-decoration: none;
   outline: none;
-  border-radius: 0.5rem;
+  box-shadow: 1px 1px 2px #aaaaaa;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(51, 50, 50);
 }
 
 #previous-next-buttons {
@@ -62,11 +102,15 @@ body {
   font-size: small;
 }
 
-.title{
+.time-title2{
   letter-spacing: .5px;
   font-size: 14px;
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+    overflow: hidden; 
 
-}
+
+} 
 
 .time-title {
    text-overflow: ellipsis;
@@ -77,6 +121,8 @@ body {
    /* display: block; */
   /* font: bolder */
   font-weight: bolder;
+  letter-spacing: .5px;
+  font-size: 14px;
 }
 
 #days-of-the-week-container {
@@ -91,6 +137,7 @@ body {
   font-size: xx-small;
   text-transform: uppercase;
   background-color: white;
+  margin-top: 1rem;
 }
 
 .day {
@@ -104,7 +151,6 @@ body {
   width: 100%;
   padding: 40px 0px 0 0px;
   background-color:white;
-  box-shadow: 10px 10px 5px #aaaaaa;
 
 
   /* outline: none; */
@@ -139,23 +185,33 @@ body {
 
 #year-input {
   font-weight: bolder;
-  border-radius: 0.5rem;
   text-decoration: none;
   outline: none;
-  text-align: center;
+  box-shadow: 1px 1px 2px #aaaaaa;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(51, 50, 50);
 }
 
 .trigger {
   font-weight: bolder;
-  border-radius: 0.5rem;
   text-decoration: none;
   outline: none;
+  box-shadow: 1px 1px 2px #aaaaaa;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+
+
 }
 
 #month {
   padding-right: 10px;
   text-transform: uppercase;
   color: rgb(255, 0, 43);
+
 }
 
 #month-year-tabs {
@@ -172,13 +228,15 @@ body {
 }
 
 #today {
-  display: flex;
-  justify-content: end;
-  margin: 1rem;
   font-weight: bolder;
-  border-radius: 0.5rem;
   text-decoration: none;
   outline: none;
+  box-shadow: 1px 1px 2px #aaaaaa;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(51, 50, 50);
 }
 
 .calendar-days {
@@ -189,6 +247,9 @@ body {
   font-size: 25px ;
   font-weight: bolder;
   color: rgb(103, 102, 102);
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+
   
 
   height: 50px;
@@ -490,7 +551,7 @@ input::-webkit-inner-spin-button {
 }
 
 #year-label {
-  color: white;
+  color: black;
   font-weight: bolder;
 }
 
@@ -515,10 +576,7 @@ input::-webkit-inner-spin-button {
     font-size: x-small;
   }
 
-  #top {
-    display: flex;
-    justify-content: space-around;
-  }
+  
 
   #event-container {
     display: flex;
@@ -527,6 +585,7 @@ input::-webkit-inner-spin-button {
     align-items: center;
     color: white;
     margin-top: 1.3rem;
+    background-color: blue;
   }
 
   #container-all-events {

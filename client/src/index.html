@@ -8,14 +8,62 @@
   </head>
   <body>
     <div id="container-body">
+
+    
       <div id="top">
-        <div id="event-container">
-          <button id="container-all-events">
-            Display All Events In<span id="event-month"></span>
-          </button>
-          LIST OF EVENTS
-          <div id="holds-events"></div>
+        <div class="dropdown-month-year">
+          <!-- <div id="month-year-tabs">
+            <span id="months-tab"></span>
+            <span id="years-tab"></span>
+          </div> -->
+
+          <div id="date-selectors">
+            <select
+              onmousedown="if(this.options.length>8){this.size=4;}"
+              onchange="this.size=0;"
+              onblur="this.size=0"
+              id="month-selector"
+            >
+              Select A Month
+              <option value="" disabled selected value>Select A Month</option>
+              <option class="month" value="January">January</option>
+              <option class="month" value="February">February</option>
+              <option class="month" value="March">March</option>
+              <option class="month" value="April">April</option>
+              <option class="month" value="May">May</option>
+              <option class="month" value="June">June</option>
+              <option class="month" value="July">July</option>
+              <option class="month" value="August">August</option>
+              <option class="month" value="September">September</option>
+              <option class="month" value="October">October</option>
+              <option class="month" value="November">November</option>
+              <option class="month" value="December">December</option>
+            </select>
+          </div>
+
+          <div>
+            <label id="year-label" for="year-input">Year:</label>
+            <input
+              type="number"
+              id="year-input"
+              value="2021"
+              autocomplete="off"
+              max="2099"
+              min="1905"
+            />
+          </div>
+
+          <div class="today-btn">
+            <button id="today">Today</button>
+          </div>
         </div>
+        <div id="vertical-line-container">
+          <div id="vertical-line"> </div>
+
+
+        </div>
+
+
         <div id="body">
           <button class="trigger">Add Event</button>
           <div class="modal">
@@ -91,49 +139,17 @@
               <div class="day">Sat</div>
             </div>
           </div>
+        </div>
 
-          <div id="month-year-tabs">
-            <span id="months-tab"></span>
-            <span id="years-tab"></span>
-          </div>
-          <button id="today">TODAY</button>
-          <div id="date-selectors">
-            <select
-              onmousedown="if(this.options.length>8){this.size=4;}"
-              onchange="this.size=0;"
-              onblur="this.size=0"
-              id="month-selector"
-            >
-              Select A Month
-              <option value="" disabled selected value>SELECT A MONTH</option>
-              <option class="month" value="January">January</option>
-              <option class="month" value="February">February</option>
-              <option class="month" value="March">March</option>
-              <option class="month" value="April">April</option>
-              <option class="month" value="May">May</option>
-              <option class="month" value="June">June</option>
-              <option class="month" value="July">July</option>
-              <option class="month" value="August">August</option>
-              <option class="month" value="September">September</option>
-              <option class="month" value="October">October</option>
-              <option class="month" value="November">November</option>
-              <option class="month" value="December">December</option>
-            </select>
-            <div>
-              <label id="year-label" for="year-input">Year:</label>
-              <input
-                type="number"
-                id="year-input"
-                value="2021"
-                autocomplete="off"
-                max="2099"
-                min="1905"
-              />
-            </div>
-          </div>
-          <script type="module" src="main.js"></script>
+        <div id="event-container">
+          <button id="container-all-events">
+            Display All Events In<span id="event-month"></span>
+          </button>
+          LIST OF EVENTS
+          <div id="holds-events"></div>
         </div>
       </div>
     </div>
+    <script type="module" src="main.js"></script>
   </body>
 </html>
