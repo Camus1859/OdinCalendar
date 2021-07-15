@@ -1,12 +1,8 @@
-body{
-  background-color: red;
-}
+
 
 #top {
     display: flex;
     justify-content: space-evenly; 
-    background-color: rgb(196, 192, 71);
-    height: 100vh;
     margin: 0;
  
   }
@@ -25,8 +21,7 @@ body{
   border-left: 1px solid black;
   height: 500px;
   /* left: 12%; */
-  /* margin-left: -3px; */
-  margin-right:1rem ;
+  margin-left: -20px;
 }
 
 #vertical-line-container{
@@ -37,16 +32,16 @@ body{
 }
 
 
-
+/* 
 #event-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* margin-right: 18rem; */
   display: none;
+  margin:0;
 
 
-}
+} */
 
 /* #container-all-events {
   display: none;
@@ -55,7 +50,6 @@ body{
 .dropdown-month-year{
   display: flex;
   flex-direction: column;
-  background-color: #06d85f;
   align-items: center;
   justify-content: space-around;
   width: 10%;
@@ -83,8 +77,6 @@ body{
   padding: 10px;
   border: none;
   cursor: pointer;
-  color: white;
-  background-color: rgb(51, 50, 50);
 }
 
 #previous-next-buttons {
@@ -191,8 +183,6 @@ body{
   padding: 10px;
   border: none;
   cursor: pointer;
-  color: white;
-  background-color: rgb(51, 50, 50);
 }
 
 .trigger {
@@ -203,6 +193,7 @@ body{
   padding: 10px;
   border: none;
   cursor: pointer;
+  margin-left: 60rem;
 
 
 }
@@ -235,8 +226,6 @@ body{
   padding: 10px;
   border: none;
   cursor: pointer;
-  color: white;
-  background-color: rgb(51, 50, 50);
 }
 
 .calendar-days {
@@ -247,8 +236,8 @@ body{
   font-size: 25px ;
   font-weight: bolder;
   color: rgb(103, 102, 102);
-  padding-top: .5rem;
-  padding-bottom: .5rem;
+  padding-top: .8rem;
+  padding-bottom: .8rem;
 
   
 
@@ -485,6 +474,10 @@ input::-webkit-inner-spin-button {
 #holds-events > ul {
   display: flex;
   justify-content: flex-start;
+  text-decoration: underline;
+  color: black;
+
+
 }
 
 #holds-events{
@@ -581,21 +574,19 @@ input::-webkit-inner-spin-button {
   #event-container {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 15%;
     align-items: center;
     color: white;
-    margin-top: 1.3rem;
-    background-color: blue;
   }
 
   #container-all-events {
-    display: inline;
-    background-color: rgb(160, 222, 238);
     font-weight: bolder;
-    text-transform: uppercase;
-    text-decoration: none;
-    outline: none;
-    padding: 0.5rem;
+  text-decoration: none;
+  outline: none;
+  box-shadow: 1px 1px 2px #aaaaaa;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
   }
 
   #body {
