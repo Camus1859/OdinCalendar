@@ -4,7 +4,7 @@ import {
   handlerForEventsClicked,
   colorInEmptySquares,
   colorInEmptySquaresYellow,
-  displayEventsInCurrentMonth
+  displayEventsInCurrentMonth,
 } from "./ui.js"
 import {
   displayYear,

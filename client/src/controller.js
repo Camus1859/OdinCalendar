@@ -6,7 +6,8 @@ import {
   updateMonth,
   yearEntered,
   showAllEvents,
-  prepareToCreateEvent
+  prepareToCreateEvent,
+  showHolidaysWhenMonthSelected
 } from './ui.js';
 
 
@@ -19,6 +20,10 @@ const modal = document.querySelector('.modal');
 const trigger = document.querySelector('.trigger');
 const closeButton = document.querySelector('.close-button');
 const submitBtn = document.getElementById('submit-event');
+const monthSelector = document.getElementById('month-selector')
+
+
+
 //submitBtn.addEventListener('click', getUserInfo);
 todayBtn.addEventListener('click', refreshShowToday);
 prevNextBtns.forEach((button) => button.addEventListener('click', updateMonth));
@@ -27,6 +32,9 @@ yearEnteredValue.addEventListener('keyup', yearEntered);
 trigger.addEventListener('click', toggleModal);
 trigger.addEventListener('click', removeOldEventsContent);
 trigger.addEventListener('click', prepareToCreateEvent);
+
+monthSelector.addEventListener('click', showHolidaysWhenMonthSelected)
+
 
 closeButton.addEventListener('click', toggleModal);
 submitBtn.addEventListener('click', toggleModal);

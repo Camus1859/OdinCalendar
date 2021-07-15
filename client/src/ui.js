@@ -30,9 +30,7 @@ const postHolidays = async (currentYear) => {
 //postHolidays(new Date().getFullYear());
 
 const generatingAllSquaresInCalendar = () => {
-  let daysInMonthContainer = document.getElementById(
-    'calendar'
-  );
+  let daysInMonthContainer = document.getElementById('calendar');
   for (let i = 0; i < 42; i++) {
     let div = `<div class="calendar-days"></div>`;
     daysInMonthContainer.insertAdjacentHTML('beforeend', div);
@@ -345,6 +343,17 @@ const refreshShowToday = () => {
   // ).textContent = calendarObject.getCalendarYear()
 };
 
+const showHolidaysWhenMonthSelected = (e)=> {
+  if(e.target.value === ""){
+    return
+  }
+
+
+  getHolidays(calendarObject.getCalendarYear())
+
+
+}
+
 const getEventToDisplayFetch = async (url) => {
   console.log('ram');
   return await fetch(url, {
@@ -516,6 +525,7 @@ const getEventClickedFetch = async (url) => {
 const handlerForEventsClicked = () => {
   const container = document.getElementById('calendar');
   container.addEventListener('click', (e) => {
+    console.log(e.target);
     if (e.target.getAttribute('data')) {
       const clickedEventNumber = e.target.getAttribute('data');
 
@@ -674,7 +684,13 @@ const createElements = (aUsersEvent, element) => {
     ` <ul data="${aUsersEvent._id}"class="event">
 
 
-     <li data="${aUsersEvent._id}" class="time-title2"><span class="time">${timer(aUsersEvent.time)}</span> <span class="time-title">${aUsersEvent.title}</span></li>
+     <li data="${
+       aUsersEvent._id
+     }" class="time-title2"><span class="time" data="${aUsersEvent._id}">${timer(
+      aUsersEvent.time
+    )}</span> <span class="time-title" data="${aUsersEvent._id}">${
+      aUsersEvent.title
+    }</span></li>
 
      </ul>
   
@@ -776,4 +792,5 @@ export {
   displayEventsInCurrentMonth,
   showAllEvents,
   prepareToCreateEvent,
+  showHolidaysWhenMonthSelected
 };

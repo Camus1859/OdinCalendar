@@ -75,6 +75,7 @@
   text-decoration: none;
   outline: none;
   box-shadow: 1px 1px 2px #ff0000;
+  height: 100%;
 
   padding: 10px;
   border: none;
@@ -244,7 +245,7 @@
 } */
 
 #month-selector option:hover {
-  background-color: rgb(160, 222, 238);
+  background-color: rgb(236, 217, 217);
 }
 
 #today {
@@ -369,7 +370,6 @@ input::-webkit-inner-spin-button {
   font-weight: bolder;
   color: rgb(64, 62, 62);
 
-  /* margin-right: 16px; */
   cursor: pointer;
   width: 100%;
   padding-left: 5px;
@@ -392,7 +392,7 @@ input::-webkit-inner-spin-button {
 
 
 .time-title:hover{
- color: rgb(24, 41, 65);
+ color: rgb(238, 167, 167);
 }
 .holiday {
   display: flex;
