@@ -572,7 +572,6 @@ border-radius: .5rem; */
 #holds-events > ul {
   display: flex;
   justify-content: flex-start;
-  text-decoration: underline;
   color: black;
 
 

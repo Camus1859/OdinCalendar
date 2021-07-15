@@ -74,3 +74,6 @@ function windowOnClick(event) {
     toggleModal();
   }
 }
+
+const today = new Date().toISOString().split('T')[0];
+document.getElementById("event-date").setAttribute('min', today);
