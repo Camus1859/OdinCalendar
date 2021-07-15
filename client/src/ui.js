@@ -31,7 +31,7 @@ const postHolidays = async (currentYear) => {
 
 const generatingAllSquaresInCalendar = () => {
   let daysInMonthContainer = document.getElementById(
-    'days-of-the-month-container'
+    'calendar'
   );
   for (let i = 0; i < 42; i++) {
     let div = `<div class="calendar-days"></div>`;
@@ -514,7 +514,7 @@ const getEventClickedFetch = async (url) => {
 };
 
 const handlerForEventsClicked = () => {
-  const container = document.getElementById('days-of-the-month-container');
+  const container = document.getElementById('calendar');
   container.addEventListener('click', (e) => {
     if (e.target.getAttribute('data')) {
       const clickedEventNumber = e.target.getAttribute('data');
