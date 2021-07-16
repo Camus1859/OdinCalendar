@@ -281,6 +281,7 @@ const yearEntered = (e) => {
     checksMonthYearToCalendar();
     getAllEventsFromDB();
     getHolidays(year);
+    gettingCurrentYearMonthDay()
   }
 };
 
@@ -329,6 +330,7 @@ const refreshShowToday = () => {
   colorInEmptySquares();
   getAllEventsFromDB();
   getHolidays(calendarObject.getCalendarYear());
+  gettingCurrentYearMonthDay()
 
   document.getElementById('year-input').value = new Date().getFullYear();
 
@@ -350,6 +352,7 @@ const showHolidaysWhenMonthSelected = (e) => {
   }
 
   getHolidays(calendarObject.getCalendarYear());
+  gettingCurrentYearMonthDay()
 };
 
 const getEventToDisplayFetch = async (url) => {
@@ -608,6 +611,52 @@ const separatingYearMonthDayOfUserEvent = (
   }
 };
 
+const gettingCurrentYearMonthDay = () => {
+  const dateObj = new Date();
+  const month = dateObj.getUTCMonth() + 1; //months from 1-12
+  const day = dateObj.getUTCDate();
+  const year = dateObj.getUTCFullYear();
+
+  const todaysDate = year + '-' + month + '-' + day;
+
+  console.log(todaysDate)
+
+  const calendarsYear = +calendarObject.getCalendarYear();
+
+  const calendarsMonth = +calendarObject.getCalendarMonthNumber() + 1;
+
+  const date = todaysDate.split('-');
+  const currentYear = Number(date[0]);
+  const currentMonth = Number(date[1]);
+  const currentDay = Number(date[2]);
+
+  console.log(currentYear, currentMonth, calendarsYear, calendarsMonth, currentDay);
+
+  const daysInTheMonth = Array.from(
+    document.querySelectorAll('.calendar-days')
+  );
+  let dayOfEventElement = daysInTheMonth.find(
+    (listOfDays) => +listOfDays.getAttribute('data-number') === currentDay
+  );
+
+  if (calendarsYear === currentYear && calendarsMonth === currentMonth) {
+
+    return dayOfEventElement.classList.add('toggleRedToday');
+  }
+  if(document.querySelector('.toggleRedToday')){
+    const el = document.querySelector('.toggleRedToday')
+    el.classList.remove('toggleRedToday')
+  }
+
+
+ 
+};
+
+
+
+
+
+
 const seperateHolidayYearAndMonth = (holiday, thisYear, thisMonthNum) => {
   const date = holiday.date.split('-');
   const holidayYear = Number(date[0]);
@@ -644,6 +693,7 @@ const checksForMatchedWhenPrevNextClicked = () => {
   checksMonthYearToCalendar();
   getAllEventsFromDB();
   getHolidays(calendarObject.getCalendarYear());
+  gettingCurrentYearMonthDay()
 };
 
 const checksMonthYearToCalendar = () => {
@@ -771,6 +821,8 @@ const clearShowAllEvents = () => {
   }
 };
 
+
+
 export {
   generatingAllSquaresInCalendar,
   displayCurrentYear,
@@ -791,4 +843,6 @@ export {
   showAllEvents,
   prepareToCreateEvent,
   showHolidaysWhenMonthSelected,
+  gettingCurrentYearMonthDay
+
 };

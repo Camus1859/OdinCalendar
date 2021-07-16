@@ -446,6 +446,11 @@ input::-webkit-inner-spin-button {
   font-size: larger;
 }
 
+.toggleRedToday{
+  color: red;
+
+}
+
 
 .time-title:hover{
  color: rgb(238, 167, 167);

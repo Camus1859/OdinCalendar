@@ -5,6 +5,8 @@ import {
   colorInEmptySquares,
   colorInEmptySquaresYellow,
   displayEventsInCurrentMonth,
+  gettingCurrentYearMonthDay
+
 } from "./ui.js"
 import {
   displayYear,
@@ -20,3 +22,5 @@ handlerForEventsClicked()
 colorInEmptySquaresYellow()
 colorInEmptySquares()
 displayEventsInCurrentMonth()
+gettingCurrentYearMonthDay()
+
