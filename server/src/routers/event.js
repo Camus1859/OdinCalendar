@@ -104,7 +104,7 @@ router.get('/holidays/:id', async (req, res) => {
       (holiday) => holiday.type[0] === 'National holiday'
     );
 
-    new Holiday.create({
+     Holiday.create({
       year: req.params.id,
       USNationalHolidays,
     });

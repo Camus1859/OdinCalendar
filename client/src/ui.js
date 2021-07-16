@@ -6,28 +6,6 @@ import {
 } from './dateGenerator.js';
 import { displayYear } from './dateGenerator.js';
 
-const postHolidays = async (currentYear) => {
-  await fetch(`/holidays/${currentYear}`, {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    // body: JSON.stringify(currentYear),
-  });
-  // let holidays = await response.json();
-  // const USNationalHolidays = holidays.response.holidays.filter(
-  //   (holiday) => holiday.type[0] === 'National holiday'
-  // );
-  // USNationalHolidays.forEach((holiday) => {
-  //   let date = holiday.date.iso;
-  //   let title = holiday.name;
-  //   let description = holiday.description;
-  //   const myHoliday = { date, title, description };
-  //   holidayYearAndMonth(myHoliday);
-  //});
-};
-
-//postHolidays(new Date().getFullYear());
 
 const generatingAllSquaresInCalendar = () => {
   let daysInMonthContainer = document.getElementById('calendar');
@@ -50,8 +28,7 @@ const displayMonth = (month) => {
 };
 
 const getEventonEdit = (title, date, time, description, id) => {
-  console.log('ran');
-  //for edit, if id is coming in, remove that id from DOM, so I dont have duplicate events
+
 
   if (id) {
     const oldEvent = document.querySelector(`[data="${id}"]`);
@@ -65,13 +42,6 @@ const getEventonEdit = (title, date, time, description, id) => {
 };
 
 const getEvent = (title, date, time, description, id) => {
-  //for edit, if id is coming in, remove that id from DOM, so I dont have duplicate events
-
-  // if (id) {
-  //   const oldEvent = document.querySelector(`[data="${id}"]`);
-  //   oldEvent.remove();
-  // }
-
   const aUsersEvent = new UserEvent(title, date, time, description, id);
   aUsersEvent.setCalendarMonth(calendarObject.getCalendarMonth());
   aUsersEvent.setCalendarYear(calendarObject.getCalendarYear());
@@ -83,23 +53,7 @@ const getUserInfo = (e) => {
   const submitBtn = document.getElementById('submit-event');
 
   const submitEvent = async (e) => {
-    //instead of checking like this, check all documents in database and see if any 3 documents have the current date, if so, stop code, if not run
-
-    //     const days = Array.from(document.querySelectorAll('.inside-of-square'));
-    // days.forEach((day) => {
-    //   if (day.childElementCount === 3) {
-    //     // const idNumber = day.lastChild.getAttribute('data');
-    //     // const arrayOfEvents = storingAllUserEvents
-    //     //   .getEventList()
-    //     //   .filter((event) => event._id != idNumber);
-    //     // storingAllUserEvents.resetEventList(arrayOfEvents);
-    //     // day.lastChild.remove();
-    //    return alert('Only allowed 3 events per day!');
-    //   }
-    // });
-
     e.preventDefault();
-
     const title = document.getElementById('event-title').value;
     const date = document.getElementById('event-date').value;
     const time = document.getElementById('event-time').value;
@@ -133,38 +87,15 @@ const getUserInfo = (e) => {
       time,
       description,
     });
-    //getEvent(title, date, time, description);
-    // countChildNodes();
-
-    // if (e.target === submitBtn) {
-    // let uniqueID = e.target.getAttribute('data');
-
-    // const arrayOfEvents = storingAllUserEvents
-    //   .getEventList()
-    //   .filter((event) => event._id != uniqueID);
-    // storingAllUserEvents.resetEventList(arrayOfEvents);
-
-    // document.querySelectorAll(`[data="${uniqueID}"]`).forEach((node) => {
-    //   node.remove();
-    // });
-
-    //});
     submitBtn.removeEventListener('click', submitEvent);
   };
-
   submitBtn.addEventListener('click', submitEvent);
-
-  // const eventTitle = document.getElementById('event-title').value;
-  // const eventDate = document.getElementById('event-date').value;
-  // const eventTime = document.getElementById('event-time').value;
-  // const eventDescription = document.getElementById('event-description').value;
 };
 
 const prepareToCreateEvent = () => {
   getUserInfo();
 };
 
-// document.querySelectorAll(`[data="${uniqueID}"]`)
 
 const getAllEventsFromDB = async () => {
   await fetch('/allEvents', {
@@ -205,7 +136,7 @@ const getHolidays = async (year) => {
 };
 getHolidays(new Date().getFullYear());
 
-const getAllEventsFromDB2 = async () => {
+const getAllEventsFromDBToDisplayonUI = async () => {
   const holdEvents = document.getElementById('holds-events');
 
   return await fetch('/allEvents', {
@@ -267,7 +198,6 @@ const dropDownMonth = (e) => {
   ).textContent = calendarObject.getCalendarYear();
 
   setFirstDayOfCalendar(calendarObject.getCalendarYear());
-  checksMonthYearToCalendar();
   getAllEventsFromDB();
 };
 
@@ -278,7 +208,6 @@ const yearEntered = (e) => {
       'year'
     ).textContent = calendarObject.setCalendarYear(year);
     setFirstDayOfCalendar(year);
-    checksMonthYearToCalendar();
     getAllEventsFromDB();
     getHolidays(year);
     gettingCurrentYearMonthDay()
@@ -325,7 +254,6 @@ const refreshShowToday = () => {
     new Date().getFullYear()
   );
   setFirstDayOfCalendar(new Date().getFullYear());
-  checksMonthYearToCalendar();
   colorInEmptySquaresYellow();
   colorInEmptySquares();
   getAllEventsFromDB();
@@ -338,19 +266,19 @@ const refreshShowToday = () => {
     'month-selector'
   ).value = calendarObject.getCalendarMonth();
 
-  // document.getElementById(
-  //   'month'
-  // ).textContent = calendarObject.setCalendarMonth(e.target.value);
-  // document.getElementById(
-  //   'year'
-  // ).textContent = calendarObject.getCalendarYear()
+
 };
 
 const showHolidaysWhenMonthSelected = (e) => {
+
+  const holiday = document.querySelector('.holiday')
   if (e.target.value === '') {
     return;
   }
 
+  if (holiday){
+    return
+  }
   getHolidays(calendarObject.getCalendarYear());
   gettingCurrentYearMonthDay()
 };
@@ -399,9 +327,6 @@ const postEventFetch = async (url, event) => {
         event._id
       );
     });
-  // countChildNodes();
-
-  // .catch((err) => console.log(err));
 };
 
 const patchEventFetch = async (url, event) => {
@@ -422,7 +347,6 @@ const patchEventFetch = async (url, event) => {
         event.description,
         event._id
       );
-      // countChildNodes();
     })
     .catch((err) => console.log(err));
 };
@@ -455,11 +379,6 @@ const editClicked = (e) => {
   if (e.target === editBtn) {
     getEventToDisplayFetch(`/event/${valuesIdNum}`);
 
-    //  document.getElementById('myform').method = 'PATCH'
-    //  document.getElementById('myform').action = `/event/${e.target.getAttribute('data')}`
-    //  if (e.target === submitBtn) {
-    //  }
-
     submitBtn.addEventListener('click', (e) => {
       e.preventDefault();
 
@@ -474,20 +393,6 @@ const editClicked = (e) => {
         time,
         description,
       });
-
-      // if (e.target === submitBtn) {
-      // let uniqueID = e.target.getAttribute('data');
-
-      // const arrayOfEvents = storingAllUserEvents
-      //   .getEventList()
-      //   .filter((event) => event._id != uniqueID);
-      // storingAllUserEvents.resetEventList(arrayOfEvents);
-
-      // document.querySelectorAll(`[data="${uniqueID}"]`).forEach((node) => {
-      //   node.remove();
-      // });
-
-      //});
     });
   }
 };
@@ -497,14 +402,7 @@ const deleteClicked = (e) => {
   if (confirm('Are You Sure')) {
     console.log('deletion confirmed');
     console.log(uniqueID);
-    // const arrayOfEvents = storingAllUserEvents.getEventList().filter((event) => event._id != uniqueID);
     deleteEventFetch(`/event/${uniqueID}`);
-
-    //storingAllUserEvents.resetEventList(arrayOfEvents);
-
-    // document.querySelectorAll(`[data="${uniqueID}"]`).forEach((node) => {
-    //   node.remove();
-    // });
   }
 };
 
@@ -616,21 +514,13 @@ const gettingCurrentYearMonthDay = () => {
   const month = dateObj.getUTCMonth() + 1; //months from 1-12
   const day = dateObj.getUTCDate();
   const year = dateObj.getUTCFullYear();
-
   const todaysDate = year + '-' + month + '-' + day;
-
-  console.log(todaysDate)
-
   const calendarsYear = +calendarObject.getCalendarYear();
-
   const calendarsMonth = +calendarObject.getCalendarMonthNumber() + 1;
-
   const date = todaysDate.split('-');
   const currentYear = Number(date[0]);
   const currentMonth = Number(date[1]);
   const currentDay = Number(date[2]);
-
-  console.log(currentYear, currentMonth, calendarsYear, calendarsMonth, currentDay);
 
   const daysInTheMonth = Array.from(
     document.querySelectorAll('.calendar-days')
@@ -647,14 +537,7 @@ const gettingCurrentYearMonthDay = () => {
     const el = document.querySelector('.toggleRedToday')
     el.classList.remove('toggleRedToday')
   }
-
-
- 
 };
-
-
-
-
 
 
 const seperateHolidayYearAndMonth = (holiday, thisYear, thisMonthNum) => {
@@ -690,27 +573,9 @@ const createElementsForHoliday = (thisHoliday, element) => {
 
 const checksForMatchedWhenPrevNextClicked = () => {
   setFirstDayOfCalendar(calendarObject.getCalendarYear());
-  checksMonthYearToCalendar();
   getAllEventsFromDB();
   getHolidays(calendarObject.getCalendarYear());
   gettingCurrentYearMonthDay()
-};
-
-const checksMonthYearToCalendar = () => {
-  const thisYear = calendarObject.getCalendarYear();
-  const thisMonthNum = calendarObject.getCalendarMonthNumber() + 1;
-
-  // getAllEventsFromDB2(thisYear,  thisMonthNum )
-
-  // storingAllUserEvents.getEventList().forEach((item) => {
-  //   const date = item.date.split('-');
-  //   const eventYear = Number(date[0]);
-  //   const eventMonth = Number(date[1]);
-  //   const eventDay = Number(date[2]);
-  //   if (thisYear === eventYear && thisMonthNum === eventMonth) {
-  //     getDayOfEvent(item, eventDay);
-  //   }
-  // });
 };
 
 const timer = (time) => {
@@ -727,11 +592,7 @@ const createElements = (aUsersEvent, element) => {
     return;
   }
   const newEventForCalendar =
-    // `<div data="${aUsersEvent._id}"class="event">
-
     ` <ul data="${aUsersEvent._id}"class="event">
-
-
      <li data="${
        aUsersEvent._id
      }" class="time-title2"><span class="time" data="${
@@ -739,12 +600,8 @@ const createElements = (aUsersEvent, element) => {
     }">${timer(aUsersEvent.time)}</span> <span class="time-title" data="${
       aUsersEvent._id
     }">${aUsersEvent.title}</span></li>
-
      </ul>
-  
   `;
-
-  // </div>`;
   element.firstChild.nextSibling.insertAdjacentHTML(
     'beforeend',
     newEventForCalendar
@@ -771,20 +628,6 @@ const colorInEmptySquaresYellow = () => {
   });
 };
 
-const countChildNodes = () => {
-  const days = Array.from(document.querySelectorAll('.inside-of-square'));
-  days.forEach((day) => {
-    if (day.childElementCount === 3) {
-      // const idNumber = day.lastChild.getAttribute('data');
-      // const arrayOfEvents = storingAllUserEvents
-      //   .getEventList()
-      //   .filter((event) => event._id != idNumber);
-      // storingAllUserEvents.resetEventList(arrayOfEvents);
-      // day.lastChild.remove();
-      return alert('Only allowed 3 events per day!');
-    }
-  });
-};
 
 const displayEventsInCurrentMonth = () => {
   const eventMonth = document.getElementById('event-month');
@@ -792,26 +635,7 @@ const displayEventsInCurrentMonth = () => {
 };
 
 const showAllEvents = () => {
-  getAllEventsFromDB2();
-
-  //   .filter((eventt) => {
-  //   const date = eventt.date.split('-');
-  //   const eventYear = Number(date[0]);
-  //   const eventMonth = Number(date[1]) - 1;
-  //   const eventDay = Number(date[2]);
-  //   if (
-  //     eventYear === calendarObject.getCalendarYear() &&
-  //     eventMonth === calendarObject.getCalendarMonthNumber()
-  //   ) {
-  //     const allEvents = `
-  //   <ul>
-  //     <li id="listing">${eventt.title} ${eventDay}th</li>
-  //   <ul>`;
-  //     holdEvents.insertAdjacentHTML('beforeend', allEvents);
-  //   }
-  // });
-  // const displayAllEvents = document.getElementById('container-all-events');
-  // displayAllEvents.removeEventListener('click', showAllEvents);
+  getAllEventsFromDBToDisplayonUI();
 };
 
 const clearShowAllEvents = () => {
@@ -832,11 +656,9 @@ export {
   refreshShowToday,
   dropDownMonth,
   removeOldEventsContent,
-  //getUserInfo,
   updateMonth,
   yearEntered,
   getCurrentYearAndMonthFromCalendar,
-  // countChildNodes,
   colorInEmptySquares,
   colorInEmptySquaresYellow,
   displayEventsInCurrentMonth,
