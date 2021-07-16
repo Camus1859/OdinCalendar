@@ -159,7 +159,7 @@ const getAllEventsFromDBToDisplayonUI = async () => {
         ) {
           const allEvents = `
         <ul>
-          <li id="listing">${eventt.title} ${eventDay}th</li>
+          <li id="listing">${eventt.title} <b>${eventDay}th</b></li>
         <ul>`;
           holdEvents.insertAdjacentHTML('beforeend', allEvents);
         }
