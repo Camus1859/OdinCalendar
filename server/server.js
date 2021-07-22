@@ -1,8 +1,13 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
+
 const cors = require('cors');
 require('./src/db/mongoose');
+const helmet = require("helmet");
+
 const eventRouter = require('./src/routers/event');
+app.use(helmet());
 
 app.use(express.static('client/src'));
 app.use(express.json());
@@ -10,7 +15,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(eventRouter);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;              
 
 
 app.listen(port, () => {

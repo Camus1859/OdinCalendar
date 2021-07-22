@@ -154,6 +154,10 @@
   width: 100%;
 }
 
+#date-selector-container{
+  min-height: 185px;
+}
+
 #year-input {
   font-weight: bolder;
   text-decoration: none;
