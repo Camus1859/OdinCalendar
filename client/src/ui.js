@@ -265,6 +265,7 @@ const refreshShowToday = () => {
   document.getElementById(
     'month-selector'
   ).value = calendarObject.getCalendarMonth();
+  displayEventsInCurrentMonth()
 
 
 };

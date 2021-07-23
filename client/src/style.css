@@ -191,7 +191,7 @@
   justify-content: space-evenly;
 }
 
-#month-selector option:hover {
+#month-selector option:n {
   background-color: rgb(236, 217, 217);
 }
 
